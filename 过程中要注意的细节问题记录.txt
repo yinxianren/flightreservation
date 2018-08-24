@@ -1,0 +1,89 @@
+*************       与thymeleaf 相关细节的问题     ##################################
+
+如果我们要在home的html中引入一些静态资源怎么办呢，这点springboot也帮我们考虑到了
+
+springboot它会将“/**”映射到几个资源路径中
+
+META-INF/resources/
+resources
+static
+public
+也就是说我们在有一个static/css/home.css
+
+那么我们这样引入就可以了。
+
+<link type="text/css" rel="stylesheet" th:href="@{/css/home.css}"></link>
+当然，我们还是可以配置前缀后缀，以及是否缓存等，只需要一个简单的配置即可
+
+复制代码
+#配置前缀
+#spring.thymeleaf.prefix=classpath:/templates/
+#配置后缀
+#spring.thymeleaf.suffix=.html
+#spring.thymeleaf.mode=HTML5
+#spring.thymeleaf.encoding=UTF-8
+#spring.thymeleaf.content-type=text/html
+#是否开启缓存
+spring.thymeleaf.cache=false
+
+
+************   thymeleaf 页面问题（路径，公共模块引入）      ##################################
+thymeleaf 创建引入公共模块：
+
+1,th:inssert:保留当前主标签，保留th:fragment主标签；
+
+2,th:replace:舍弃当前主标签，保留th:fragment主标签；
+
+3,th:include:保留当前主标签，舍弃th:fragment主标签。
+
+格式：
+
+引入：<head th:replace="路径 :: 模块名"></head>
+
+模块：<div th:fragment="模块名"></div>
+
+注1：引入的路径以默认的根路径static为相对路径.
+
+eg:  <head th:replace="../templates/system/index/headLink :: links"></head>
+
+注2：引入头部公共外部资源问题
+
+由于<head></head>标签中不能存放<div></div>之类的标签，而不同页面的title基本上都不同，再加上网站后期的SEO优化需要的<meta/>标签,这些都要单独出来
+
+ <head th:replace="路径 :: 模块名"></head>或者
+
+<div th:include="路径 :: 模块名"></div>
+
+都会使引入或者模块中的主标签保留下来
+
+在此处都是不适用的，解决方法如下：
+
+引入：<div th:replace="路径 :: 模块名"></div>
+
+模块：<th:block th:fragment="模块名"></th:block>
+
+<th:block></th:block>是Thymeleaf提供的唯一的一个Thymeleaf块级元素，其特殊性在于Thymeleaf模板引擎在处理<th:block>的时候会删掉它本身，而保留其内容。（多用于渲染平级标签）
+
+th:replace 和<th:block>的结合，完美舍弃引入和模块处的主标签。
+
+
+************         ##################################
+
+
+************         ##################################
+
+
+
+************         ##################################
+
+
+************         ##################################
+
+
+************         ##################################
+
+
+************         ##################################
+
+
+************         ##################################

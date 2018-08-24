@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <th:block th:fragment="navigation-bars-head">
+        <link rel="stylesheet" th:href="@{/private/frontdesk/body/css/bootstrap.min.css}" />
+        <link rel="stylesheet" th:href="@{/private/frontdesk/body/css/matrix-style.css}" />
+        <link rel="stylesheet" th:href="@{/private/frontdesk/body/css/matrix-media.css}" />
+        <link th:href="@{/private/frontdesk/body/font-awesome/css/font-awesome.css}" rel="stylesheet" />
+        <script th:src="@{/private/frontdesk/body/js/jquery.min.js}"></script>
+        <script th:src="@{/private/frontdesk/body/js/matrix.js}"></script>
+    </th:block>
+</head>
+
+<body>
+
+<div th:fragment="navigation-bars-content">
+
+<!--Header-part-->
+<div id="header">
+    <h1><a href="dashboard.html">MatAdmin</a></h1>
+</div>
+<!--close-Header-part-->
+<!--top-Header-menu-->
+<div id="user-nav" class="navbar navbar-inverse">
+
+    <ul class="nav">
+
+        <li  class="dropdown" id="profile-messages" >
+            <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle">
+                <i class="icon icon-user"></i>
+                <span class="text">欢迎 yinxianren</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a href="#"><i class="icon-user"></i> 我的资料</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="icon-check"></i> 我的任务</a></li>
+                <li class="divider"></li>
+                <li><a href="#"><i class="icon-key"></i> 退出</a></li>
+            </ul>
+        </li>
+
+
+        <li class="dropdown" id="menu-messages">
+            <a href="#" data-toggle="dropdown" data-target="#menu-messages" class="dropdown-toggle">
+                <i class="icon icon-envelope"></i>
+                <span class="text">消息</span>
+                <span class="label label-important">0</span>
+                <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+                <li><a class="sAdd" title="" href="#"><i class="icon-plus"></i> 新消息</a></li>
+                <li class="divider"></li>
+                <li><a class="sInbox" title="" href="#"><i class="icon-envelope"></i> 收件箱</a></li>
+                <li class="divider"></li>
+                <li><a class="sOutbox" title="" href="#"><i class="icon-arrow-up"></i> 发件箱</a></li>
+                <li class="divider"></li>
+                <li><a class="sTrash" title="" href="#"><i class="icon-trash"></i> 发送</a></li>
+            </ul>
+        </li>
+
+        <li class=""><a title="" href="#"><i class="icon icon-cog"></i> <span class="text">设置</span></a></li>
+        <li class=""><a title="" href="login.html"><i class="icon icon-share-alt"></i> <span class="text">退出</span></a></li>
+    </ul>
+
+
+
+</div>
+<!--close-top-Header-menu-->
+
+
+
+<!--start-top-serch-->
+<div id="search">
+    <input type="text" placeholder="输入搜索内容..."/>
+    <button type="submit" class="tip-bottom" title="Search">
+        <i class="icon-search icon-white"></i>
+    </button>
+</div>
+<!--close-top-serch-->
+
+
+
+<!--sidebar-menu-->
+<div id="sidebar">
+
+    <ul>
+        <!-- class="active" -->
+        <li><a href="#"><i class="icon icon-home"></i> <span>首页</span></a> </li>
+        <!-- 业务管理模块 -->
+        <li class="submenu  open btn-success"> <a href="#"><i class="icon icon-glass"></i> <span>业务管理</span> </a>
+            <ul>
+                <li><a href="#">照片管理</a></li>
+                <li><a href="#">证照管理</a></li>
+                <li class="btn-warning"><a href="#">签证管理</a></li>
+                <li><a href="#">机票管理</a></li>
+                <li><a href="#">酒店管理</a></li>
+                <li><a href="#">自由行管理</a></li>
+                <li><a href="#">台湾自由行</a></li>
+                <li><a href="#">旅游团管理</a></li>
+                <li><a href="#">保险代理管理</a></li>
+                <li><a href="#">快递管理</a></li>
+                <li><a href="#">其他管理</a></li>
+            </ul>
+        </li>
+
+        <!--  订单管理模块 -->
+        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>订单管理</span> </a>
+            <ul>
+                <li><a href="#">需求订单</a></li>
+                <li><a href="#">签证流程</a></li>
+                <li><a href="#">机票流程</a></li>
+            </ul>
+        </li>
+
+
+        <!--  调度派送模块 -->
+        <li class="submenu"> <a href="#"><i class="icon  icon-truck"></i> <span>调度派送</span> </a>
+            <ul>
+                <li><a href="#">快递派送</a></li>
+                <li><a href="#">订单派送</a></li>
+            </ul>
+        </li>
+
+        <!--  财务管理 -->
+        <li> <a href="#"><i class="icon icon-book"></i> <span>财务管理</span></a> </li>
+
+        <!--  供应商管理 -->
+        <li> <a href="#"><i class="icon  icon-comments-alt"></i> <span>供应商管理</span></a> </li>
+
+        <!--  政策管理 -->
+        <li><a href="#"><i class="icon icon-flag"></i> <span>政策管理</span></a></li>
+
+        <!--  客户关系管理模块 -->
+        <li class="submenu"> <a href="#"><i class="icon  icon-user-md"></i> <span>客户关系管理</span> </a>
+            <ul>
+                <li><a href="#">客户维护管理</a></li>
+                <li><a href="#">基本信息维护</a></li>
+            </ul>
+        </li>
+
+        <!--  报表统计管理-->
+        <li><a href="#"><i class="icon icon-list"></i> <span>报表统计管理</span></a></li>
+
+        <!--  系统设置管理模块 -->
+        <li class="submenu"> <a href="#"><i class="icon icon-cogs"></i> <span>系统设置管理</span> </a>
+            <ul>
+                <li><a href="#">组织结构</a></li>
+                <li><a href="#">可用资源</a></li>
+                <li><a href="#">权限管理</a></li>
+                <li><a href="#">参数设置</a></li>
+            </ul>
+        </li>
+
+        <!--  扩张功能 -->
+        <li><a href="#"><i class="icon icon-tint"></i> <span>扩张功能</span></a></li>
+
+
+        <!--  网站后台管理模块 -->
+        <li class="submenu"> <a href="#"><i class="icon icon-cog "> </i>  <span>网站后台管理</span> </a>
+            <ul>
+                <li><a href="#">客户管理</a></li>
+                <li><a href="#">注销信息管理</a></li>
+            </ul>
+        </li>
+
+
+        <!--<li class="content"> <span>每个月带宽</span>-->
+        <!--<div class="progress progress-mini progress-danger active progress-striped">-->
+        <!--<div style="width: 77%;" class="bar"></div>-->
+        <!--</div>-->
+        <!--<span class="percent">77%</span>-->
+        <!--<div class="stat">21419.94 / 14000 MB</div>-->
+        <!--</li>-->
+
+        <!--<li class="content"> <span>Disk Space Usage</span>-->
+        <!--<div class="progress progress-mini active progress-striped">-->
+        <!--<div style="width: 87%;" class="bar"></div>-->
+        <!--</div>-->
+        <!--<span class="percent">87%</span>-->
+        <!--<div class="stat">604.44 / 4000 MB</div>-->
+        <!--</li>-->
+
+
+    </ul>
+</div>
+<!--sidebar-menu-->
+
+</div>
+
+</body>
+
+</html>
