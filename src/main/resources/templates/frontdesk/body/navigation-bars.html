@@ -89,28 +89,29 @@
         <!-- class="active" -->
         <li><a href="#"><i class="icon icon-home"></i> <span>首页</span></a> </li>
         <!-- 业务管理模块 -->
-        <li class="submenu  open btn-success"> <a href="#"><i class="icon icon-glass"></i> <span>业务管理</span> </a>
+        <!--<li class="submenu  open btn-success">-->
+        <li class="submenu "> <a href="#"><i class="icon icon-glass"></i> <span>业务管理</span> </a>
             <ul>
-                <li><a href="#">照片管理</a></li>
-                <li><a href="#">证照管理</a></li>
-                <li class="btn-warning"><a href="#">签证管理</a></li>
-                <li><a href="#">机票管理</a></li>
-                <li><a href="#">酒店管理</a></li>
-                <li><a href="#">自由行管理</a></li>
-                <li><a href="#">台湾自由行</a></li>
-                <li><a href="#">旅游团管理</a></li>
-                <li><a href="#">保险代理管理</a></li>
-                <li><a href="#">快递管理</a></li>
-                <li><a href="#">其他管理</a></li>
+                <li><a th:href="@{/body/busi-manage/photograph-management}">照片管理</a></li>
+                <li><a th:href="@{/body/busi-manage/license-management}">证照管理</a></li>
+                <li class="btn-warning"><a th:href="@{/body/busi-manage/visa-management}">签证管理</a></li>
+                <li><a th:href="@{/body/busi-manage/air-ticket-management}">机票管理</a></li>
+                <li><a th:href="@{/body/busi-manage/hotel-management}">酒店管理</a></li>
+                <li><a th:href="@{/body/busi-manage/independent-travel-management}">自由行管理</a></li>
+                <li><a th:href="@{/body/busi-manage/taiwan-independent-travel-management}">台湾自由行</a></li>
+                <li><a th:href="@{/body/busi-manage/tourist-groups-management}">旅游团管理</a></li>
+                <li><a th:href="@{/body/busi-manage/insurance-agency-management}">保险代理管理</a></li>
+                <li><a th:href="@{/body/busi-manage/expressage-management}">快递管理</a></li>
+                <li><a th:href="@{/body/busi-manage/other-management}">其他管理</a></li>
             </ul>
         </li>
 
         <!--  订单管理模块 -->
         <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>订单管理</span> </a>
             <ul>
-                <li><a href="#">需求订单</a></li>
-                <li><a href="#">签证流程</a></li>
-                <li><a href="#">机票流程</a></li>
+                <li><a th:href="@{/body/order-manage/demand-order-management}">需求订单</a></li>
+                <li><a th:href="@{/body/order-manage/visa-process-management}">签证流程</a></li>
+                <li><a th:href="@{/body/order-manage/air-ticket-process-management}">机票流程</a></li>
             </ul>
         </li>
 
@@ -118,50 +119,50 @@
         <!--  调度派送模块 -->
         <li class="submenu"> <a href="#"><i class="icon  icon-truck"></i> <span>调度派送</span> </a>
             <ul>
-                <li><a href="#">快递派送</a></li>
-                <li><a href="#">订单派送</a></li>
+                <li><a th:href="@{/body/dispatchsendmanagement/expressage-send-management}">快递派送</a></li>
+                <li><a th:href="@{/body/dispatchsendmanagement/order-send-management}">订单派送</a></li>
             </ul>
         </li>
 
         <!--  财务管理 -->
-        <li> <a href="#"><i class="icon icon-book"></i> <span>财务管理</span></a> </li>
+        <li> <a th:href="@{/body/financemanagement/finance-management}"><i class="icon icon-book"></i> <span>财务管理</span></a> </li>
 
         <!--  供应商管理 -->
-        <li> <a href="#"><i class="icon  icon-comments-alt"></i> <span>供应商管理</span></a> </li>
+        <li> <a th:href="@{/body/suppliermanagement/supplier-management}"><i class="icon  icon-comments-alt"></i> <span>供应商管理</span></a> </li>
 
         <!--  政策管理 -->
-        <li><a href="#"><i class="icon icon-flag"></i> <span>政策管理</span></a></li>
+        <li><a th:href="@{/body/policymanagement/policy-management}"><i class="icon icon-flag"></i> <span>政策管理</span></a></li>
 
         <!--  客户关系管理模块 -->
         <li class="submenu"> <a href="#"><i class="icon  icon-user-md"></i> <span>客户关系管理</span> </a>
             <ul>
-                <li><a href="#">客户维护管理</a></li>
-                <li><a href="#">基本信息维护</a></li>
+                <li><a th:href="@{/body/customerrelationsmanagement/customer-maintain-management}">客户维护管理</a></li>
+                <li><a th:href="@{/body/customerrelationsmanagement/base-info-management}">基本信息维护</a></li>
             </ul>
         </li>
 
         <!--  报表统计管理-->
-        <li><a href="#"><i class="icon icon-list"></i> <span>报表统计管理</span></a></li>
+        <li><a th:href="@{/body/statisticsstatementsmanagement/statistics-statements-management}"><i class="icon icon-list"></i> <span>报表统计管理</span></a></li>
 
         <!--  系统设置管理模块 -->
         <li class="submenu"> <a href="#"><i class="icon icon-cogs"></i> <span>系统设置管理</span> </a>
             <ul>
-                <li><a href="#">组织结构</a></li>
-                <li><a href="#">可用资源</a></li>
-                <li><a href="#">权限管理</a></li>
-                <li><a href="#">参数设置</a></li>
+                <li><a th:href="@{/body/systemsettingmanagement/institutional-framework-management}">组织结构</a></li>
+                <li><a th:href="@{/body/systemsettingmanagement/available-resources-management}">可用资源</a></li>
+                <li><a th:href="@{/body/systemsettingmanagement/authority-management}">权限管理</a></li>
+                <li><a th:href="@{/body/systemsettingmanagement/parameter-setting-management}">参数设置</a></li>
             </ul>
         </li>
 
         <!--  扩张功能 -->
-        <li><a href="#"><i class="icon icon-tint"></i> <span>扩张功能</span></a></li>
+        <li><a th:href="@{/body/extnetedfunctionmangement/extended-function-management}"><i class="icon icon-tint"></i> <span>扩张功能</span></a></li>
 
 
         <!--  网站后台管理模块 -->
         <li class="submenu"> <a href="#"><i class="icon icon-cog "> </i>  <span>网站后台管理</span> </a>
             <ul>
-                <li><a href="#">客户管理</a></li>
-                <li><a href="#">注销信息管理</a></li>
+                <li><a th:href="@{/body/webbackstagemanagement/user-management}">用户管理</a></li>
+                <li><a th:href="@{/body/webbackstagemanagement/cancel-info-management}">注销信息管理</a></li>
             </ul>
         </li>
 
