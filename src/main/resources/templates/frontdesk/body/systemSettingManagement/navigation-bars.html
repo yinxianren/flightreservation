@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="ifm-navigation-bars(action)">
+
+
+    <div class="quick-actions_homepage">
+        <ul class="quick-actions">
+            <li class="bg_lb">
+                <a th:href="@{/body/systemsettingmanagement/institutional-framework-management/ifm-company-management}">
+                    <i class="icon-github-alt"></i>
+                    <span class="label label-success">[[${action=='company_manage'?'✔':''}]]</span>
+                    公司管理</a> </li>
+            <li class="bg_lg span3"> <a href="charts.html"> <i class="icon-eye-open"></i> 部门管理</a> </li>
+            <li class="bg_ly"> <a href="widgets.html"> <i class=" icon-user"></i> 用户管理 </a> </li>
+            <li class="bg_lo"> <a href="tables.html"> <i class="icon-user-md"></i> 用户添加 </a> </li>
+            <li class="bg_ls"> <a href="grid.html"> <i class="icon-pencil"></i> 修改密码 </a> </li>
+            <li class="bg_lv"> <a href="grid.html"> <i class=" icon-truck"></i> 派送员管理 </a> </li>
+        </ul>
+    </div>
+
+</div>
+</body>
+
+</html>

@@ -14,7 +14,7 @@
 
 <body>
 
-<div th:fragment="navigation-bars-content">
+<div th:fragment="navigation-bars-content(action,sub_action)">
 
 <!--Header-part-->
 <div id="header">
@@ -90,19 +90,19 @@
         <li><a href="#"><i class="icon icon-home"></i> <span>首页</span></a> </li>
         <!-- 业务管理模块 -->
         <!--<li class="submenu  open btn-success">-->
-        <li class="submenu "> <a href="#"><i class="icon icon-glass"></i> <span>业务管理</span> </a>
+        <li th:class="${action=='busi_manage'}?'submenu  open ':'submenu' "> <a href="#"><i class="icon icon-glass"></i> <span>业务管理</span> </a>
             <ul>
-                <li><a th:href="@{/body/busi-manage/photograph-management}">照片管理</a></li>
-                <li><a th:href="@{/body/busi-manage/license-management}">证照管理</a></li>
-                <li class="btn-warning"><a th:href="@{/body/busi-manage/visa-management}">签证管理</a></li>
-                <li><a th:href="@{/body/busi-manage/air-ticket-management}">机票管理</a></li>
-                <li><a th:href="@{/body/busi-manage/hotel-management}">酒店管理</a></li>
-                <li><a th:href="@{/body/busi-manage/independent-travel-management}">自由行管理</a></li>
-                <li><a th:href="@{/body/busi-manage/taiwan-independent-travel-management}">台湾自由行</a></li>
-                <li><a th:href="@{/body/busi-manage/tourist-groups-management}">旅游团管理</a></li>
-                <li><a th:href="@{/body/busi-manage/insurance-agency-management}">保险代理管理</a></li>
-                <li><a th:href="@{/body/busi-manage/expressage-management}">快递管理</a></li>
-                <li><a th:href="@{/body/busi-manage/other-management}">其他管理</a></li>
+                <li th:class=" ${sub_action=='photo_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/photograph-management}">照片管理</a></li>
+                <li th:class=" ${sub_action=='liscense_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/license-management}">证照管理</a></li>
+                <li th:class=" ${sub_action=='visa_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/visa-management}">签证管理</a></li>
+                <li th:class=" ${sub_action=='air_ticket_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/air-ticket-management}">机票管理</a></li>
+                <li th:class=" ${sub_action=='hotel_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/hotel-management}">酒店管理</a></li>
+                <li th:class=" ${sub_action=='indep_travel_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/independent-travel-management}">自由行管理</a></li>
+                <li th:class=" ${sub_action=='taiwan_indep_travel_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/taiwan-independent-travel-management}">台湾自由行</a></li>
+                <li th:class=" ${sub_action=='tourist_groups_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/tourist-groups-management}">旅游团管理</a></li>
+                <li th:class=" ${sub_action=='insurance_agency_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/insurance-agency-management}">保险代理管理</a></li>
+                <li th:class=" ${sub_action=='expressage_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/expressage-management}">快递管理</a></li>
+                <li th:class=" ${sub_action=='other_manage'?'btn-success':''}"><a th:href="@{/body/busi-manage/other-management}">其他管理</a></li>
             </ul>
         </li>
 
@@ -143,14 +143,15 @@
 
         <!--  报表统计管理-->
         <li><a th:href="@{/body/statisticsstatementsmanagement/statistics-statements-management}"><i class="icon icon-list"></i> <span>报表统计管理</span></a></li>
-
+        <!--<li class="submenu  open btn-success">-->
         <!--  系统设置管理模块 -->
-        <li class="submenu"> <a href="#"><i class="icon icon-cogs"></i> <span>系统设置管理</span> </a>
+        <li th:class="${action=='sys_set'}?'submenu  open ':'submenu' "> <a href="#"><i class="icon icon-cogs"></i> <span>系统设置管理</span> </a>
             <ul>
-                <li><a th:href="@{/body/systemsettingmanagement/institutional-framework-management}">组织结构</a></li>
-                <li><a th:href="@{/body/systemsettingmanagement/available-resources-management}">可用资源</a></li>
-                <li><a th:href="@{/body/systemsettingmanagement/authority-management}">权限管理</a></li>
-                <li><a th:href="@{/body/systemsettingmanagement/parameter-setting-management}">参数设置</a></li>
+
+                <li th:class=" ${sub_action=='inst_fra'?'btn-success':''}"><a th:href="@{/body/systemsettingmanagement/institutional-framework-management}">组织结构</a></li>
+                <li th:class=" ${sub_action=='available_resource'?'btn-success':''}  "><a th:href="@{/body/systemsettingmanagement/available-resources-management}">可用资源</a></li>
+                <li th:class=" ${sub_action=='auth_manage'?'btn-success':''}  " ><a th:href="@{/body/systemsettingmanagement/authority-management}">权限管理</a></li>
+                <li th:class=" ${sub_action=='parameter_setting'?'btn-success':''}  "><a th:href="@{/body/systemsettingmanagement/parameter-setting-management}">参数设置</a></li>
             </ul>
         </li>
 
@@ -161,8 +162,8 @@
         <!--  网站后台管理模块 -->
         <li class="submenu"> <a href="#"><i class="icon icon-cog "> </i>  <span>网站后台管理</span> </a>
             <ul>
-                <li><a th:href="@{/body/webbackstagemanagement/user-management}">用户管理</a></li>
-                <li><a th:href="@{/body/webbackstagemanagement/cancel-info-management}">注销信息管理</a></li>
+                <li><a th:href="@{/body/webbackstagemanagement/service-management}">客户管理</a></li>
+                <li><a th:href="@{/body/webbackstagemanagement/promotion-info-management}">促销信息管理</a></li>
             </ul>
         </li>
 
