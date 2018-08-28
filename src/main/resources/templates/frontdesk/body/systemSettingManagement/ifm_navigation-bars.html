@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="ifm-navigation-bars(action)">
+
+
+    <div class="quick-actions_homepage">
+        <ul class="quick-actions">
+
+
+            <li class="bg_lb">
+                <a th:href="@{/body/systemsettingmanagement/institutional-framework-management/ifm-company-management}">
+                    <i class="icon-github-alt"></i>
+                    <span class="label label-success">[[${action=='company_manage'?'✔':''}]]</span>
+                    公司管理</a> </li>
+
+
+            <li class="bg_lg span3">
+                <a th:href="@{/body/systemsettingmanagement/institutional-framework-management/ifm_department_management}">
+                    <i class="icon-eye-open"></i>
+                    <span class="label label-success">[[${action=='department_manage'?'✔':''}]]</span>
+                    部门管理</a> </li>
+
+
+            <li class="bg_ly">
+                <a th:href="@{/body/systemsettingmanagement/institutional-framework-management/ifm_users_management}">
+                    <i class=" icon-user"></i>
+                    <span class="label label-success">[[${action=='users_manage'?'✔':''}]]</span>
+                    用户管理 </a> </li>
+
+
+            <li class="bg_lo">
+                <a th:href="@{/body/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage}">
+                    <i class="icon-user-md"></i>
+                    <span class="label label-success">[[${action=='add_users'?'✔':''}]]</span>
+                    用户添加 </a> </li>
+
+
+            <li class="bg_ls">
+                <a th:href="@{/body/systemsettingmanagement/institutional-framework-management/ifm_modify_password_management}">
+                <i class="icon-pencil"></i>
+                    <span class="label label-success">[[${action=='modify_password'?'✔':''}]]</span>
+                    修改密码 </a> </li>
+
+
+            <li class="bg_lv">
+                <a th:href="@{/body/systemsettingmanagement/institutional-framework-management/ifm_deliverer_management}">
+                <i class=" icon-truck"></i>
+                    <span class="label label-success">[[${action=='deliverer_manage'?'✔':''}]]</span>
+                    派送员管理 </a> </li>
+        </ul>
+    </div>
+
+</div>
+</body>
+
+</html>

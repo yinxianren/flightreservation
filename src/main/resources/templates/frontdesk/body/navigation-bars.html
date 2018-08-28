@@ -107,42 +107,42 @@
         </li>
 
         <!--  订单管理模块 -->
-        <li class="submenu"> <a href="#"><i class="icon icon-th-list"></i> <span>订单管理</span> </a>
+        <li th:class="${action=='order_manage'}?'submenu  open ':'submenu' "> <a href="#"><i class="icon icon-th-list"></i> <span>订单管理</span> </a>
             <ul>
-                <li><a th:href="@{/body/order-manage/demand-order-management}">需求订单</a></li>
-                <li><a th:href="@{/body/order-manage/visa-process-management}">签证流程</a></li>
-                <li><a th:href="@{/body/order-manage/air-ticket-process-management}">机票流程</a></li>
+                <li th:class=" ${sub_action=='demand_order_manage'?'btn-success':''}"><a th:href="@{/body/order-manage/demand-order-management}">需求订单</a></li>
+                <li th:class=" ${sub_action=='visa_process_manage'?'btn-success':''}"><a th:href="@{/body/order-manage/visa-process-management}">签证流程</a></li>
+                <li th:class=" ${sub_action=='air_ticket_process'?'btn-success':''}"><a th:href="@{/body/order-manage/air-ticket-process-management}">机票流程</a></li>
             </ul>
         </li>
 
 
         <!--  调度派送模块 -->
-        <li class="submenu"> <a href="#"><i class="icon  icon-truck"></i> <span>调度派送</span> </a>
+        <li th:class="${action=='dispatch_send'}?'submenu  open ':'submenu' "> <a href="#"><i class="icon  icon-truck"></i> <span>调度派送</span> </a>
             <ul>
-                <li><a th:href="@{/body/dispatchsendmanagement/expressage-send-management}">快递派送</a></li>
-                <li><a th:href="@{/body/dispatchsendmanagement/order-send-management}">订单派送</a></li>
+                <li th:class=" ${sub_action=='expressage_send_manage'?'btn-success':''}"><a th:href="@{/body/dispatchsendmanagement/expressage-send-management}">快递派送</a></li>
+                <li th:class=" ${sub_action=='order_send_manage'?'btn-success':''}"><a th:href="@{/body/dispatchsendmanagement/order-send-management}">订单派送</a></li>
             </ul>
         </li>
 
         <!--  财务管理 -->
-        <li> <a th:href="@{/body/financemanagement/finance-management}"><i class="icon icon-book"></i> <span>财务管理</span></a> </li>
+        <li th:class="${action=='finace_manage'}?'btn-success':'' "> <a th:href="@{/body/financemanagement/finance-management}"><i class="icon icon-book"></i> <span>财务管理</span></a> </li>
 
         <!--  供应商管理 -->
-        <li> <a th:href="@{/body/suppliermanagement/supplier-management}"><i class="icon  icon-comments-alt"></i> <span>供应商管理</span></a> </li>
+        <li th:class="${action=='supplier_manage'}?'btn-success':'' "> <a th:href="@{/body/suppliermanagement/supplier-management}"><i class="icon  icon-comments-alt"></i> <span>供应商管理</span></a> </li>
 
         <!--  政策管理 -->
-        <li><a th:href="@{/body/policymanagement/policy-management}"><i class="icon icon-flag"></i> <span>政策管理</span></a></li>
+        <li th:class="${action=='policy_manage'}?'btn-success':'' "><a th:href="@{/body/policymanagement/policy-management}"><i class="icon icon-flag"></i> <span>政策管理</span></a></li>
 
         <!--  客户关系管理模块 -->
-        <li class="submenu"> <a href="#"><i class="icon  icon-user-md"></i> <span>客户关系管理</span> </a>
+        <li th:class="${action=='customer_relations'}?'submenu  open ':'submenu' "> <a href="#"><i class="icon  icon-user-md"></i> <span>客户关系管理</span> </a>
             <ul>
-                <li><a th:href="@{/body/customerrelationsmanagement/customer-maintain-management}">客户维护管理</a></li>
-                <li><a th:href="@{/body/customerrelationsmanagement/base-info-management}">基本信息维护</a></li>
+                <li th:class=" ${sub_action=='customer_maintain_manage'?'btn-success':''}"><a th:href="@{/body/customerrelationsmanagement/customer-maintain-management}">客户维护管理</a></li>
+                <li th:class=" ${sub_action=='base_info_manage'?'btn-success':''}"><a th:href="@{/body/customerrelationsmanagement/base-info-management}">基本信息维护</a></li>
             </ul>
         </li>
 
         <!--  报表统计管理-->
-        <li><a th:href="@{/body/statisticsstatementsmanagement/statistics-statements-management}"><i class="icon icon-list"></i> <span>报表统计管理</span></a></li>
+        <li th:class="${action=='statistic_statements_manage'}?'btn-success':'' "><a th:href="@{/body/statisticsstatementsmanagement/statistics-statements-management}"><i class="icon icon-list"></i> <span>报表统计管理</span></a></li>
         <!--<li class="submenu  open btn-success">-->
         <!--  系统设置管理模块 -->
         <li th:class="${action=='sys_set'}?'submenu  open ':'submenu' "> <a href="#"><i class="icon icon-cogs"></i> <span>系统设置管理</span> </a>
@@ -156,14 +156,14 @@
         </li>
 
         <!--  扩张功能 -->
-        <li><a th:href="@{/body/extnetedfunctionmangement/extended-function-management}"><i class="icon icon-tint"></i> <span>扩张功能</span></a></li>
+        <li th:class="${action=='extended_function_manage'}?'btn-success':'' "><a th:href="@{/body/extnetedfunctionmangement/extended-function-management}"><i class="icon icon-tint"></i> <span>扩展功能</span></a></li>
 
 
         <!--  网站后台管理模块 -->
-        <li class="submenu"> <a href="#"><i class="icon icon-cog "> </i>  <span>网站后台管理</span> </a>
+        <li th:class="${action=='webbase_stage_manage'}?'submenu  open ':'submenu' "> <a href="#"><i class="icon icon-cog "> </i>  <span>网站后台管理</span> </a>
             <ul>
-                <li><a th:href="@{/body/webbackstagemanagement/service-management}">客户管理</a></li>
-                <li><a th:href="@{/body/webbackstagemanagement/promotion-info-management}">促销信息管理</a></li>
+                <li th:class=" ${sub_action=='service_manage'?'btn-success':''}"><a th:href="@{/body/webbackstagemanagement/service-management}">客户管理</a></li>
+                <li th:class=" ${sub_action=='promotional_info_manage'?'btn-success':''}"><a th:href="@{/body/webbackstagemanagement/promotional-info-management}">促销信息管理</a></li>
             </ul>
         </li>
 

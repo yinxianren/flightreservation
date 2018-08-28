@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="avaires_navigetion_bars(action)">
+
+
+    <div class="quick-actions_homepage">
+        <ul class="quick-actions">
+
+
+            <li class="bg_lb span3">
+                <a th:href="@{/body/systemsettingmanagement/available-resources-management/avaires_office_manage}">
+                    <i class="icon-group"></i>
+                    <span class="label label-success">[[${action=='office_manage'?'✔':''}]]</span>
+                    OFFICE MANAGE</a> </li>
+
+
+            <li class="bg_lg span3">
+                <a th:href="@{/body/systemsettingmanagement/available-resources-management/avaires_setting_manage}">
+                    <i class="icon-cog"></i>
+                    <span class="label label-success">[[${action=='setting_manage'?'✔':''}]]</span>
+                    SETTING MANAGE</a> </li>
+
+
+            <li class="bg_ly span3">
+                <a th:href="@{/body/systemsettingmanagement/available-resources-management/avaires_my_message_manage}">
+                    <i class="icon-comments-alt"></i>
+                    <span class="label label-success">[[${action=='my_message'?'✔':''}]]</span>
+                    我的信息 </a> </li>
+
+
+            <li class="bg_lo span3">
+                <a th:href="@{/body/systemsettingmanagement/available-resources-management/avaires_short_message_sending_manage}">
+                    <i class=" icon-twitter-sign"></i>
+                    <span class="label label-success">[[${action=='message_send'?'✔':''}]]</span>
+                    短信发送 </a> </li>
+        </ul>
+    </div>
+
+</div>
+</body>
+
+</html>

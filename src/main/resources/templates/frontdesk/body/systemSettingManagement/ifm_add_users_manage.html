@@ -1,18 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>可用资源</title>
+    <title>组织结构->用户添加</title>
     <meta charset="UTF-8" />
+    <!--<link rel="stylesheet" href="/common/font-awesome-4.7.0/css/font-awesome.min.css">-->
     <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
 </head>
 <body>
-<div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='sys_set',sub_action='available_resource')"></div>
+<div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content (action='sys_set',sub_action='inst_fra')"></div>
 <!--main-container-part-->
 <div id="content">
 
     <!--Action boxes-->
     <div class="container-fluid">
-        <div th:replace="../templates/frontdesk/body/systemSettingManagement/avaires_navigetion_bars :: avaires_navigetion_bars(action='available_resources_manage')"></div>
+        <div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_navigation-bars :: ifm-navigation-bars(action='add_users')"></div>
         <div class="row-fluid"></div>
         <hr/>
 
@@ -25,8 +26,6 @@
 
 
     </div>
-
-
 </div>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 </body>

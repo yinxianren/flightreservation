@@ -6,11 +6,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
 @RequestMapping("/body")
-public class PromotionInformationManagement implements IFrontDeskController {
+public class PromotionalInformationManagement implements IFrontDeskController {
 
-    @RequestMapping("/webbackstagemanagement/cancel-info-management")
+    @RequestMapping("/webbackstagemanagement/promotional-info-management")
     @Override
     public String pageJump() {
-        return "/frontdesk/body/webBack-stageManagement/promotion-info-management";
+        return "/frontdesk/body/webBack-stageManagement/promotional-info-management";
     }
 }

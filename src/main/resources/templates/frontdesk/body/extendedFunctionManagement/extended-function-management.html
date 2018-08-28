@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>开展功能</title>
+    <title>扩展功能</title>
     <meta charset="UTF-8" />
     <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
 </head>
 <body>
-<div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content"></div>
+<div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='extended_function_manage',sub_action='extended_function_manage')"></div>
 <!--main-container-part-->
 <div id="content">
 
