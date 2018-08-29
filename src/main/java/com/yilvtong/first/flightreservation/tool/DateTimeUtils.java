@@ -65,8 +65,12 @@ public class DateTimeUtils {
     public static String getCurrentDateTimeStr() {
         return LocalDateTime.now().format(DATETIME_FORMATTER);
     }
-    public static String getCurrentDateTimeStrCommon() {
+    public static String getCurrentDateTimeStr1() {
         return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss"));
+    }
+
+    public static String getCurrentDateTimeStr2() {
+        return LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
     }
 
     /**

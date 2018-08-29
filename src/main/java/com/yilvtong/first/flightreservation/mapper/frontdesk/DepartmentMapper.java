@@ -1,7 +1,6 @@
 package com.yilvtong.first.flightreservation.mapper.frontdesk;
 
 
-import com.yilvtong.first.flightreservation.entity.Page;
 import com.yilvtong.first.flightreservation.entity.frontdesk.Department;
 import org.springframework.stereotype.Repository;
 
@@ -16,6 +15,14 @@ public interface DepartmentMapper {
      * @return
      */
     Department getDepartmentById(int id);
+
+
+    /**
+     *  sql 设置默认最多获取100条
+     * @return
+     */
+    List<Department> getAllDepartment();
+
     /**
      *  根据部门名查找详细信息
      * @param name
@@ -54,5 +61,12 @@ public interface DepartmentMapper {
      * @param id
      */
     void delDepartmentById(int id);
+
+
+    /**
+     * 根据id 更新部门，同时判断Department相关属性进行更新
+     * @param Department
+     */
+    void updateDepartmentById(Department dep);
 
 }

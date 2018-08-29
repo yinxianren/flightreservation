@@ -18,174 +18,375 @@
     <div class="container-fluid">
         <div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_navigation-bars :: ifm-navigation-bars(action='department_manage')"></div>
         <div class="row-fluid"></div>
-        <hr/>
+
 
         <!-- 部门数据展示表 -->
-        <div class="widget-box">
-            <div class="widget-title">
-                <h2>部门信息</h2>
+        <div id="show_dep">
+            <hr/>
+            <div class="widget-box" >
+                <div class="widget-title">
+                    <h2>部门信息</h2>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped">
+
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>所属公司</th>
+                            <th>部门名称</th>
+                            <th>负责人</th>
+                            <th>部门简称</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+
+
+
+                        <tr th:each="dep,iterStat : ${lists}"  th:class="${iterStat.odd}?'odd gradeA':'even gradeC'">
+                            <td th:switch="${iterStat.index%4}" style="text-align: center;">
+                                <span th:case="0" class="badge" th:text="${iterStat.count}"></span>
+                                <span th:case="1" class="badge badge-success" th:text="${iterStat.count}"></span>
+                                <span th:case="2" class="badge badge-important" th:text="${iterStat.count}"></span>
+                                <span th:case="3" class="badge badge-info" th:text="${iterStat.count}"></span>
+                            </td>
+                            <td  style="text-align: center;" th:text="${dep.depCompany}"></td>
+                            <td  style="text-align: center;" th:text="${dep.depName}"></td>
+                            <td  style="text-align: center;" th:text="${dep.depPricipal}"></td>
+                            <td  style="text-align: center;" th:text="${dep.depAbbreviation}"></td>
+                            <td style="text-align: center;">
+                                <button class="btn btn-success btn-mini" th:id="check_+${dep.id}" th:attr="dep_id=${dep.id}"  >
+                                    <i class=" icon-eye-open" ></i>
+                                    查看
+                                </button>
+                                <button class="btn btn-warning btn-mini" th:id="mod_+${dep.id}" th:attr="dep_id=${dep.id}">
+                                    <i class="icon-pencil"></i>
+                                    修改
+                                </button>
+                                <button class="btn btn-danger btn-mini" th:id="del_+${dep.id}" th:attr="dep_id=${dep.id}">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <hr/>
+
+            <div>
+                <p style="text-align: center;">
+                    <button class="btn btn-primary btn-large" ><i class="icon-spinner icon-spin"></i> 加载更多</button>
+                </p>
+            </div>
+        </div>
+
+        <!-- 新增 / 更新  部门信息  -->
+        <div id="add_dep">
+            <hr/>
+            <div class="widget-title add-del-title">
+                <h2>新增部门</h2>
             </div>
             <div class="widget-content nopadding">
-                <table class="table table-bordered table-striped">
+                <form action="#" method="get" class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">部门名称 :</label>
+                        <div class="controls">
+                            <input type="text" class="span11" placeholder="部门名称" />
+                            <span class="help-block">Description field</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门负责人 :</label>
+                        <div class="controls">
+                            <input type="text" class="span11" placeholder="部门负责人" />
+                            <span class="help-block">Description field</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门简称 :</label>
+                        <div class="controls">
+                            <input type="text"  class="span11" placeholder="部门简称"  />
+                            <span class="help-block">Description field</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门地址 :</label>
+                        <div class="controls">
+                            <input type="text" class="span11" placeholder="部门地址" />
+                            <span class="help-block">Description field</span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门电话 :</label>
+                        <div class="controls">
+                            <input type="text" class="span11" placeholder="部门电话"/>
+                            <span class="help-block">Description field</span> </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">备注 ：</label>
+                        <div class="controls">
+                            <textarea class="span11"  placeholder="部门描述"></textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions">
 
-                    <thead>
-                    <tr>
-                        <th>序号</th>
-                        <th>所属公司</th>
-                        <th>部门信息</th>
-                        <th>负责人</th>
-                        <th>部门简称</th>
-                        <th>操作</th>
-                    </tr>
-                    </thead>
-
-
-                    <tbody>
-                    <tr class="odd gradeX">
-                        <td><span class="badge">1</span></td>
-                        <td>Tridentsdfafdadfadsfasdfasdfasdfasfasffa</td>
-                        <td>Internet
-                            Explorer 4.0</td>
-                        <td>Win 95+</td>
-                        <td class="center"> 4</td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-mini">
-                                <i class="icon-pencil"></i>
-                                修改
+                        <p style="text-align: center;">
+                            <button type="submit" class="btn btn-success">
+                                <i class=" icon-save"></i>
+                                保存&thinsp;/&thinsp;提交
                             </button>
-                            <button class="btn btn-warning btn-mini">
-                                <i class=" icon-remove"></i>
-                                删除
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="even gradeC">
-                        <td><span class="badge badge-success">2</span></td>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.0</td>
-                        <td>Win 95+</td>
-                        <td class="center">5</td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-mini">
-                                <i class="icon-pencil"></i>
-                                修改
-                            </button>
-                            <button class="btn btn-warning btn-mini">
-                                <i class=" icon-remove"></i>
-                                删除
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="odd gradeA">
-                        <td><span class="badge badge-important">3</span></td>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 5.5</td>
-                        <td>Win 95+</td>
-                        <td class="center">5.5</td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-mini">
-                                <i class="icon-pencil"></i>
-                                修改
-                            </button>
-                            <button class="btn btn-warning btn-mini">
-                                <i class=" icon-remove"></i>
-                                删除
-                            </button>
-                        </td>
-                    </tr>
-                    <tr class="even gradeA">
-                        <td><span class="badge badge-info">4</span></td>
-                        <td>Trident</td>
-                        <td>Internet
-                            Explorer 6</td>
-                        <td>Win 98+</td>
-                        <td class="center">6</td>
-                        <td style="text-align: center;">
-                            <button class="btn btn-danger btn-mini">
-                                <i class="icon-pencil"></i>
-                                修改
-                            </button>
-                            <button class="btn btn-warning btn-mini">
-                                <i class=" icon-remove"></i>
-                                删除
-                            </button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+                        </p>
+                    </div>
+                </form>
             </div>
         </div>
-        <hr/>
 
-        <div>
-            <p style="text-align: center;">
-                <button class="btn btn-primary btn-large" ><i class="icon-spinner icon-spin"></i> 加载更多</button>
-            </p>
+
+        <!-- 查看 / 删除 部门信息  -->
+        <div id="check_dep" style="display: none;margin-bottom: 100px;">
+            <hr/>
+            <div class="widget-title">
+                <h2><span></span></h2>
+            </div>
+            <div class="widget-content nopadding">
+                <form   class="form-horizontal">
+                    <div class="control-group">
+                        <label class="control-label">所属公司 :</label>
+                        <div class="controls">
+                            <input value="默认公司" type="text" class="span11" id="dep_company" readonly="readonly" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">部门名称 :</label>
+                        <div class="controls">
+                            <input value="默认部门" type="text" class="span11" id="dep_name" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门负责人 :</label>
+                        <div class="controls">
+                            <input value="默认负责人" type="text" class="span11" id="dep_pricipal" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门简称 :</label>
+                        <div class="controls">
+                            <input value="默认简称" type="text"  class="span11"  id="dep_abbreviation" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门地址 :</label>
+                        <div class="controls">
+                            <input value="默认地址" type="text" class="span11"  id="dep_addr" readonly="readonly" />
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门电话 :</label>
+                        <div class="controls">
+                            <input value="默认电话" type="text" class="span11" id="dep_phone" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">创建时间 :</label>
+                        <div class="controls">
+                            <input value="默认时间" type="text" class="span11" id="c_data" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">修改时间 :</label>
+                        <div class="controls">
+                            <input value="默认时间" type="text" class="span11" id="up_data" readonly="readonly"/>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">备注 ：</label>
+                        <div class="controls">
+                            <textarea  class="span11"  id="dep_description" readonly="readonly">默认备注</textarea>
+                        </div>
+                    </div>
+                    <div class="form-actions" id="div_return" >
+
+                    </div>
+                </form>
+            </div>
         </div>
 
-        <hr/>
-        <!-- 部门添加表单  -->
-        <div class="widget-title">
-            <h2>新增部门</h2>
-        </div>
-        <div class="widget-content nopadding">
-            <form action="#" method="get" class="form-horizontal">
-                <div class="control-group">
-                    <label class="control-label">部门名称 :</label>
-                    <div class="controls">
-                        <input type="text" class="span11" placeholder="部门名称" />
-                        <span class="help-block">Description field</span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">部门负责人 :</label>
-                    <div class="controls">
-                        <input type="text" class="span11" placeholder="部门负责人" />
-                        <span class="help-block">Description field</span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">部门简称 :</label>
-                    <div class="controls">
-                        <input type="text"  class="span11" placeholder="部门简称"  />
-                        <span class="help-block">Description field</span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">部门地址 :</label>
-                    <div class="controls">
-                        <input type="text" class="span11" placeholder="部门地址" />
-                        <span class="help-block">Description field</span>
-                    </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">部门电话 :</label>
-                    <div class="controls">
-                        <input type="text" class="span11" placeholder="部门电话"/>
-                        <span class="help-block">Description field</span> </div>
-                </div>
-                <div class="control-group">
-                    <label class="control-label">备注 ：</label>
-                    <div class="controls">
-                        <textarea class="span11"  placeholder="部门描述"></textarea>
-                    </div>
-                </div>
-                <div class="form-actions">
 
-                    <p style="text-align: center;">
-                        <button type="submit" class="btn btn-success">
-                            <i class=" icon-save"></i>
-                            保存&thinsp;/&thinsp;提交
-                        </button>
-                    </p>
-                </div>
-            </form>
-        </div>
 
     </div>
 </div>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 </body>
+<script th:inline="javascript" type="text/javascript">
+
+    var objs = [[${lists}]];
+    var array=new Array();
+
+
+    $.each( objs, function(i, n){
+        //把后台传输过来的信息储存起来
+        array[i]=new Array();
+        array[i][0]=n.id;
+        array[i][1]=n.depCompany;
+        array[i][2]=n.depName;
+        array[i][3]=n.depPricipal;
+        array[i][4]=n.depAbbreviation;
+        array[i][5]=n.depAddr;
+        array[i][6]=n.depPhone;
+        array[i][7]=n.description;
+        array[i][8]=n.createDate;
+        array[i][9]=n.update;
+        /**
+         * 点击查看事件
+         */
+        $("#check_"+n.id).click( function () {
+            var depId=$(this).attr("dep_id");
+
+            for(var i=0;i<array.length;i++){
+                if(array[i][0]==depId){
+                    $("#show_dep").hide();
+                    $("#add_dep").hide();
+                    $("#dep_company").val( array[i][1]);
+                    $("#dep_name").val( array[i][2]);
+                    $("#dep_pricipal").val( array[i][3]);
+                    $("#dep_abbreviation").val( array[i][4]);
+                    $("#dep_addr").val( array[i][5]);
+                    $("#dep_phone").val( array[i][6]);
+                    $("#dep_description").val( array[i][7]);
+                    $("#c_data").val( array[i][8]);
+                    $("#up_data").val( array[i][9]);
+
+                    $(".widget-title h2 span").html("部门信息");
+                    $("#div_return").append("<p style=\"text-align: center;\">\n" +
+                        "                            <button type=\"button\" class=\"btn btn-success\" id=\"return\" onclick=\"check_return()\">\n" +
+                        "                                <i class=\"icon-repeat\"></i>\n" +
+                        "                                返回\n" +
+                        "                            </button>\n" +
+
+                        "                        </p>");
+
+                    $("#check_dep").show();
+                }
+            }
+        });
+
+        /**
+         * 点击删除事件
+         */
+        $("#del_"+n.id).click( function () {
+            var depId=$(this).attr("dep_id");
+
+            for(var i=0;i<array.length;i++){
+                if(array[i][0]==depId){
+                    $("#show_dep").hide();
+                    $("#add_dep").hide();
+                    $("#dep_company").val( array[i][1]);
+                    $("#dep_name").val( array[i][2]);
+                    $("#dep_pricipal").val( array[i][3]);
+                    $("#dep_abbreviation").val( array[i][4]);
+                    $("#dep_addr").val( array[i][5]);
+                    $("#dep_phone").val( array[i][6]);
+                    $("#dep_description").val( array[i][7]);
+                    $("#c_data").val( array[i][8]);
+                    $("#up_data").val( array[i][9]);
+
+                    $(".widget-title h2 span").html("删除部门信息");
+
+                    $("#div_return").append("<p style=\"text-align: center;\">\n" +
+                        "                            <button type=\"button\" class=\"btn btn-success\" id=\"return\" onclick=\"check_return()\">\n" +
+                        "                                <i class=\"icon-repeat\"></i>\n" +
+                        "                                返回\n" +
+                        "                            </button>\n" +
+
+
+                        "                            <button style=\"margin-left: 100px;\" type=\"button\" class=\"btn btn-danger\" id=\"return\" onclick=\"dep_del()\">\n" +
+                        "                                <i class=\"icon-remove\"></i>\n" +
+                        "                               确定删除\n" +
+                        "                            </button>\n" +
+
+
+                        "                        </p>");
+
+                    $("#check_dep").show();
+                }
+            }
+        });
+
+
+        /**
+         * 点击修改事件
+         */
+        $("#mod_"+n.id).click( function () {
+            var depId=$(this).attr("dep_id");
+
+            for(var i=0;i<array.length;i++){
+                if(array[i][0]==depId){
+                    $("#show_dep").hide();
+                    $("#add_dep").hide();
+                    $("#dep_company").val( array[i][1]);
+                    $("#dep_name").val( array[i][2]);
+                    $("#dep_pricipal").val( array[i][3]);
+                    $("#dep_abbreviation").val( array[i][4]);
+                    $("#dep_addr").val( array[i][5]);
+                    $("#dep_phone").val( array[i][6]);
+                    $("#dep_description").val( array[i][7]);
+                    $("#c_data").val( array[i][8]);
+                    $("#up_data").val( array[i][9]);
+
+                    $(".widget-title h2 span").html("删除部门信息");
+
+                    $("#div_return").append("<p style=\"text-align: center;\">\n" +
+                        "                            <button type=\"button\" class=\"btn btn-success\" id=\"return\" onclick=\"check_return()\">\n" +
+                        "                                <i class=\"icon-repeat\"></i>\n" +
+                        "                                返回\n" +
+                        "                            </button>\n" +
+
+
+                        "                            <button style=\"margin-left: 100px;\" type=\"button\" class=\"btn btn-danger\" id=\"return\" onclick=\"dep_del()\">\n" +
+                        "                                <i class=\"icon-remove\"></i>\n" +
+                        "                               确定删除\n" +
+                        "                            </button>\n" +
+
+
+                        "                        </p>");
+
+                    $("#check_dep").show();
+                }
+            }
+        });
+
+
+
+
+    });
+
+
+
+    /**
+     *   查看部门信息中的返回按钮
+     */
+    function check_return(){
+        common_01();
+    }
+
+    /**
+     * 查看部门信息中的删除按钮
+     */
+    function  dep_del(){
+
+        common_01();
+    }
+
+    function common_01(){
+        $("#div_return").empty();
+        $("#check_dep").hide();
+        $("#show_dep").show();
+        $("#add_dep").show();
+    }
+</script>
 </html>

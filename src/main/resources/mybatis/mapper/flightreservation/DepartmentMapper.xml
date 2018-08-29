@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 
-<mapper namespace="com.yilvtong.first.flightreservation.mapper.frontdesk.UserMapper" >
+<mapper namespace="com.yilvtong.first.flightreservation.mapper.frontdesk.DepartmentMapper" >
 
     <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.entity.frontdesk.Department" >
         <id column="dep_id" property="id" jdbcType="INTEGER" />
-
+        <result column="dep_company" property="depCompany" jdbcType="VARCHAR" />
         <result column="dep_name" property="depName" jdbcType="VARCHAR" />
         <result column="dep_pricipal" property="depPricipal" jdbcType="VARCHAR" />
         <result column="dep_abbreviation" property="depAbbreviation" jdbcType="VARCHAR" />
@@ -21,27 +21,127 @@
 
 
     <sql id="Base_Column_List" >
-        dep_id, dep_name, dep_pricipal, dep_abbreviation,dep_addr,dep_phone,description,c_date,up_date
+       dep_company,dep_id, dep_name, dep_pricipal, dep_abbreviation,dep_addr,dep_phone,description,c_date,up_date
     </sql>
 
 
-    <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <select id="getDepartmentById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
         <include refid="Base_Column_List" />
-        from fr_user
-        where u_id = #{userId,jdbcType=INTEGER}
+        from fr_dep
+        where dep_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getAllDepartment" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from fr_dep
+        LIMIT 0,100
     </select>
 
 
 
 
-    <!-- 这个方法是我自己加的 -->
-    <!--<select id="selectAllUser" resultMap="BaseResultMap">-->
-    <!--select-->
-    <!--<include refid="Base_Column_List" />-->
-    <!--from t_user-->
-    <!--</select>-->
-    <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >-->
-    <!--delete from t_user-->
-    <!--where user_id = #{userId,jdbcType=INTEGER}-->
-    <!--</delete>-->
+
+
+    <insert id="addDepartment" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Department">
+        INSERT  INTO fr_dep
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="depCompany != null" >
+                dep_company
+            </if>
+            <if test="depName != null" >
+                dep_name,
+            </if>
+            <if test="depPricipal != null" >
+                dep_pricipal,
+            </if>
+            <if test="depAbbreviation != null" >
+                dep_abbreviation,
+            </if>
+            <if test="depAddr != null" >
+                dep_addr,
+            </if>
+            <if test="depPhone != null" >
+                dep_phone,
+            </if>
+            <if test="description != null" >
+                description,
+            </if>
+            <if test="createDate != null" >
+                c_date,
+            </if>
+            <if test="update != null" >
+                up_date,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+            <if test="depCompany != null" >
+                 #{dep_company,jdbcType=VARCHAR},
+            </if>
+            <if test="depName != null" >
+                #{depName,jdbcType=VARCHAR},
+            </if>
+            <if test="depPricipal != null" >
+                #{depPricipal,jdbcType=VARCHAR},
+            </if>
+            <if test="depAbbreviation != null" >
+                #{depAbbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="depAddr != null" >
+                #{depAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="depPhone != null" >
+                #{depPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null" >
+                #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=DATE},
+            </if>
+            <if test="update != null" >
+                #{update,jdbcType=DATE},
+            </if>
+        </trim>
+    </insert>
+
+
+    <delete id="delDepartmentById" parameterType="java.lang.Integer" >
+        delete from fr_dep
+        where dep_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updateDepartmentById" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Department" >
+        update fr_dep
+        <set >
+            <if test="depCompany != null" >
+                dep_company = #{depCompany,jdbcType=VARCHAR},
+            </if>
+            <if test="depName != null" >
+                dep_name = #{depName,jdbcType=VARCHAR},
+            </if>
+            <if test="depPricipal != null" >
+                dep_pricipal = #{depPricipal,jdbcType=VARCHAR},
+            </if>
+            <if test="depAbbreviation != null" >
+                dep_abbreviation = #{depAbbreviation,jdbcType=VARCHAR},
+            </if>
+            <if test="depAddr != null" >
+                dep_addr = #{depAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="depPhone != null" >
+                dep_phone = #{depPhone,jdbcType=VARCHAR},
+            </if>
+            <if test="description != null" >
+                description = #{description,jdbcType=VARCHAR},
+            </if>
+            <if test="update != null" >
+                up_date = #{update,jdbcType=VARCHAR},
+            </if>
+        </set>
+        where dep_id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>
