@@ -80,13 +80,13 @@
 
             <div>
                 <p style="text-align: right;margin-right:100px;margin-top:20px;">
-                    <button class="btn btn-inverse " ><i class=" icon-plus"></i>添加新部门</button>
+                    <button class="btn btn-inverse " id="add_department"><i class=" icon-plus"></i>添加新部门</button>
                 </p>
             </div>
             <hr/>
             <div style="margin-bottom:500px;">
                 <p style="text-align: center;">
-                    <button class="btn btn-primary btn-large" ><i class="icon-spinner icon-spin"></i> 加载更多</button>
+                    <button class="btn btn-primary btn-large" id="load_info"><i class="icon-spinner icon-spin"></i> 加载更多</button>
                 </p>
             </div>
         </div>
@@ -185,7 +185,7 @@
                     <div class="control-group">
                         <label class="control-label">所属公司 :</label>
                         <div class="controls">
-                            <input value="默认公司" type="text" class="span11" name="depCompany" id="company" />
+                            <input value="默认公司"  placeholder="请输入该部门属哪一子公司或公司" type="text" class="span11" name="depCompany" id="company" />
                             <span class="help-block"  id="hint_co"></span>
                         </div>
                     </div>
@@ -220,7 +220,7 @@
                     <div class="control-group">
                         <label class="control-label">部门电话 :</label>
                         <div class="controls">
-                            <input type="text" class="span11" placeholder="部门电话" name="depPhone" id="phone"/>
+                            <input type="text" class="span11" placeholder="请输入部门联系电话或负责人联系电话" name="depPhone" id="phone"/>
                             <span class="help-block"  id="hint_ph"></span>
                         </div>
                     </div>
@@ -279,7 +279,7 @@
                     $("#show_dep").hide();
                     $("#submitButton").empty();
 
-
+                    //各自输入框赋值
                     $("#id_id").val( array[i][0]);
                     $("#company").val( array[i][1]);
                     $("#name").val( array[i][2]);
@@ -289,6 +289,14 @@
                     $("#phone").val( array[i][6]);
                     $("#description").val( array[i][7]);
 
+                    //提示标签清空
+                    $("#hint_co").html("");
+                    $("#hint_na").html("");
+                    $("#hint_pr").html("");
+                    $("#hint_ab").html("");
+                    $("#hint_ad").html("");
+                    $("#hint_ph").html("");
+                    $("#hint_des").html("");
 
                     $(".widget-title h2").html("修改部门信息");
 
@@ -299,16 +307,13 @@
                         "                            </button>");
 
 
-                    var sub_button=$("<button>提交</button>");
-                    sub_button.css("margin-right","25px");
-                    sub_button.attr("type","button");
-                    sub_button.attr("onClick","mod_submit()");
-                    sub_button.addClass("btn btn-inverse")
 
-                    var sub_i=$("<i></i>");
-                    sub_i.addClass("icon-save");
-                    sub_button.append(sub_i);
-                    $("#submitButton").append(sub_button);
+                    $("#submitButton").append(" <button onclick=\"mod_submit()\"  style=\"margin-right: 25px;\"  type=\"button\" class=\"btn btn-inverse\">\n" +
+
+                        "                                <i class=\" icon-save\"></i>\n" +
+                        "                               提交\n" +
+                        "                            </button>");
+
                     $("#add_dep").show();
                 }
             }
@@ -360,7 +365,7 @@
                     unScroll();
                     var json = {
                         title:"删除操作！",
-                        msg:"确定删除( "+array[i][2]+" )?删除后将无法恢复！！",
+                        msg:"确定删除<span style='color:#10b803;font-style: inherit;'> "+array[i][2]+"</span> ? 删除后将无法恢复！！",
                         buttons:[
                             { title:"确定",color:"red",click:function(){
 
@@ -498,6 +503,105 @@
 
     }
 
+
+
+
+    /**
+     * 添加按钮
+     *
+     */
+    function add_return(){
+
+        $(window).scrollTop(0);
+        $("#add_dep").hide();
+        $("#show_dep").show();
+    }
+
+    /**
+     *  填加部门提交
+     */
+
+    function  add_submit(){
+
+        $(window).scrollTop(0);
+        unScroll();
+        var co=$("#company").val();
+        var na=$("#name").val();
+        var pr=$("#pricipal").val();
+        var ab=$("#abbreviation").val();
+        var ad=$("#addr").val( );
+        var ph=$("#phone").val();
+        var de=$("#description").val();
+
+
+        if(isEmpty(co)||
+            isEmpty(na)||
+            isEmpty(pr)||
+            isEmpty(ab)||
+            isEmpty(ad)||
+            isEmpty(ph)||
+            isEmpty(de)){
+            var json = {
+                title:"<span style='color: red;font-size: 22px;'>警告</span>",
+                msg:"<span style='color: #73680a;font-size: 18px;'>输入有误.....！</span>",
+                buttons:[
+                    { title:"确定",click:function(){ removeUnScroll();} }
+
+                ]
+            }
+            $.alertView(json);
+        }else{
+            //************************************************
+            $.ajax({
+                url :contextPath+ "body/systemsettingmanagement/institutional-framework-management/ifm_department_management/add",
+                type: "POST",
+                data: $('#addAndUpdateForm').serialize(),
+                dataType:"json",
+                error: function(request) {
+                    $.alertView(" 连接错误 ！");
+                    removeUnScroll();
+                },
+                success: function(data) {
+                    if (data == true) {
+                        $.alertView("添加成功！");
+                        location.reload();
+                    } else {
+                        $.alertView("服务繁忙，稍后再试！");
+                        location.reload();
+                    }
+                    removeUnScroll();
+                }
+            });
+            //************************************************
+        }
+        return false;
+
+
+    }
+
+    /**
+     * 点击加载更多部门信息
+     */
+   $("#load_info").click(function(){
+
+       if(array.length<=99){
+
+           $(window).scrollTop(0);
+           unScroll();
+           var json = {
+               title:"<span style='color: #41ff1a;font-size: 22px;'>提示信息</span>",
+               msg:"<span style='color: #73680a;font-size: 18px;'>无更多相关部门信息.....！</span>",
+               buttons:[
+                   { title:"确定",click:function(){ removeUnScroll();} }
+
+               ]
+           }
+           $.alertView(json);
+
+
+       }
+
+   });
 
     //禁止滚动条滚动
     function unScroll() {

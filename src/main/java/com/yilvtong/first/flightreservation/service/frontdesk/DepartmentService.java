@@ -7,6 +7,7 @@ import com.yilvtong.first.flightreservation.tool.VeDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -54,8 +55,11 @@ public class DepartmentService {
      * @return
      */
     public  boolean addDepartment(Department dep){
+
+       Date date= VeDate.getNowDate();
         try {
-            dep.setCreateDate(VeDate.getNowDate());
+            dep.setCreateDate(date);
+            dep.setUpdate(date);
             departmentMapper.addDepartment(dep);
           return true;
         }catch(Exception e){

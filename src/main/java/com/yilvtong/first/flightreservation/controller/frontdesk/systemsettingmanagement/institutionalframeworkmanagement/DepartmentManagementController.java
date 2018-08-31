@@ -67,4 +67,24 @@ public class DepartmentManagementController  {
 
 
 
+    /**
+     * 添加部门
+     * @param
+     * @return
+     */
+    @ResponseBody
+    @PostMapping(" /systemsettingmanagement/institutional-framework-management/ifm_department_management/add")
+    public boolean addDepartmentById(Department dep){
+        Boolean  how=departmentService.addDepartment(dep);
+        if(how){
+            return true;
+        }else {
+            return false;
+        }
+    }
+
+
+
+
+
 }

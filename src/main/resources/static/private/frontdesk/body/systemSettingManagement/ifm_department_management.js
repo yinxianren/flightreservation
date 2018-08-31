@@ -1,6 +1,46 @@
 $(function(){
 
 
+  $("#add_department").click(function(){
+
+      $("#submitButton").empty();
+      $("#show_dep").hide();
+      $(window).scrollTop(0);
+      //输入框清空
+      var co=$("#company").val("");
+      var na=$("#name").val("");
+      var pr=$("#pricipal").val("");
+      var ab=$("#abbreviation").val("");
+      var ad=$("#addr").val("");
+      var ph=$("#phone").val("");
+      var de=$("#description").val("");
+      $(".widget-title h2").html("新增部门");
+      //提示标签清空
+      $("#hint_co").html("");
+      $("#hint_na").html("");
+      $("#hint_pr").html("");
+      $("#hint_ab").html("");
+      $("#hint_ad").html("");
+      $("#hint_ph").html("");
+      $("#hint_des").html("");
+
+
+      $("#submitButton").append(" <button onclick=\"add_return()\"  style=\"margin-right: 20px;\"  type=\"button\" class=\"btn btn-success\">\n" +
+
+          "                                <i class=\" icon-repeat\"></i>\n" +
+          "                               返回\n" +
+          "                            </button>");
+
+
+      $("#submitButton").append(" <button onclick=\"add_submit()\"  style=\"margin-right: 25px;\"  type=\"button\" class=\"btn btn-inverse\">\n" +
+
+          "                                <i class=\" icon-save\"></i>\n" +
+          "                               提交\n" +
+          "                            </button>");
+      $("#add_dep").show();
+  });
+
+
 
 
 
@@ -87,7 +127,6 @@ $(function(){
             $("#hint_des").html("");
         }
     });
-
 
 
 
