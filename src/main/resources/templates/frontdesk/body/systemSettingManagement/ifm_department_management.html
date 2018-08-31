@@ -6,7 +6,12 @@
     <meta charset="UTF-8" />
     <!--<link rel="stylesheet" href="/common/font-awesome-4.7.0/css/font-awesome.min.css">-->
     <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
-    <script th:src="@{/private/frontdesk/body/systemSettingManagement/ifm_department_management.js}"></script>
+
+
+    <script src="http://www.jq22.com/jquery/jquery-1.10.2.js"></script>
+    <link type="text/css" rel="stylesheet" href="/common/uiAlertView/css/uiAlertView-1.0.0.css" />
+    <script type="text/javascript" src="/common/uiAlertView/js/jquery.uiAlertView-1.0.0.js"></script>
+
 </head>
 
 <body>
@@ -42,9 +47,6 @@
                         </thead>
 
                         <tbody>
-
-
-
                         <tr th:each="dep,iterStat : ${lists}"  th:class="${iterStat.odd}?'odd gradeA':'even gradeC'">
                             <td th:switch="${iterStat.index%4}" style="text-align: center;">
                                 <span th:case="0" class="badge" th:text="${iterStat.count}"></span>
@@ -75,78 +77,23 @@
                     </table>
                 </div>
             </div>
-            <hr/>
 
             <div>
+                <p style="text-align: right;margin-right:100px;margin-top:20px;">
+                    <button class="btn btn-inverse " ><i class=" icon-plus"></i>添加新部门</button>
+                </p>
+            </div>
+            <hr/>
+            <div style="margin-bottom:500px;">
                 <p style="text-align: center;">
                     <button class="btn btn-primary btn-large" ><i class="icon-spinner icon-spin"></i> 加载更多</button>
                 </p>
             </div>
         </div>
 
-        <!-- 新增 / 更新  部门信息  -->
-        <div id="add_dep">
-            <hr/>
-            <div class="widget-title add-del-title">
-                <h2>新增部门</h2>
-            </div>
-            <div class="widget-content nopadding">
-                <form action="#" method="get" class="form-horizontal">
-                    <div class="control-group">
-                        <label class="control-label">部门名称 :</label>
-                        <div class="controls">
-                            <input type="text" class="span11" placeholder="部门名称" />
-                            <span class="help-block">Description field</span>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">部门负责人 :</label>
-                        <div class="controls">
-                            <input type="text" class="span11" placeholder="部门负责人" />
-                            <span class="help-block">Description field</span>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">部门简称 :</label>
-                        <div class="controls">
-                            <input type="text"  class="span11" placeholder="部门简称"  />
-                            <span class="help-block">Description field</span>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">部门地址 :</label>
-                        <div class="controls">
-                            <input type="text" class="span11" placeholder="部门地址" />
-                            <span class="help-block">Description field</span>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">部门电话 :</label>
-                        <div class="controls">
-                            <input type="text" class="span11" placeholder="部门电话"/>
-                            <span class="help-block">Description field</span> </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label">备注 ：</label>
-                        <div class="controls">
-                            <textarea class="span11"  placeholder="部门描述"></textarea>
-                        </div>
-                    </div>
-                    <div class="form-actions">
-
-                        <p style="text-align: center;">
-                            <button type="submit" class="btn btn-success">
-                                <i class=" icon-save"></i>
-                                保存&thinsp;/&thinsp;提交
-                            </button>
-                        </p>
-                    </div>
-                </form>
-            </div>
-        </div>
 
 
-        <!-- 查看 / 删除 部门信息  -->
+        <!-- 查看 部门信息  -->
         <div id="check_dep" style="display: none;margin-bottom: 100px;">
             <hr/>
             <div class="widget-title">
@@ -209,8 +156,85 @@
                             <textarea  class="span11"  id="dep_description" readonly="readonly">默认备注</textarea>
                         </div>
                     </div>
-                    <div class="form-actions" id="div_return" >
+                    <div class="form-actions" id="div_return"  >
 
+                    </div>
+                </form>
+            </div>
+        </div>
+
+
+
+
+        <!-- 新增 / 更新  部门信息  -->
+        <div id="add_dep" style="display: none;margin-bottom: 200px;">
+            <hr/>
+            <div class="widget-title add-del-title">
+                <h2>新增部门</h2>
+            </div>
+            <div class="widget-content nopadding">
+                <form action="#" id="addAndUpdateForm" method="post" class="form-horizontal">
+
+                    <div class="control-group" style="display: none;">
+                        <label class="control-label">id :</label>
+                        <div class="controls">
+                            <input value="默认id" type="text" class="span11" name="id" id="id_id" />
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <label class="control-label">所属公司 :</label>
+                        <div class="controls">
+                            <input value="默认公司" type="text" class="span11" name="depCompany" id="company" />
+                            <span class="help-block"  id="hint_co"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门名称 :</label>
+                        <div class="controls">
+                            <input type="text" class="span11" placeholder="部门名称" name="depName" id="name"/>
+                            <span class="help-block"  id="hint_na"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门负责人 :</label>
+                        <div class="controls">
+                            <input type="text" class="span11" placeholder="部门负责人" name="depPricipal" id="pricipal"/>
+                            <span class="help-block"  id="hint_pr"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门简称 :</label>
+                        <div class="controls">
+                            <input type="text"  class="span11" placeholder="部门简称" name="depAbbreviation" id="abbreviation" />
+                            <span class="help-block"  id="hint_ab"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门地址 :</label>
+                        <div class="controls">
+                            <input type="text" class="span11" placeholder="部门地址" name="depAddr" id="addr" />
+                            <span class="help-block"  id="hint_ad"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">部门电话 :</label>
+                        <div class="controls">
+                            <input type="text" class="span11" placeholder="部门电话" name="depPhone" id="phone"/>
+                            <span class="help-block"  id="hint_ph"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label">备注 ：</label>
+                        <div class="controls">
+                            <textarea class="span11"  placeholder="部门描述" name="description" id="description" ></textarea>
+                            <span class="help-block"  id="hint_des"></span>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <p id="submitButton" style="text-align: center;">
+
+                        </p>
                     </div>
                 </form>
             </div>
@@ -221,12 +245,14 @@
     </div>
 </div>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
+<a th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() + '/'} "
+   id="contextPath"></a>
 </body>
 <script th:inline="javascript" type="text/javascript">
 
     var objs = [[${lists}]];
     var array=new Array();
-
+    var contextPath = $('#contextPath').attr('href');
 
     $.each( objs, function(i, n){
         //把后台传输过来的信息储存起来
@@ -241,6 +267,54 @@
         array[i][7]=n.description;
         array[i][8]=n.createDate;
         array[i][9]=n.update;
+
+        /**
+         * 点击修改事件
+         */
+        $("#mod_"+n.id).click( function () {
+            var depId=$(this).attr("dep_id");
+
+            for(var i=0;i<array.length;i++){
+                if(array[i][0]==depId){
+                    $("#show_dep").hide();
+                    $("#submitButton").empty();
+
+
+                    $("#id_id").val( array[i][0]);
+                    $("#company").val( array[i][1]);
+                    $("#name").val( array[i][2]);
+                    $("#pricipal").val( array[i][3]);
+                    $("#abbreviation").val( array[i][4]);
+                    $("#addr").val( array[i][5]);
+                    $("#phone").val( array[i][6]);
+                    $("#description").val( array[i][7]);
+
+
+                    $(".widget-title h2").html("修改部门信息");
+
+                    $("#submitButton").append(" <button onclick=\"mod_return()\"  style=\"margin-right: 20px;\"  type=\"button\" class=\"btn btn-success\">\n" +
+
+                        "                                <i class=\" icon-repeat\"></i>\n" +
+                        "                               返回\n" +
+                        "                            </button>");
+
+
+                    var sub_button=$("<button>提交</button>");
+                    sub_button.css("margin-right","25px");
+                    sub_button.attr("type","button");
+                    sub_button.attr("onClick","mod_submit()");
+                    sub_button.addClass("btn btn-inverse")
+
+                    var sub_i=$("<i></i>");
+                    sub_i.addClass("icon-save");
+                    sub_button.append(sub_i);
+                    $("#submitButton").append(sub_button);
+                    $("#add_dep").show();
+                }
+            }
+        });
+
+
         /**
          * 点击查看事件
          */
@@ -262,8 +336,8 @@
                     $("#up_data").val( array[i][9]);
 
                     $(".widget-title h2 span").html("部门信息");
-                    $("#div_return").append("<p style=\"text-align: center;\">\n" +
-                        "                            <button type=\"button\" class=\"btn btn-success\" id=\"return\" onclick=\"check_return()\">\n" +
+                    $("#div_return").append("<p style=\"text-align: center;font-size: 22px;\">\n" +
+                        "                            <button  style=\"font-size: 20px;\" type=\"button\" class=\" btn-large btn btn-success\" id=\"return\" onclick=\"check_return()\">\n" +
                         "                                <i class=\"icon-repeat\"></i>\n" +
                         "                                返回\n" +
                         "                            </button>\n" +
@@ -280,113 +354,175 @@
          */
         $("#del_"+n.id).click( function () {
             var depId=$(this).attr("dep_id");
-
             for(var i=0;i<array.length;i++){
                 if(array[i][0]==depId){
-                    $("#show_dep").hide();
-                    $("#add_dep").hide();
-                    $("#dep_company").val( array[i][1]);
-                    $("#dep_name").val( array[i][2]);
-                    $("#dep_pricipal").val( array[i][3]);
-                    $("#dep_abbreviation").val( array[i][4]);
-                    $("#dep_addr").val( array[i][5]);
-                    $("#dep_phone").val( array[i][6]);
-                    $("#dep_description").val( array[i][7]);
-                    $("#c_data").val( array[i][8]);
-                    $("#up_data").val( array[i][9]);
+                    $(window).scrollTop(0);
+                    unScroll();
+                    var json = {
+                        title:"删除操作！",
+                        msg:"确定删除( "+array[i][2]+" )?删除后将无法恢复！！",
+                        buttons:[
+                            { title:"确定",color:"red",click:function(){
 
-                    $(".widget-title h2 span").html("删除部门信息");
+                                //************************************************
+                                $.ajax({
+                                    url :contextPath+ "body/systemsettingmanagement/institutional-framework-management/ifm_department_management/del",
+                                    type: "POST",
+                                    data: "id="+depId,
+                                    dataType:"json",
+                                    error: function(request) {
+                                        removeUnScroll();
+                                        alert("Connection error");
+                                    },
 
-                    $("#div_return").append("<p style=\"text-align: center;\">\n" +
-                        "                            <button type=\"button\" class=\"btn btn-success\" id=\"return\" onclick=\"check_return()\">\n" +
-                        "                                <i class=\"icon-repeat\"></i>\n" +
-                        "                                返回\n" +
-                        "                            </button>\n" +
+                                    success: function(data) {
+
+                                        if (data == true) {
+                                            $.alertView("删除成功！");
+                                            location.reload();
+                                        } else {
+                                            $.alertView("服务繁忙，稍后再试！");
+                                            location.reload();
+                                        }
+
+                                        removeUnScroll();
+                                    }
 
 
-                        "                            <button style=\"margin-left: 100px;\" type=\"button\" class=\"btn btn-danger\" id=\"return\" onclick=\"dep_del()\">\n" +
-                        "                                <i class=\"icon-remove\"></i>\n" +
-                        "                               确定删除\n" +
-                        "                            </button>\n" +
+                                });
+                                //************************************************
 
 
-                        "                        </p>");
 
-                    $("#check_dep").show();
+                            } },
+                            { title:"取消",click:function(){
+                                removeUnScroll();
+                            } }
+                        ]
+                    }
+                    $.alertView(json);
                 }
             }
         });
-
-
-        /**
-         * 点击修改事件
-         */
-        $("#mod_"+n.id).click( function () {
-            var depId=$(this).attr("dep_id");
-
-            for(var i=0;i<array.length;i++){
-                if(array[i][0]==depId){
-                    $("#show_dep").hide();
-                    $("#add_dep").hide();
-                    $("#dep_company").val( array[i][1]);
-                    $("#dep_name").val( array[i][2]);
-                    $("#dep_pricipal").val( array[i][3]);
-                    $("#dep_abbreviation").val( array[i][4]);
-                    $("#dep_addr").val( array[i][5]);
-                    $("#dep_phone").val( array[i][6]);
-                    $("#dep_description").val( array[i][7]);
-                    $("#c_data").val( array[i][8]);
-                    $("#up_data").val( array[i][9]);
-
-                    $(".widget-title h2 span").html("删除部门信息");
-
-                    $("#div_return").append("<p style=\"text-align: center;\">\n" +
-                        "                            <button type=\"button\" class=\"btn btn-success\" id=\"return\" onclick=\"check_return()\">\n" +
-                        "                                <i class=\"icon-repeat\"></i>\n" +
-                        "                                返回\n" +
-                        "                            </button>\n" +
-
-
-                        "                            <button style=\"margin-left: 100px;\" type=\"button\" class=\"btn btn-danger\" id=\"return\" onclick=\"dep_del()\">\n" +
-                        "                                <i class=\"icon-remove\"></i>\n" +
-                        "                               确定删除\n" +
-                        "                            </button>\n" +
-
-
-                        "                        </p>");
-
-                    $("#check_dep").show();
-                }
-            }
-        });
-
-
-
-
     });
 
 
+
+
+
+    /**
+     *修改提交
+     *
+     */
+
+
+    function mod_submit(){
+        $(window).scrollTop(0);
+        unScroll();
+        var co=$("#company").val();
+        var na=$("#name").val();
+        var pr=$("#pricipal").val();
+        var ab=$("#abbreviation").val();
+        var ad=$("#addr").val( );
+        var ph=$("#phone").val();
+        var de=$("#description").val();
+
+        if(isEmpty(co)||
+            isEmpty(na)||
+            isEmpty(pr)||
+            isEmpty(ab)||
+            isEmpty(ad)||
+            isEmpty(ph)||
+            isEmpty(de)){
+            var json = {
+                title:"<span style='color: red;font-size: 22px;'>警告</span>",
+                msg:"<span style='color: #73680a;font-size: 18px;'>输入有误.....！</span>",
+                buttons:[
+                    { title:"确定",click:function(){ removeUnScroll();} }
+
+                ]
+            }
+
+            $.alertView(json);
+        }else{
+
+            //************************************************
+            $.ajax({
+                url :contextPath+ "body/systemsettingmanagement/institutional-framework-management/ifm_department_management/mod",
+                type: "POST",
+                data: $('#addAndUpdateForm').serialize(),
+                dataType:"json",
+                error: function(request) {
+                    $.alertView(" 连接错误 ！");
+                    removeUnScroll();
+                },
+                success: function(data) {
+                    if (data == true) {
+                        $.alertView("修改成功！");
+
+                        location.reload();
+                    } else {
+                        $.alertView("服务繁忙，稍后再试！");
+                        location.reload();
+                    }
+                    removeUnScroll();
+                }
+
+
+            });
+            //************************************************
+        }
+
+        return false;
+    }
+
+
+
+
+
+    /**
+     *   修改返回按钮
+     */
+    function mod_return(){
+        $("#add_dep").hide();
+        $("#show_dep").show();
+    }
 
     /**
      *   查看部门信息中的返回按钮
      */
     function check_return(){
-        common_01();
-    }
-
-    /**
-     * 查看部门信息中的删除按钮
-     */
-    function  dep_del(){
-
-        common_01();
-    }
-
-    function common_01(){
         $("#div_return").empty();
         $("#check_dep").hide();
         $("#show_dep").show();
-        $("#add_dep").show();
+
     }
+
+
+    //禁止滚动条滚动
+    function unScroll() {
+        var top = $(document).scrollTop();
+        $(document).on('scroll.unable',function (e) {
+            $(document).scrollTop(top);
+        })
+    }
+
+    //移除禁止滚动条滚动
+    function removeUnScroll() {
+        $(document).unbind("scroll.unable");
+    }
+
+
+    //判断字符是否为空的方法
+    function isEmpty(obj){
+        if(typeof obj == "undefined" || obj == null || obj == ""){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+
 </script>
+<script th:src="@{/private/frontdesk/body/systemSettingManagement/ifm_department_management.js}"></script>
 </html>

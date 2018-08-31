@@ -2,6 +2,7 @@ body {
 	background:#2E363F;
 }
 
+
 #header {
 	background-color: #1f262d;
    margin-top:10px;
@@ -36,6 +37,8 @@ body {
 	color: #fff;
 	background-color: #28b779;
 }
+
+
 
 
 #search input[type=text] {
