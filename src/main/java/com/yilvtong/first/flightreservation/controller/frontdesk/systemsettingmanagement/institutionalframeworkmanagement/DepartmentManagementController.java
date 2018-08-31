@@ -73,7 +73,7 @@ public class DepartmentManagementController  {
      * @return
      */
     @ResponseBody
-    @PostMapping(" /systemsettingmanagement/institutional-framework-management/ifm_department_management/add")
+    @PostMapping("/systemsettingmanagement/institutional-framework-management/ifm_department_management/add")
     public boolean addDepartmentById(Department dep){
         Boolean  how=departmentService.addDepartment(dep);
         if(how){

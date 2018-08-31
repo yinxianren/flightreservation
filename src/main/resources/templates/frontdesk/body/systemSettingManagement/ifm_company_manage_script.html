@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="com_manage_script">
+    <script th:inline="javascript" type="text/javascript">
+
+        var objs = [[${companyList}]];
+        var array=new Array();
+        var contextPath = $('#contextPath').attr('href');
+
+
+        $.each( objs, function(i, n) {
+
+            //把后台传输过来的信息储存起来
+            array[i] = new Array();
+            array[i][0] = n.id;
+            array[i][1] = n.createDate;
+            array[i][2] = n.update;
+            array[i][3] = n.companyName;
+            array[i][4] = n.companyShareName;
+            array[i][5] = n.registeredAddress;
+            array[i][6] = n.businessLicense;
+            array[i][7] = n.legalRepresentative;
+            array[i][8] = n.legalRepresentativeIdNum;
+            array[i][9] = n.industryType;
+            array[i][10] = n.businessScope;
+            array[i][11] = n.webAddr;
+            array[i][12] = n.ipcNum;
+            array[i][13] = n.bankAccountName;
+            array[i][14] = n.bankNum;
+            array[i][15] = n.bankName;
+
+            /**
+             * 点击修改事件
+             */
+            $("#mod_"+n.id).click( function () {
+                var comId=$(this).attr("mod_id");
+                for(var i=0;i<array.length;i++){
+                    if(array[i][0]==comId) {
+
+
+                    }
+                }
+            });
+            //*******************
+
+
+            /**
+             * 点击删除事件
+             */
+            $("#del_"+n.id).click( function () {
+                var comId=$(this).attr("del_id");
+                for(var i=0;i<array.length;i++){
+                    if(array[i][0]==comId) {
+
+
+//                        $(window).scrollTop(0);
+//                        unScroll();
+//                        var json = {
+//                            title:"删除操作！",
+//                            msg:"确定删除<span style='color:#10b803;font-style: inherit;'> "+array[i][2]+"</span> ? 删除后将无法恢复！！",
+//                            buttons:[
+//                                { title:"确定",color:"red",click:function(){
+//
+//                                    //************************************************
+//                                    $.ajax({
+//                                        url :contextPath+ "body/systemsettingmanagement/institutional-framework-management/ifm_department_management/del",
+//                                        type: "POST",
+//                                        data: "id="+depId,
+//                                        dataType:"json",
+//                                        error: function(request) {
+//                                            removeUnScroll();
+//                                            alert("Connection error");
+//                                        },
+//
+//                                        success: function(data) {
+//
+//                                            if (data == true) {
+//                                                $.alertView("删除成功！");
+//                                                location.reload();
+//                                            } else {
+//                                                $.alertView("服务繁忙，稍后再试！");
+//                                                location.reload();
+//                                            }
+//
+//                                            removeUnScroll();
+//                                        }
+//                                    });
+//                                    //************************************************
+//
+//
+//
+//                                } },
+//                                { title:"取消",click:function(){
+//                                    removeUnScroll();
+//                                } }
+//                            ]
+//                        }
+//                        $.alertView(json);
+//                    }
+
+
+
+
+
+                    }
+                }
+            });
+            //*******************
+
+
+
+        });
+
+
+        /**
+         * 添加新公司信息
+         *
+         */
+        function add_company(){
+            alert("tianjia");
+        }
+
+
+
+        //禁止滚动条滚动
+        function unScroll() {
+            var top = $(document).scrollTop();
+            $(document).on('scroll.unable',function (e) {
+                $(document).scrollTop(top);
+            })
+        }
+
+        //移除禁止滚动条滚动
+        function removeUnScroll() {
+            $(document).unbind("scroll.unable");
+        }
+
+
+        //判断字符是否为空的方法
+        function isEmpty(obj){
+            if(typeof obj == "undefined" || obj == null || obj == ""){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    </script>
+</div>
+</body>
+
+</html>

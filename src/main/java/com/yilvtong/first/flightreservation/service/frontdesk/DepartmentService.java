@@ -3,6 +3,7 @@ package com.yilvtong.first.flightreservation.service.frontdesk;
 
 import com.yilvtong.first.flightreservation.entity.frontdesk.Department;
 import com.yilvtong.first.flightreservation.mapper.frontdesk.DepartmentMapper;
+import com.yilvtong.first.flightreservation.tool.DateTimeUtils;
 import com.yilvtong.first.flightreservation.tool.VeDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -56,7 +57,7 @@ public class DepartmentService {
      */
     public  boolean addDepartment(Department dep){
 
-       Date date= VeDate.getNowDate();
+       String date= DateTimeUtils.getCurrentDateTimeStr2();
         try {
             dep.setCreateDate(date);
             dep.setUpdate(date);
@@ -94,7 +95,7 @@ public class DepartmentService {
 
         try{
 
-            dep.setUpdate(VeDate.getNowDate());
+            dep.setUpdate(DateTimeUtils.getCurrentDateTimeStr2());
             departmentMapper.updateDepartmentById(dep);
             return true;
         }catch(Exception e){

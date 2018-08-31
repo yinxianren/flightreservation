@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.yilvtong.first.flightreservation.mapper.frontdesk.CompanyMapper" >
+
+    <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.entity.frontdesk.Company" >
+        <id column="cpy_id" property="id" jdbcType="INTEGER" />
+
+       <result column="cpy_com_name" property="companyName" jdbcType="VARCHAR" />
+        <result column="cpy_com_sh_name" property="companyShareName" jdbcType="VARCHAR" />
+        <result column="cpy_reg_addr" property="registeredAddress" jdbcType="VARCHAR" />
+        <result column="cpy_bus_lic" property="businessLicense" jdbcType="VARCHAR" />
+        <result column="cpy_legal_rep" property="legalRepresentative" jdbcType="VARCHAR" />
+        <result column="cpy_legal_rep_num" property="legalRepresentativeIdNum" jdbcType="VARCHAR" />
+        <result column="cpy_ind_type" property="industryType" jdbcType="VARCHAR" />
+        <result column="cpy_bus_sco" property="businessScope" jdbcType="VARCHAR" />
+        <result column="cpy_web_addr" property="webAddr" jdbcType="VARCHAR" />
+        <result column="cpy_icp_num" property="ipcNum" jdbcType="VARCHAR" />
+        <result column="cpy_bank_acc_name" property="bankAccountName" jdbcType="VARCHAR" />
+        <result column="cpy_bank_num" property="bankNum" jdbcType="VARCHAR" />
+        <result column="cpy_bank_name" property="bankName" jdbcType="VARCHAR" />
+
+        <result column="c_date" property="createDate" jdbcType="VARCHAR" />
+        <result column="up_date" property="update" jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="Base_Column_List" >
+    cpy_id,
+    cpy_com_name,
+    cpy_com_sh_name,
+    cpy_reg_addr,
+    cpy_bus_lic,
+    cpy_legal_rep,
+    cpy_legal_rep_num,
+    cpy_ind_type,
+    cpy_bus_sco,
+    cpy_web_addr,
+    cpy_icp_num,
+    cpy_bank_acc_name,
+    cpy_bank_num,
+    cpy_bank_name,
+    c_date,
+    up_date
+    </sql>
+
+    <select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from fr_company
+        where cpy_id = #{id,jdbcType=INTEGER}
+    </select>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from fr_company
+        LIMIT 0,100
+    </select>
+
+    <insert id="add" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Department">
+        INSERT  INTO fr_company
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="companyName != null" >
+                cpy_com_name,
+            </if>
+            <if test="companyShareName != null" >
+                cpy_com_sh_name,
+            </if>
+            <if test="registeredAddress != null" >
+                cpy_reg_addr,
+            </if>
+            <if test="businessLicense != null" >
+                cpy_bus_lic,
+            </if>
+            <if test="legalRepresentative != null" >
+                cpy_legal_rep,
+            </if>
+
+            <if test="legalRepresentativeIdNum != null" >
+                cpy_legal_rep_num,
+            </if>
+            <if test="industryType != null" >
+                cpy_ind_type,
+            </if>
+            <if test="businessScope != null" >
+                cpy_bus_sco,
+            </if>
+
+            <if test="webAddr != null" >
+                cpy_web_addr,
+            </if>
+            <if test="ipcNum != null" >
+                cpy_icp_num,
+            </if>
+            <if test="bankAccountName != null" >
+                cpy_bank_acc_name,
+            </if>
+            <if test="bankNum != null" >
+                cpy_bank_num,
+            </if>
+            <if test="bankName != null" >
+                cpy_bank_name,
+            </if>
+            <if test="createDate != null" >
+                c_date,
+            </if>
+            <if test="update != null" >
+                up_date
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+
+            <if test="companyName != null" >
+                #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="companyShareName != null" >
+                #{companyShareName,jdbcType=VARCHAR},
+            </if>
+            <if test="registeredAddress != null" >
+                #{registeredAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="businessLicense != null" >
+                #{businessLicense,jdbcType=VARCHAR},
+            </if>
+            <if test="legalRepresentative != null" >
+                #{legalRepresentative,jdbcType=VARCHAR},
+            </if>
+
+            <if test="legalRepresentativeIdNum != null" >
+                #{legalRepresentativeIdNum,jdbcType=VARCHAR},
+            </if>
+            <if test="industryType != null" >
+                #{industryType,jdbcType=VARCHAR},
+            </if>
+            <if test="businessScope != null" >
+                #{businessScope,jdbcType=VARCHAR},
+            </if>
+
+            <if test="webAddr != null" >
+                #{webAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="ipcNum != null" >
+                #{ipcNum,jdbcType=VARCHAR},
+            </if>
+            <if test="bankAccountName != null" >
+                #{bankAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankNum != null" >
+                #{bankNum,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null" >
+                #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="update != null" >
+                #{update,jdbcType=VARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+
+    <delete id="delById" parameterType="java.lang.Integer" >
+        delete from fr_company
+        where dep_id = #{id,jdbcType=INTEGER}
+    </delete>
+
+    <update id="updataById" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Department" >
+        update fr_dep
+        <set >
+            <if test="companyName != null" >
+                cpy_com_name= #{companyName,jdbcType=VARCHAR},
+            </if>
+            <if test="companyShareName != null" >
+                cpy_com_sh_name= #{companyShareName,jdbcType=VARCHAR},
+            </if>
+            <if test="registeredAddress != null" >
+                cpy_reg_addr= #{registeredAddress,jdbcType=VARCHAR},
+            </if>
+            <if test="businessLicense != null" >
+                cpy_bus_lic= #{businessLicense,jdbcType=VARCHAR},
+            </if>
+            <if test="legalRepresentative != null" >
+                cpy_legal_rep= #{legalRepresentative,jdbcType=VARCHAR},
+            </if>
+
+            <if test="legalRepresentativeIdNum != null" >
+                cpy_legal_rep_num= #{legalRepresentativeIdNum,jdbcType=VARCHAR},
+            </if>
+            <if test="industryType != null" >
+                cpy_ind_type= #{industryType,jdbcType=VARCHAR},
+            </if>
+            <if test="businessScope != null" >
+                cpy_bus_sco= #{businessScope,jdbcType=VARCHAR},
+            </if>
+
+            <if test="webAddr != null" >
+                cpy_web_addr= #{webAddr,jdbcType=VARCHAR},
+            </if>
+            <if test="ipcNum != null" >
+                cpy_icp_num= #{ipcNum,jdbcType=VARCHAR},
+            </if>
+            <if test="bankAccountName != null" >
+                cpy_bank_acc_name= #{bankAccountName,jdbcType=VARCHAR},
+            </if>
+            <if test="bankNum != null" >
+                cpy_bank_num= #{bankNum,jdbcType=VARCHAR},
+            </if>
+            <if test="bankName != null" >
+                cpy_bank_name= #{bankName,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                c_date= #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="update != null" >
+                up_date= #{update,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where cpy_id = #{id,jdbcType=INTEGER}
+    </update>
+
+</mapper>

@@ -11,6 +11,6 @@ import java.util.Date;
 public class EntityModule {
 
     private int id;
-    private Date createDate;
-    private Date update;
+    private String createDate;
+    private String update;
 }
