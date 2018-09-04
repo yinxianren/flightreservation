@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="dept_manage_script">
+    <script th:inline="javascript" type="text/javascript">
+
+        var objs = [[${lists}]];
+        var array=new Array();
+        var contextPath = $('#contextPath').attr('href');
+
+        $.each( objs, function(i, n){
+            //把后台传输过来的信息储存起来
+            array[i]=new Array();
+            array[i][0]=n.id;
+            array[i][1]=n.depCompany;
+            array[i][2]=n.depName;
+            array[i][3]=n.depPricipal;
+            array[i][4]=n.depAbbreviation;
+            array[i][5]=n.depAddr;
+            array[i][6]=n.depPhone;
+            array[i][7]=n.description;
+            array[i][8]=n.createDate;
+            array[i][9]=n.update;
+            array[i][10]=n.companyName;
+
+            /**
+             * 点击修改事件
+             */
+            $("#mod_"+n.id).click( function () {
+                var depId = $(this).attr("dep_id");
+                for (var i = 0; i < array.length; i++) {
+                    if (array[i][0] == depId) {
+                        $(window).attr('location',contextPath+
+                            'body/systemsettingmanagement/institutional-framework-management/ifm_department_modify_management?id='+depId);
+                    }
+                }
+            });
+            /**
+             * 点击查看事件
+             */
+            $("#check_"+n.id).click( function () {
+                var depId=$(this).attr("dep_id");
+
+                for(var i=0;i<array.length;i++){
+                    if(array[i][0]==depId){
+                        $("#show_dep").hide();
+                        $("#add_dep").hide();
+                        $("#dep_company").val( array[i][10]);
+                        $("#dep_name").val( array[i][2]);
+                        $("#dep_pricipal").val( array[i][3]);
+                        $("#dep_abbreviation").val( array[i][4]);
+                        $("#dep_addr").val( array[i][5]);
+                        $("#dep_phone").val( array[i][6]);
+                        $("#dep_description").val( array[i][7]);
+                        $("#c_data").val( array[i][8]);
+                        $("#up_data").val( array[i][9]);
+
+                        $(".widget-title h2 span").html("部门信息");
+                        $("#div_return").append("<p style=\"text-align: center;font-size: 22px;\">\n" +
+                            "                            <button  style=\"font-size: 20px;\" type=\"button\" class=\" btn-large btn btn-success\" id=\"return\" onclick=\"check_return()\">\n" +
+                            "                                <i class=\"icon-repeat\"></i>\n" +
+                            "                                返回\n" +
+                            "                            </button>\n" +
+
+                            "                        </p>");
+
+                        $("#check_dep").show();
+                    }
+                }
+            });
+
+            /**
+             * 点击删除事件
+             */
+            $("#del_"+n.id).click( function () {
+                var depId=$(this).attr("dep_id");
+                for(var i=0;i<array.length;i++){
+                    if(array[i][0]==depId){
+                        $(window).scrollTop(0);
+                        unScroll();
+                        var json = {
+                            title:"删除操作！",
+                            msg:"确定删除<span style='color:#10b803;font-style: inherit;'> "+array[i][2]+"</span> ? 删除后将无法恢复！！",
+                            buttons:[
+                                { title:"确定",color:"red",click:function(){
+
+                                    //************************************************
+                                    $.ajax({
+                                        url :contextPath+ "body/systemsettingmanagement/institutional-framework-management/ifm_department_management/del",
+                                        type: "POST",
+                                        data: "id="+depId,
+                                        dataType:"json",
+                                        error: function(request) {
+                                            removeUnScroll();
+                                            alert("Connection error");
+                                        },
+
+                                        success: function(data) {
+
+                                            if (data == true) {
+                                                $.alertView("删除成功！");
+                                                location.reload();
+                                            } else {
+                                                $.alertView("服务繁忙，稍后再试！");
+                                                location.reload();
+                                            }
+
+                                            removeUnScroll();
+                                        }
+                                    });
+                                    //************************************************
+                                } },
+                                { title:"取消",click:function(){
+                                    removeUnScroll();
+                                } }
+                            ]
+                        }
+                        $.alertView(json);
+                    }
+                }
+            });
+        });
+
+        /**
+         *   查看部门信息中的返回按钮
+         */
+        function check_return(){
+            $("#div_return").empty();
+            $("#check_dep").hide();
+            $("#show_dep").show();
+
+        }
+        /**
+         * 点击添加部门信息
+         */
+
+        $("#add_department").click(function () {
+            $(window).attr('location',contextPath+
+                'body/systemsettingmanagement/institutional-framework-management/ifm_department_add_management');
+        });
+
+
+
+
+
+        /**
+         * 点击加载更多部门信息
+         */
+        $("#load_info").click(function(){
+
+            if(array.length<=99){
+
+                $(window).scrollTop(0);
+                unScroll();
+                var json = {
+                    title:"<span style='color: #41ff1a;font-size: 22px;'>提示信息</span>",
+                    msg:"<span style='color: #73680a;font-size: 18px;'>无更多相关部门信息.....！</span>",
+                    buttons:[
+                        { title:"确定",click:function(){ removeUnScroll();} }
+
+                    ]
+                }
+                $.alertView(json);
+
+
+            }
+
+        });
+
+
+        //禁止滚动条滚动
+        function unScroll() {
+            var top = $(document).scrollTop();
+            $(document).on('scroll.unable',function (e) {
+                $(document).scrollTop(top);
+            })
+        }
+
+        //移除禁止滚动条滚动
+        function removeUnScroll() {
+            $(document).unbind("scroll.unable");
+        }
+    </script>
+
+</div>
+</body>
+
+</html>

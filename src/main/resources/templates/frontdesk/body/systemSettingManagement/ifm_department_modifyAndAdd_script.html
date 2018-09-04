@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+
+
+
+<div th:fragment="verify_script">
+    <script th:inline="javascript" type="text/javascript">
+
+        var contextPath = $('#contextPath').attr('href');
+
+
+
+
+
+        //所属部门名称输入框失去焦点事件
+        $("#name").focusout(function(){
+            var na = $(this).val();
+            if(isEmpty(na)){
+                $("#hint_na").css("color","red");
+                $("#hint_na").html("请输入该部门名称");
+            }else{
+                $("#hint_na").html("");
+            }
+        });
+
+
+        //部门负责人输入框失去焦点事件
+        $("#pricipal").focusout(function(){
+            var pr = $(this).val();
+            if(isEmpty(pr)){
+                $("#hint_pr").css("color","red");
+                $("#hint_pr").html("请输入该部门负责人");
+            }else{
+                $("#hint_pr").html("");
+            }
+        });
+
+
+
+        //部门简称输入框失去焦点事件
+        $("#abbreviation").focusout(function(){
+            var ab = $(this).val();
+            if(isEmpty(ab)){
+                $("#hint_ab").css("color","red");
+                $("#hint_ab").html("请输入该部门简称");
+            }else{
+                $("#hint_ab").html("");
+            }
+        });
+
+
+        //部门地址输入框失去焦点事件
+        $("#addr").focusout(function(){
+            var ad = $(this).val();
+            if(isEmpty(ad)){
+                $("#hint_ad").css("color","red");
+                $("#hint_ad").html("请输入部门所在地理位置");
+            }else{
+                $("#hint_ad").html("");
+            }
+        });
+
+
+        //部门联系电话输入框失去焦点事件
+        $("#phone").focusout(function(){
+            var ph = $(this).val();
+            if(isEmpty(ph)){
+                $("#hint_ph").css("color","red");
+                $("#hint_ph").html("请输入部门联系电话或负责人联系电话");
+            }else{
+                $("#hint_ph").html("");
+            }
+        });
+
+
+        //备注输入框失去焦点事件
+        $("#description").focusout(function(){
+            var des = $(this).val();
+            if(isEmpty(des)){
+                $("#hint_des").css("color","red");
+                $("#hint_des").html("备注一下吧！");
+            }else{
+                $("#hint_des").html("");
+            }
+        });
+
+
+        //禁止滚动条滚动
+        function unScroll() {
+            var top = $(document).scrollTop();
+            $(document).on('scroll.unable',function (e) {
+                $(document).scrollTop(top);
+            })
+        }
+
+        //移除禁止滚动条滚动
+        function removeUnScroll() {
+            $(document).unbind("scroll.unable");
+        }
+
+
+        //判断字符是否为空的方法
+        function isEmpty(obj){
+            if(typeof obj == "undefined" || obj == null || obj == ""){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    </script>
+</div>
+
+<div th:fragment="modify_script">
+    <script th:inline="javascript" type="text/javascript">
+
+        $("#save").click(function () {
+
+
+
+        });
+
+
+    </script>
+</div>
+
+
+<div th:fragment="regexp_script">
+    <script th:inline="javascript" type="text/javascript">
+
+      //匹配手机号
+      function  regPhone(phone) {
+          var patt = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$";
+          return patt.test(phone);
+      }
+     //电话号码
+      function regTelPhone(telPhone){
+          var patt ="^(\(\d{3,4}-)|\d{3.4}-)?\d{7,8}$";
+          return patt.test(telPhone);
+      }
+       //中文
+      function regName(name) {
+          var patt="^[\u4e00-\u9fa5]{0,}$";
+          return patt.test(name);
+      }
+       //字母
+      function regAlphabet(alphabet) {
+          var patt="^[A-Za-z]+$";
+          return patt.test(alphabet);
+      }
+
+
+
+    </script>
+</div>
+
+
+
+<div th:fragment="add_script">
+    <script th:inline="javascript" type="text/javascript">
+        $("#save").click(function () {
+            var company=$("#company").val();//公司ID
+            var name=$("#name").val();//部门名称
+            var pricipal=$("#pricipal").val();//负责人
+            var abbreviation=$("#abbreviation").val();//部门简称
+            var addr=$("#addr").val();//地址
+            var phone=$("#phone").val();//电话
+            var description=$("#description").val();//描述
+
+//            console.info(
+//                "name="+name
+//                +",company="+company
+//                +",pricipal="+pricipal
+//                +",abbreviation="+abbreviation
+//                +",addr="+addr
+//                +",phone="+phone
+//                +",description="+description
+//            );
+
+
+
+
+
+
+        });
+
+    </script>
+</div>
+
+</body>
+
+</html>

@@ -39,12 +39,36 @@
                 var comId=$(this).attr("mod_id");
                 for(var i=0;i<array.length;i++){
                     if(array[i][0]==comId) {
+                        $("#id").val(array[i][0]);
+                        $("#companyName").val(array[i][3]);
+                        $("#companyShareName").val(array[i][4]);
+                        $("#businessLicense").val(array[i][6]);
+                        $("#registeredAddress").val(array[i][5]);
+                        $("#legalRepresentative").val(array[i][7]);
+                        $("#legalRepresentativeIdNum").val(array[i][8]);
+                        $("#webAddr").val(array[i][11]);
+                        $("#ipcNum").val(array[i][12]);
+                        $("#industryType").val(array[i][9]);
+                        $("#businessScope").val(array[i][10]);
+                        $("#bankAccountName").val(array[i][13]);
+                        $("#bankName").val(array[i][15]);
+                        $("#bankNum").val(array[i][14]);
 
+
+
+                        $(window).scrollTop(0);
+                        $("#infoShow").hide();
+                        $("#modAndAdd").show();
+                        $("#mod-add-title").html("修改公司信息");
 
                     }
                 }
             });
             //*******************
+
+
+
+
 
 
             /**
@@ -54,57 +78,27 @@
                 var comId=$(this).attr("del_id");
                 for(var i=0;i<array.length;i++){
                     if(array[i][0]==comId) {
+                        $(window).scrollTop(0);
+                        unScroll();
+                        //----------------------------
+                        var json = {
+                            title:"删除操作",
+                            msg:"确定删除<span style='color:#10b803;font-style: inherit;'> "+array[i][3]+"</span> ? 删除后将无法恢复！！",
+                            buttons:[
+                                { title:"确定删除",color:"red",click:function(){
 
-
-//                        $(window).scrollTop(0);
-//                        unScroll();
-//                        var json = {
-//                            title:"删除操作！",
-//                            msg:"确定删除<span style='color:#10b803;font-style: inherit;'> "+array[i][2]+"</span> ? 删除后将无法恢复！！",
-//                            buttons:[
-//                                { title:"确定",color:"red",click:function(){
-//
-//                                    //************************************************
-//                                    $.ajax({
-//                                        url :contextPath+ "body/systemsettingmanagement/institutional-framework-management/ifm_department_management/del",
-//                                        type: "POST",
-//                                        data: "id="+depId,
-//                                        dataType:"json",
-//                                        error: function(request) {
-//                                            removeUnScroll();
-//                                            alert("Connection error");
-//                                        },
-//
-//                                        success: function(data) {
-//
-//                                            if (data == true) {
-//                                                $.alertView("删除成功！");
-//                                                location.reload();
-//                                            } else {
-//                                                $.alertView("服务繁忙，稍后再试！");
-//                                                location.reload();
-//                                            }
-//
-//                                            removeUnScroll();
-//                                        }
-//                                    });
-//                                    //************************************************
-//
-//
-//
-//                                } },
-//                                { title:"取消",click:function(){
-//                                    removeUnScroll();
-//                                } }
-//                            ]
-//                        }
-//                        $.alertView(json);
-//                    }
-
-
-
-
-
+                                    var path="body/systemsettingmanagement/institutional-framework-management/ifm-company-management/del";
+                                    var data="id="+comId;
+                                    company_ajax(path,data);
+                                } },
+                                { title:"取消",click:function(){
+                                    removeUnScroll();
+                                }
+                                }
+                            ]
+                        }
+                        $.alertView(json);
+                        //----------------------------
                     }
                 }
             });
@@ -114,13 +108,186 @@
 
         });
 
+        /**
+         * 通用ajax
+         *
+         */
+        function company_ajax(path,data){
+
+            $(window).scrollTop(0);
+            unScroll();
+            $.ajax({
+                url :contextPath+path,
+                type: "POST",
+                data: data,
+                dataType:"json",
+                error: function(request) {
+                    console.log(request);
+                    $.alertView(" 连接错误 ！");
+                    removeUnScroll();
+                },
+                success: function(data) {
+                    if (data == true) {
+                        $.alertView("成功！");
+                        setTimeout(function(){
+                            location.reload();
+                        },1000);
+
+                    } else {
+                        $.alertView("服务繁忙，稍后再试！");
+                        setTimeout(function(){
+                            location.reload();
+                        },1000);
+                    }
+                    removeUnScroll();
+                }
+            });
+        }
+
+        /**
+         * 添加和修改  点击取消事件
+         *
+         */
+        function  mod_add_cancel(){
+            $("#infoShow").show();
+            $("#modAndAdd").hide();
+        }
+        /**
+         * 添加和修改  提交
+         *
+         */
+        function  mod_add_submit() {
+            var id=$("#id").val();
+            var companyName= $("#companyName").val();
+            var companyShareName=$("#companyShareName").val();
+            var businessLicense= $("#businessLicense").val();
+            var registeredAddress= $("#registeredAddress").val();
+            var legalRepresentative= $("#legalRepresentative").val();
+            var legalRepresentativeIdNum =$("#legalRepresentativeIdNum").val();
+            var webAddr= $("#webAddr").val();
+            var ipcNum=$("#ipcNum").val();
+            var industryType= $("#industryType").val();
+            var businessScope= $("#businessScope").val();
+            var bankAccountName= $("#bankAccountName").val();
+            var bankName= $("#bankName").val();
+            var bankNum= $("#bankNum").val();
+
+
+            if(isEmpty(companyName)){
+                hint("公司名称");
+                return ;
+            }
+            if(isEmpty(companyShareName)){
+                hint("公司简称");
+                return ;
+            }
+            if(isEmpty(businessLicense)){
+                hint("营业执照号");
+                return ;
+            }
+            if(isEmpty(registeredAddress)){
+                hint("公司地址");
+                return ;
+            }
+            if(isEmpty(legalRepresentative)){
+                hint("法定代表人");
+                return ;
+            }
+            if(isEmpty(legalRepresentativeIdNum)){
+                hint("法定代表人身份证号码");
+                return ;
+            }
+            if(isEmpty(industryType)){
+                hint("行业类型");
+                return ;
+            }
+            if(isEmpty(businessScope)){
+                hint("经营范围");
+                return ;
+            }
+            if(isEmpty(bankAccountName)){
+                hint("银行开户名");
+                return ;
+            }
+            if(isEmpty(bankNum)){
+                hint("卡号");
+                return ;
+            }
+            if(isEmpty(bankName)){
+                hint("开户银行");
+                return ;
+            }
+
+
+            var data=
+                "&companyName="+companyName
+                +"&companyShareName="+companyShareName
+                +"&businessLicense="+businessLicense
+                +"&registeredAddress="+registeredAddress
+                +"&legalRepresentative="+legalRepresentative
+                +"&legalRepresentativeIdNum="+legalRepresentativeIdNum
+                +"&webAddr="+webAddr
+                +"&ipcNum="+ipcNum
+                +"&industryType="+industryType
+                +"&businessScope="+businessScope
+                +"&bankAccountName="+bankAccountName
+                +"&bankName="+bankName
+                +"&bankNum="+bankNum;
+
+
+            if(isEmpty(id)){
+                data="id=0"+data;
+                company_ajax("body/systemsettingmanagement/institutional-framework-management/ifm-company-management/add",data)
+            }else{
+                data="id="+id+data;
+                company_ajax("body/systemsettingmanagement/institutional-framework-management/ifm-company-management/upData",data)
+            }
+
+        }
+        /**
+         * 提示信息
+         *
+         */
+        function hint(msg){
+            $(window).scrollTop(0);
+            unScroll();
+            var json = {
+                title:"<span style='color: red;font-size: 22px;'>警告!</span>",
+                msg:"<span style='color: #73680a;font-size: 18px;'>输入有误.....</span>"+msg,
+                buttons:[
+                    { title:"取消",click:function(){
+                        removeUnScroll();
+                    }
+                    }
+                ]
+            }
+            $.alertView(json);
+        }
 
         /**
          * 添加新公司信息
          *
          */
         function add_company(){
-            alert("tianjia");
+            $("#id").val("");
+            $("#companyName").val("");
+            $("#companyShareName").val("");
+            $("#businessLicense").val("");
+            $("#registeredAddress").val("");
+            $("#legalRepresentative").val("");
+            $("#legalRepresentativeIdNum").val("");
+            $("#webAddr").val("");
+            $("#ipcNum").val("");
+            $("#industryType").val("");
+            $("#businessScope").val("");
+            $("#bankAccountName").val("");
+            $("#bankName").val("");
+            $("#bankNum").val("");
+
+            $(window).scrollTop(0);
+            $("#infoShow").hide();
+            $("#modAndAdd").show();
+            $("#mod-add-title").html("新增公司信息");
         }
 
 

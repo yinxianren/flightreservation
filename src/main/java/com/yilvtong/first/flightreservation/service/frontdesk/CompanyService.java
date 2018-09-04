@@ -1,14 +1,15 @@
 package com.yilvtong.first.flightreservation.service.frontdesk;
 
+import com.yilvtong.first.flightreservation.entity.frontdesk.Company;
 import com.yilvtong.first.flightreservation.mapper.frontdesk.CompanyMapper;
-import com.yilvtong.first.flightreservation.service.ServiceModule;
+import com.yilvtong.first.flightreservation.tool.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 @Service
-public class CompanyService<Company> implements ServiceModule<Company> {
+public class CompanyService{
 
     @Autowired
     private CompanyMapper companyMapper;
@@ -18,7 +19,6 @@ public class CompanyService<Company> implements ServiceModule<Company> {
      * @param id
      * @return
      */
-    @Override
     public Company getByIdService(int id){
 
         try{
@@ -36,7 +36,6 @@ public class CompanyService<Company> implements ServiceModule<Company> {
      *  默认获取100条数据
      * @return
      */
-    @Override
     public List<Company> getAllService() {
         try {
             List<Company> comList = companyMapper.getAll();
@@ -53,10 +52,10 @@ public class CompanyService<Company> implements ServiceModule<Company> {
      * @param com
      * @return
      */
-    @Override
     public boolean updataByIdService(Company com) {
 
         try{
+            com.setUpdate(DateTimeUtils.getCurrentDateTimeStr2());
             companyMapper.updataById(com);
             return true;
         }catch(Exception e){
@@ -70,10 +69,12 @@ public class CompanyService<Company> implements ServiceModule<Company> {
      * @param com
      * @return
      */
-    @Override
     public boolean addService(Company com) {
-
+            String time=DateTimeUtils.getCurrentDateTimeStr2();
         try{
+
+            com.setUpdate(time);
+            com.setCreateDate(time);
             companyMapper.add(com);
             return true;
         }catch(Exception e){
@@ -89,7 +90,6 @@ public class CompanyService<Company> implements ServiceModule<Company> {
      * @param id
      * @return
      */
-    @Override
     public boolean delByIdService(int id){
 
         try{

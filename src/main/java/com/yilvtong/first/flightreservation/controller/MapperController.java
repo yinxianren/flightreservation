@@ -2,14 +2,14 @@ package com.yilvtong.first.flightreservation.controller;
 
 import java.util.List;
 
-public interface MapperController<E> {
+public interface MapperController {
 
 
-    E getByIdController(int id);
-    List<E> getAllController();//默认最多获取100条
+    Object getByIdController(int id);
+    List<Object> getAllController();//默认最多获取100条
     boolean delByIdController(int id);
-    boolean updataByIdController(E e);
-    boolean addController(E e);
+    boolean updataByIdController(Object obj);
+    boolean addController(Object obj);
 
 
 }

@@ -20,8 +20,8 @@
         <result column="cpy_bank_num" property="bankNum" jdbcType="VARCHAR" />
         <result column="cpy_bank_name" property="bankName" jdbcType="VARCHAR" />
 
-        <result column="c_date" property="createDate" jdbcType="VARCHAR" />
-        <result column="up_date" property="update" jdbcType="VARCHAR" />
+        <result column="c_date" property="createDate" jdbcType="DATE" />
+        <result column="up_date" property="update" jdbcType="DATE" />
     </resultMap>
 
     <sql id="Base_Column_List" >
@@ -163,12 +163,12 @@
 
     <delete id="delById" parameterType="java.lang.Integer" >
         delete from fr_company
-        where dep_id = #{id,jdbcType=INTEGER}
+        where cpy_id = #{id,jdbcType=INTEGER}
     </delete>
 
-    <update id="updataById" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Department" >
-        update fr_dep
-        <set >
+    <update id="updataById" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Company" >
+        update fr_company
+        <set>
             <if test="companyName != null" >
                 cpy_com_name= #{companyName,jdbcType=VARCHAR},
             </if>

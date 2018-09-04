@@ -17,12 +17,71 @@
         <div class="row-fluid"></div>
         <hr/>
 
-        <div>
-            <p style="text-align: center;font-size:25px;color:red;margin-top:300px;margin-bottom: 500px;font-family:  Helvetica,'Helvetica Neue', Arial, sans-serif">
-                <i class="icon-spinner icon-spin"></i>
-                正在开发中......
-            </p>
+        <!-- 部门数据展示表 -->
+        <div id="show_user">
+            <div class="widget-box" >
+                <div class="widget-title">
+                    <h2>用户信息表</h2>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped">
+
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>登入账号</th>
+                            <th>姓名</th>
+                            <th>性别</th>
+                            <th>联系电话</th>
+                            <th>操作</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <!--<tr th:each="dep,iterStat : ${lists}"  th:class="${iterStat.odd}?'odd gradeA':'even gradeC'">-->
+                            <!--<td th:switch="${iterStat.index%4}" style="text-align: center;">-->
+                                <!--<span th:case="0" class="badge" th:text="${iterStat.count}"></span>-->
+                                <!--<span th:case="1" class="badge badge-success" th:text="${iterStat.count}"></span>-->
+                                <!--<span th:case="2" class="badge badge-important" th:text="${iterStat.count}"></span>-->
+                                <!--<span th:case="3" class="badge badge-info" th:text="${iterStat.count}"></span>-->
+                            <!--</td>-->
+                            <!--<td  style="text-align: center;" th:text="${dep.depCompany}"></td>-->
+                            <!--<td  style="text-align: center;" th:text="${dep.depName}"></td>-->
+                            <!--<td  style="text-align: center;" th:text="${dep.depPricipal}"></td>-->
+                            <!--<td  style="text-align: center;" th:text="${dep.depAbbreviation}"></td>-->
+                            <!--<td style="text-align: center;">-->
+                                <!--<button class="btn btn-success btn-mini" th:id="check_+${dep.id}" th:attr="dep_id=${dep.id}"  >-->
+                                    <!--<i class=" icon-eye-open" ></i>-->
+                                    <!--查看-->
+                                <!--</button>-->
+                                <!--<button class="btn btn-warning btn-mini" th:id="mod_+${dep.id}" th:attr="dep_id=${dep.id}">-->
+                                    <!--<i class="icon-pencil"></i>-->
+                                    <!--修改-->
+                                <!--</button>-->
+                                <!--<button class="btn btn-danger btn-mini" th:id="del_+${dep.id}" th:attr="dep_id=${dep.id}">-->
+                                    <!--<i class=" icon-remove"></i>-->
+                                    <!--删除-->
+                                <!--</button>-->
+                            <!--</td>-->
+                        <!--</tr>-->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div>
+                <p style="text-align: right;margin-right:100px;margin-top:20px;">
+                    <button class="btn btn-inverse " id="add_department"><i class=" icon-plus"></i>添加新部门</button>
+                </p>
+            </div>
+            <hr/>
+            <div style="margin-bottom:500px;">
+                <p style="text-align: center;">
+                    <button class="btn btn-primary btn-large" id="load_info"><i class="icon-spinner icon-spin"></i> 加载更多</button>
+                </p>
+            </div>
         </div>
+
 
 
     </div>

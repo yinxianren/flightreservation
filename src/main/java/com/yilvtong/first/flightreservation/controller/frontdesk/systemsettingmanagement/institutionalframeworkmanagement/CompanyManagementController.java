@@ -1,12 +1,9 @@
 package com.yilvtong.first.flightreservation.controller.frontdesk.systemsettingmanagement.institutionalframeworkmanagement;
 
-import com.yilvtong.first.flightreservation.controller.MapperController;
-import com.yilvtong.first.flightreservation.controller.frontdesk.IFrontDeskController;
 import com.yilvtong.first.flightreservation.entity.frontdesk.Company;
 import com.yilvtong.first.flightreservation.service.frontdesk.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -15,7 +12,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/body")
-public class CompanyManagementController<Company> implements MapperController<Company> {
+public class CompanyManagementController {
 
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management")
     public String pageJump(Map<Object,Object> map) {
@@ -33,7 +30,6 @@ public class CompanyManagementController<Company> implements MapperController<Co
 
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/get")
-    @Override
     public Company getByIdController(int id) {
         Company company= (Company) companyService.getByIdService(id);
         if(null==company){
@@ -44,7 +40,6 @@ public class CompanyManagementController<Company> implements MapperController<Co
 
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/getAll")
-    @Override
     public List<Company> getAllController() {
         List<Company> companyList=companyService.getAllService();
         if(null==companyList){
@@ -55,7 +50,6 @@ public class CompanyManagementController<Company> implements MapperController<Co
 
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/del")
-    @Override
     public boolean delByIdController(int id) {
         boolean isTrue=companyService.delByIdService(id);
         if(isTrue){
@@ -66,8 +60,8 @@ public class CompanyManagementController<Company> implements MapperController<Co
 
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/upData")
-    @Override
-    public boolean updataByIdController(Company company) {
+    public boolean updataByIdController( Company company) {
+
         boolean isTrue=companyService.updataByIdService(company);
         if(isTrue){
             return true;
@@ -77,7 +71,6 @@ public class CompanyManagementController<Company> implements MapperController<Co
 
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/add")
-    @Override
     public boolean addController(Company company) {
         boolean isTrue=companyService.addService(company);
         if(isTrue){

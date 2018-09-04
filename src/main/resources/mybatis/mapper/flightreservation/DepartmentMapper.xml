@@ -5,7 +5,8 @@
 
     <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.entity.frontdesk.Department" >
         <id column="dep_id" property="id" jdbcType="INTEGER" />
-        <result column="dep_company" property="depCompany" jdbcType="VARCHAR" />
+        <result column="dep_company" property="depCompany" jdbcType="INTEGER" />
+        <result column="company_name" property="companyName" jdbcType="VARCHAR" />
         <result column="dep_name" property="depName" jdbcType="VARCHAR" />
         <result column="dep_pricipal" property="depPricipal" jdbcType="VARCHAR" />
         <result column="dep_abbreviation" property="depAbbreviation" jdbcType="VARCHAR" />
@@ -21,27 +22,27 @@
 
 
     <sql id="Base_Column_List" >
-       dep_company,dep_id, dep_name, dep_pricipal, dep_abbreviation,dep_addr,dep_phone,description,c_date,up_date
+       dep_company,com.cpy_com_name company_name,dep_id, dep_name, dep_pricipal, dep_abbreviation,dep_addr,dep_phone,description,dep.c_date,dep.up_date
     </sql>
 
 
     <select id="getDepartmentById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
         <include refid="Base_Column_List" />
-        from fr_dep
+        FROM  fr_dep dep
+        JOIN  fr_company com
+        ON dep.dep_company=com.cpy_id
         where dep_id = #{id,jdbcType=INTEGER}
     </select>
 
     <select id="getAllDepartment" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
-        from fr_dep
+        FROM  fr_dep dep
+        JOIN  fr_company com
+        ON dep.dep_company=com.cpy_id
         LIMIT 0,100
     </select>
-
-
-
-
 
 
     <insert id="addDepartment" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Department">
