@@ -1,5 +1,7 @@
 package com.yilvtong.first.flightreservation.controller.frontdesk.systemsettingmanagement.institutionalframeworkmanagement;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yilvtong.first.flightreservation.bo.Cmpy;
 import com.yilvtong.first.flightreservation.bo.Dep;
 import com.yilvtong.first.flightreservation.controller.frontdesk.IFrontDeskController;
@@ -92,14 +94,22 @@ public class DepartmentManagementController  {
      * @param
      * @return
      */
-    @ResponseBody
     @PostMapping("/systemsettingmanagement/institutional-framework-management/ifm_department_management/mod")
-    public boolean modDepartmentById(Department dep){
+    public String modDepartmentById(Department dep,Map<String,Object> map){
         Boolean  how=departmentService.updateDepartmentById(dep);
         if(how){
-            return true;
+            return "redirect:/body/systemsettingmanagement/institutional-framework-management/ifm_department_management";
+//            return RedirectToAction("/body/systemsettingmanagement/institutional-framework-management/ifm_department_management");
         }else {
-            return false;
+            ObjectMapper mapper = new ObjectMapper();
+            String json = null;
+            try {
+                json = mapper.writeValueAsString(dep);
+            } catch (JsonProcessingException e) {
+                e.printStackTrace();
+            }
+            map.put("message",json);
+            return "/frontdesk/body/error500";
         }
     }
 
@@ -110,15 +120,22 @@ public class DepartmentManagementController  {
      * @param
      * @return
      */
-    @ResponseBody
     @PostMapping("/systemsettingmanagement/institutional-framework-management/ifm_department_management/add")
-    public boolean addDepartmentById(Department dep){
+    public String addDepartmentById(Department dep,Map<String,Object> map){
         Boolean  how=departmentService.addDepartment(dep);
         if(how){
-            return true;
-        }else {
-            return false;
+            return "redirect:/body/systemsettingmanagement/institutional-framework-management/ifm_department_management";
         }
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(dep);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        map.put("message",json);
+        return "/frontdesk/body/error500";
+
     }
 
 

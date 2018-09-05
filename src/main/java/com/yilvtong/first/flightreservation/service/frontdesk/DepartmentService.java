@@ -92,8 +92,9 @@ public class DepartmentService {
     public boolean updateDepartmentById(Department dep){
 
         try{
-
             dep.setUpdate(DateTimeUtils.getCurrentDateTimeStr2());
+            dep.setCompanyName(null); //不更新
+            dep.setDepName(null);//不更新
             departmentMapper.updateDepartmentById(dep);
             return true;
         }catch(Exception e){

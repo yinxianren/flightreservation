@@ -11,17 +11,15 @@
     <script th:inline="javascript" type="text/javascript">
 
         var contextPath = $('#contextPath').attr('href');
-
-
-
-
-
         //所属部门名称输入框失去焦点事件
         $("#name").focusout(function(){
             var na = $(this).val();
             if(isEmpty(na)){
                 $("#hint_na").css("color","red");
-                $("#hint_na").html("请输入该部门名称");
+                $("#hint_na").html("请输入该部门名称!");
+            }else if(!regName(na)){
+                $("#hint_na").css("color","red");
+                $("#hint_na").html("请输入中文！");
             }else{
                 $("#hint_na").html("");
             }
@@ -33,7 +31,10 @@
             var pr = $(this).val();
             if(isEmpty(pr)){
                 $("#hint_pr").css("color","red");
-                $("#hint_pr").html("请输入该部门负责人");
+                $("#hint_pr").html("请输入该部门负责人！");
+            }else if(!regName(pr)){
+                $("#hint_pr").css("color","red");
+                $("#hint_pr").html("请输入中文！");
             }else{
                 $("#hint_pr").html("");
             }
@@ -46,19 +47,24 @@
             var ab = $(this).val();
             if(isEmpty(ab)){
                 $("#hint_ab").css("color","red");
-                $("#hint_ab").html("请输入该部门简称");
+                $("#hint_ab").html("请输入该部门简称！");
+            }else if(!regLargeAlphabet(ab)){
+                $("#hint_ab").css("color","red");
+                $("#hint_ab").html("请输入大写字母！");
             }else{
                 $("#hint_ab").html("");
             }
         });
-
 
         //部门地址输入框失去焦点事件
         $("#addr").focusout(function(){
             var ad = $(this).val();
             if(isEmpty(ad)){
                 $("#hint_ad").css("color","red");
-                $("#hint_ad").html("请输入部门所在地理位置");
+                $("#hint_ad").html("请输入部门所在地理位置！");
+            }else if(!regCH_NUM_ALP(ad)){
+                $("#hint_ad").css("color","red");
+                $("#hint_ad").html("只能中文开头，并只能包含中文、数字，下划线！");
             }else{
                 $("#hint_ad").html("");
             }
@@ -67,27 +73,27 @@
 
         //部门联系电话输入框失去焦点事件
         $("#phone").focusout(function(){
-            var ph = $(this).val();
+            var ph = $(this).val().trim();
             if(isEmpty(ph)){
                 $("#hint_ph").css("color","red");
-                $("#hint_ph").html("请输入部门联系电话或负责人联系电话");
+                $("#hint_ph").html("请输入部门负责人联系手机号码！");
+            }else if(!regPhone(ph)){
+                $("#hint_ph").css("color","red");
+                $("#hint_ph").html("请输入格式不正确！");
             }else{
                 $("#hint_ph").html("");
             }
         });
-
-
         //备注输入框失去焦点事件
         $("#description").focusout(function(){
             var des = $(this).val();
             if(isEmpty(des)){
                 $("#hint_des").css("color","red");
-                $("#hint_des").html("备注一下吧！");
+                $("#hint_des").html("请备注一下！");
             }else{
                 $("#hint_des").html("");
             }
         });
-
 
         //禁止滚动条滚动
         function unScroll() {
@@ -96,12 +102,10 @@
                 $(document).scrollTop(top);
             })
         }
-
         //移除禁止滚动条滚动
         function removeUnScroll() {
             $(document).unbind("scroll.unable");
         }
-
 
         //判断字符是否为空的方法
         function isEmpty(obj){
@@ -111,19 +115,111 @@
                 return false;
             }
         }
+
+
+           //验证中文信息
+        function check_ch(obj,meg){
+            var val=obj.val().trim();
+            if(isEmpty(val)||!regName(val)){
+                hint(meg);
+                return false;
+            }
+            return true;
+        }
+        //验证大写字母信息
+        function check_lgal(obj,meg){
+            var val=obj.val().trim();
+            if(isEmpty(val)||!regLargeAlphabet(val)){
+                hint(meg);
+                return false;
+            }
+            return true;
+        }
+        //验证地址信息
+        function check_addr(obj,meg){
+            var val=obj.val().trim();
+            if(isEmpty(val)||!regCH_NUM_ALP(val)){
+                hint(meg);
+                return false;
+            }
+            return true;
+        }
+        //验证电话号码
+        function check_phone(obj,meg){
+            var val=obj.val().trim();
+            if(isEmpty(val)||!regPhone(val)){
+                hint(meg);
+                return false;
+            }
+            return true;
+        }
+
+        //验证是否是空值
+        function check_null(obj,meg){
+            var val=obj.val().trim();
+            if(isEmpty(val)){
+                hint(meg);
+                return false;
+            }
+            return true;
+        }
+
+        /**
+         * 提示信息
+         *
+         */
+        function hint(msg){
+            $(window).scrollTop(0);
+            unScroll();
+            var json = {
+                title:"<span style='color: red;font-size: 22px;'>警告!</span>",
+                msg:"<span style='color: #73680a;font-size: 18px;'>输入有误 (</span>"+msg+")!",
+                buttons:[
+                    { title:"取消",click:function(){
+                        removeUnScroll();
+                    }
+                    }
+                ]
+            }
+            $.alertView(json);
+        }
+
+        /**
+         *  修改和添加共同部分
+         * @returns {boolean}
+         */
+        function comCheck(){
+
+            if(!check_ch($("#pricipal"),"部门负责人")){//部门负责人
+                return false;
+            }
+            if(!check_lgal($("#abbreviation"),"部门简称")){//部门负责人
+                return false;
+            }
+            if(!check_addr($("#addr"),"地址信息")){//部门地址
+                return false;
+            }
+            if(!check_phone($("#phone"),"联系电话")){
+                return false;
+            }
+            if(!check_null($("#description"),"请备注一下")){
+                return false;
+            }
+
+            return true;
+        }
+
+
     </script>
 </div>
 
 <div th:fragment="modify_script">
     <script th:inline="javascript" type="text/javascript">
-
         $("#save").click(function () {
-
-
-
+            if(!comCheck()){
+                return  false;
+            }
         });
-
-
     </script>
 </div>
 
@@ -131,28 +227,79 @@
 <div th:fragment="regexp_script">
     <script th:inline="javascript" type="text/javascript">
 
-      //匹配手机号
-      function  regPhone(phone) {
-          var patt = "^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\\d{8}$";
-          return patt.test(phone);
-      }
-     //电话号码
-      function regTelPhone(telPhone){
-          var patt ="^(\(\d{3,4}-)|\d{3.4}-)?\d{7,8}$";
-          return patt.test(telPhone);
-      }
-       //中文
-      function regName(name) {
-          var patt="^[\u4e00-\u9fa5]{0,}$";
-          return patt.test(name);
-      }
-       //字母
-      function regAlphabet(alphabet) {
-          var patt="^[A-Za-z]+$";
-          return patt.test(alphabet);
-      }
+        //匹配手机号
+        function  regPhone(phone) {
+            var patt = /^1[0-9]{10}$/;
+            return patt.test(phone);
+        }
+        //电话号码
+        function regTelPhone(telPhone){
+            var patt =/^(^0\d{2}-?\d{8}$)|(^0\d{3}-?\d{7}$)|(^0\d2 -?\d{8}$)|(^0\d3 -?\d{7}$)$/;
+            return patt.test(telPhone);
+        }
+        //中文
+        function regName(name) {
+            var patt=/^[\u4e00-\u9fa5]{0,}$/;
+            return patt.test(name);
+        }
+        //字母
+        function regAlphabet(alphabet) {
+            var patt=/^[A-Za-z]+$/;
+            return patt.test(alphabet);
+        }
+        //字母
+        function regLargeAlphabet(alphabet) {
+            var patt=/^[A-Z]+$/;
+            return patt.test(alphabet);
+        }
+        //中文 字母  数字
+        function regCH_NUM_ALP(str){
+            var patt=/^[\u4e00-\u9fa5][\u4e00-\u9fa5_a-zA-Z0-9]+$/;
+            return patt.test(str);
+        }
+
+        //中文 字母  数字 其他符合
+        function regCH(str){
+            var patt=/[\u4e00-\u9fa5][\u4e00-\u9fa5_a-zA-Z0-9]||[，。；‘’“”,.;''-=*\/!@#$%^&*(){}【】]+/;
+            return patt.test(str);
+        }
+        v
+
+        //数字
+        function regNum(str){
+            var patt=/^[0-9]+$/;
+            return patt.test(str);
+        }
 
 
+
+        //数字和字母
+        function regAlphabetAndNum(str){
+            var patt=/^[A-Za-z0-9]+$/;
+            return patt.test(str);
+        }
+
+        //验证身份证
+        function regIdNum(idNum){
+            var patt= /(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/;
+            return patt.test(idNum);
+        }
+        //域名验证
+        function regInternetURL(url){
+            var patt=/[a-zA-z]+:///[^\\s]*/;
+            return patt.test(url);
+        }
+
+        //密码  以字母开头，长度在6~36之间，只能包含字母、数字和下划线
+        function regPassword(password){
+            var patt=/^[a-zA-Z][a-zA-Z0-9_]{6,36}$/;
+            return patt.test(password);
+        }
+        //账户
+        function regAccount(account){
+            var patt=/^[a-zA-Z][a-zA-Z0-9_]{4,15}$/;
+            return patt.test(account);
+        }
 
     </script>
 </div>
@@ -161,32 +308,14 @@
 
 <div th:fragment="add_script">
     <script th:inline="javascript" type="text/javascript">
-        $("#save").click(function () {
-            var company=$("#company").val();//公司ID
-            var name=$("#name").val();//部门名称
-            var pricipal=$("#pricipal").val();//负责人
-            var abbreviation=$("#abbreviation").val();//部门简称
-            var addr=$("#addr").val();//地址
-            var phone=$("#phone").val();//电话
-            var description=$("#description").val();//描述
-
-//            console.info(
-//                "name="+name
-//                +",company="+company
-//                +",pricipal="+pricipal
-//                +",abbreviation="+abbreviation
-//                +",addr="+addr
-//                +",phone="+phone
-//                +",description="+description
-//            );
-
-
-
-
-
-
-        });
-
+            $("#save").click(function () {
+                if(!check_ch($("#name"),"部门名称")){//部门负责人
+                    return false;
+                }
+                if(!comCheck()){
+                    return  false;
+                }
+            });
     </script>
 </div>
 

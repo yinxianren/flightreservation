@@ -158,63 +158,63 @@
          */
         function  mod_add_submit() {
             var id=$("#id").val();
-            var companyName= $("#companyName").val();
-            var companyShareName=$("#companyShareName").val();
-            var businessLicense= $("#businessLicense").val();
-            var registeredAddress= $("#registeredAddress").val();
-            var legalRepresentative= $("#legalRepresentative").val();
-            var legalRepresentativeIdNum =$("#legalRepresentativeIdNum").val();
-            var webAddr= $("#webAddr").val();
-            var ipcNum=$("#ipcNum").val();
-            var industryType= $("#industryType").val();
-            var businessScope= $("#businessScope").val();
-            var bankAccountName= $("#bankAccountName").val();
-            var bankName= $("#bankName").val();
-            var bankNum= $("#bankNum").val();
+            var companyName= $("#companyName").val().trim();
+            var companyShareName=$("#companyShareName").val().trim();
+            var businessLicense= $("#businessLicense").val().trim();
+            var registeredAddress= $("#registeredAddress").val().trim();
+            var legalRepresentative= $("#legalRepresentative").val().trim();
+            var legalRepresentativeIdNum =$("#legalRepresentativeIdNum").val().trim();
+            var webAddr= $("#webAddr").val().trim();
+            var ipcNum=$("#ipcNum").val().trim();
+            var industryType= $("#industryType").val().trim();
+            var businessScope= $("#businessScope").val().trim();
+            var bankAccountName= $("#bankAccountName").val().trim();
+            var bankName= $("#bankName").val().trim();
+            var bankNum= $("#bankNum").val().trim();
 
 
-            if(isEmpty(companyName)){
-                hint("公司名称");
+            if(isEmpty(companyName)||!regName(companyName)||companyName.length<6||!(companyName.search("公司")!=-1)){
+                hint("公司名称不空、只能输入中文、符合公司命名规则");
                 return ;
             }
-            if(isEmpty(companyShareName)){
-                hint("公司简称");
+            if(isEmpty(companyShareName)||!regName(companyShareName)||companyShareName.length<2||!(companyName.search(companyShareName)!=-1)){
+                hint("公司简称不空、只能输入中文、要符合简称要求");
                 return ;
             }
-            if(isEmpty(businessLicense)){
-                hint("营业执照号");
+            if(isEmpty(businessLicense)||!regAlphabetAndNum(businessLicense)||businessLicense.length<16){
+                hint("营业执照号、只能包含字母和数字");
                 return ;
             }
-            if(isEmpty(registeredAddress)){
-                hint("公司地址");
+            if(isEmpty(registeredAddress)||!regCH_NUM_ALP(registeredAddress)){
+                hint("公司地址,只能包含中文、字母、数字");
                 return ;
             }
-            if(isEmpty(legalRepresentative)){
-                hint("法定代表人");
+            if(isEmpty(legalRepresentative)||!regName(legalRepresentative)||!(legalRepresentative.length>2&&legalRepresentative.length<6)){
+                hint("法定代表人,名字要符合中国取名规则");
                 return ;
             }
-            if(isEmpty(legalRepresentativeIdNum)){
+            if(isEmpty(legalRepresentativeIdNum)||!regIdNum(legalRepresentativeIdNum)){
                 hint("法定代表人身份证号码");
                 return ;
             }
-            if(isEmpty(industryType)){
-                hint("行业类型");
+            if(isEmpty(industryType)||!regName(industryType)){
+                hint("行业类型,只能中文");
                 return ;
             }
-            if(isEmpty(businessScope)){
-                hint("经营范围");
+            if(isEmpty(businessScope)||!regCH(businessScope)){
+                hint("经营范围,只包含中文格式");
                 return ;
             }
-            if(isEmpty(bankAccountName)){
-                hint("银行开户名");
+            if(isEmpty(bankAccountName)||!regName(bankAccountName)){
+                hint("银行开户名,只能包含中文");
                 return ;
             }
-            if(isEmpty(bankNum)){
+            if(isEmpty(bankNum)||!regNum(bankNum)||!(bankNum.length>16&&bankNum.length<19)){
                 hint("卡号");
                 return ;
             }
-            if(isEmpty(bankName)){
-                hint("开户银行");
+            if(isEmpty(bankName)||!regName(bankName)){
+                hint("开户银行,只能包含中文");
                 return ;
             }
 
@@ -253,7 +253,7 @@
             unScroll();
             var json = {
                 title:"<span style='color: red;font-size: 22px;'>警告!</span>",
-                msg:"<span style='color: #73680a;font-size: 18px;'>输入有误.....</span>"+msg,
+                msg:"<span style='color: #73680a;font-size: 18px;'>输入有误(</span>"+msg+")",
                 buttons:[
                     { title:"取消",click:function(){
                         removeUnScroll();

@@ -27,7 +27,7 @@
                 <h2>新增部门</h2>
             </div>
             <div class="widget-content nopadding">
-                <form action="#" id="addAndUpdateForm" method="post" class="form-horizontal">
+                <form action="/body/systemsettingmanagement/institutional-framework-management/ifm_department_management/add"  method="post" class="form-horizontal">
 
                     <div class="control-group" style="display: none;">
                         <label class="control-label">id :</label>
@@ -62,6 +62,13 @@
                         </div>
                     </div>
                     <div class="control-group">
+                        <label class="control-label">部门负责人电话 :</label>
+                        <div class="controls">
+                            <input type="text" class="span11" placeholder="请输入部门负责人联系电话" name="depPhone" id="phone"/>
+                            <span class="help-block"  id="hint_ph"></span>
+                        </div>
+                    </div>
+                    <div class="control-group">
                         <label class="control-label">部门简称 :</label>
                         <div class="controls">
                             <input type="text"  class="span11" placeholder="部门简称" name="depAbbreviation" id="abbreviation" />
@@ -75,13 +82,7 @@
                             <span class="help-block"  id="hint_ad"></span>
                         </div>
                     </div>
-                    <div class="control-group">
-                        <label class="control-label">部门电话 :</label>
-                        <div class="controls">
-                            <input type="text" class="span11" placeholder="请输入部门联系电话或负责人联系电话" name="depPhone" id="phone"/>
-                            <span class="help-block"  id="hint_ph"></span>
-                        </div>
-                    </div>
+
                     <div class="control-group">
                         <label class="control-label">备注 ：</label>
                         <div class="controls">
@@ -91,12 +92,7 @@
                     </div>
                     <div class="form-actions">
                         <p id="submitButton" style="text-align: center;">
-                            <button  style="font-size: 20px;" type="button" class=" btn-large btn btn-success" onclick="javascript:history.back(-1);">
-                                <i class="icon-repeat"></i>
-                                返回
-                            </button>
-
-                            <button  style="font-size: 20px;" type="button" class=" btn-large btn btn-inverse" id="save">
+                            <button  style="font-size: 20px;" type="submit" class=" btn-large btn btn-inverse" id="save">
                                 <i class="icon-save"></i>
                                 提交
                             </button>
@@ -105,15 +101,13 @@
                 </form>
             </div>
         </div>
-
-
-
     </div>
 </div>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 <a style="display: none;" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() + '/'} " id="contextPath"></a>
 <div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_department_modifyAndAdd_script :: verify_script"></div>
 <div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_department_modifyAndAdd_script :: add_script"></div>
+<div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_department_modifyAndAdd_script :: regexp_script"></div>
 </body>
 
 </html>

@@ -157,7 +157,7 @@
                                 <td class="table-title" style="text-align: center;"><i style="color: red;" class=" icon-bell-alt"></i>公司名称</td>
                                 <td style="height: 100%;">
                                     <div class="div-input">
-                                        <input name="companyName"  id="companyName" class="MNK_BORDER_BOX input-style">
+                                        <input name="companyName"  placeholder="公司名称不空、只能输入中文、符合公司命名规则"  id="companyName" class="MNK_BORDER_BOX input-style">
                                     </div>
                                 </td>
                             </tr>
@@ -165,7 +165,7 @@
                                 <td class="table-title" style="text-align: center;"><i style="color: red;" class=" icon-bell-alt"></i>公司简称</td>
                                 <td style="height: 100%;">
                                     <div class="div-input">
-                                        <input name="companyShareName"  id="companyShareName" class="MNK_BORDER_BOX input-style">
+                                        <input name="companyShareName" placeholder="简称不空、只能输入中文"  id="companyShareName" class="MNK_BORDER_BOX input-style">
                                     </div>
                                 </td>
                             </tr>
@@ -174,7 +174,7 @@
                                 <td class="table-title" style="text-align: center;"><i style="color: red;" class=" icon-bell-alt"></i>营业执照号</td>
                                 <td style="height: 100%;">
                                     <div class="div-input">
-                                        <input name="businessLicense"  id="businessLicense" class="MNK_BORDER_BOX input-style">
+                                        <input name="businessLicense"  placeholder="只能包含字母和数字" id="businessLicense" class="MNK_BORDER_BOX input-style">
                                     </div>
                                 </td>
                             </tr>
@@ -182,7 +182,7 @@
                                 <td class="table-title" style="text-align: center;"><i style="color: red;" class=" icon-bell-alt"></i>公司地址</td>
                                 <td style="height: 100%;">
                                     <div class="div-input">
-                                        <input name="registeredAddress"  id="registeredAddress" class="MNK_BORDER_BOX input-style">
+                                        <input name="registeredAddress" placeholder="只能包含中文、字母、数字" id="registeredAddress" class="MNK_BORDER_BOX input-style">
                                     </div>
                                 </td>
                             </tr>
@@ -191,7 +191,7 @@
                                 <td class="table-title" style="text-align: center;"><i style="color: red;" class=" icon-bell-alt"></i>公司法人</td>
                                 <td style="height: 100%;">
                                     <div class="div-input">
-                                        <input name="legalRepresentative"  id="legalRepresentative" class="MNK_BORDER_BOX input-style">
+                                        <input name="legalRepresentative"  placeholder="名字要符合中国取名规则" id="legalRepresentative" class="MNK_BORDER_BOX input-style">
                                     </div>
                                 </td>
                             </tr>
@@ -281,4 +281,5 @@
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 </body>
 <div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_company_manage_script :: com_manage_script"></div>
+<div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_department_modifyAndAdd_script :: regexp_script"></div>
 </html>

@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Error 500</title>
+    <meta charset="UTF-8" />
+    <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
+</head>
+<body>
+<div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content (action='sys_set',sub_action='auth_manage')"></div>
+<!--main-container-part-->
+<div id="content">
+
+    <div class="container-fluid">
+        <!--<div th:replace="../templates/frontdesk/body/systemSettingManagement/navigation-bars :: ifm-navigation-bars(action='auth_manage')"></div>-->
+        <div class="row-fluid"></div>
+        <hr/>
+        <div class="row-fluid">
+            <div class="span12">
+                <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"> <i class="icon-info-sign"></i> </span>
+                        <h5>Error 500</h5>
+                    </div>
+                    <div class="widget-content">
+                        <div class="error_ex">
+                            <h1>500</h1>
+                            <h3 style="color: red;">服务繁忙......稍后再试！</h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row-fluid" style="margin-top: 20px;">
+            <div class="span12">
+                    <p class="control-label" style="color: #db1a70;font-size: 25px;font-weight: bolder;text-align: center">Message</p>
+                    <div class="controls">
+                        <textarea style="color: #9a160b;" class="span12" th:text="${message}" ></textarea>
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="../templates/frontdesk/body/footer :: footer"></div>
+</body>
+</html>
