@@ -13,21 +13,7 @@ public class UserInfoController {
  @Autowired
  private UserService userInfoService;
 
-  public User varifyUserInfo(User  user){
 
-      return null;
-  }
-
-    /**
-     * http://localhost:8080/use/byId?id=10001
-     * @param id
-     * @return
-     */
-  @GetMapping("/use/byId")
-  public User  getUserInfoById(int id){
-      System.out.println("id==========="+id);
-      return userInfoService.getUserInfoByidService(id);
-  }
 
 
 

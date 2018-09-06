@@ -15,7 +15,7 @@ public class CmpyService {
    private CmpyMapper cmpyMapper;
 
 
-   public List<Cmpy> getAllDepartment(){
+   public List<Cmpy> getAllCompany(){
        try {
            List<Cmpy> cmpyList= cmpyMapper.getAll();
            return cmpyList;

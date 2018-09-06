@@ -5,6 +5,10 @@
     <meta charset="UTF-8" />
     <!--<link rel="stylesheet" href="/common/font-awesome-4.7.0/css/font-awesome.min.css">-->
     <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
+    <style type="text/css">
+        #single-user-info-Show table tbody tr td:first-child{font-weight: bolder;color: #0e0e0e;font-size: 18px;text-align: center;}
+        #single-user-info-Show table tbody tr td:nth-child(2){font-size: 16px;}
+    </style>
 </head>
 <body>
 <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content (action='sys_set',sub_action='inst_fra')"></div>
@@ -18,14 +22,13 @@
         <hr/>
 
         <!-- 部门数据展示表 -->
-        <div id="show_user">
+        <div id="show-user-info">
             <div class="widget-box" >
                 <div class="widget-title">
                     <h2>用户信息表</h2>
                 </div>
                 <div class="widget-content nopadding">
                     <table class="table table-bordered table-striped">
-
                         <thead>
                         <tr>
                             <th>序号</th>
@@ -33,59 +36,159 @@
                             <th>姓名</th>
                             <th>性别</th>
                             <th>联系电话</th>
+                            <th>状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
-
                         <tbody>
-                        <!--<tr th:each="dep,iterStat : ${lists}"  th:class="${iterStat.odd}?'odd gradeA':'even gradeC'">-->
-                            <!--<td th:switch="${iterStat.index%4}" style="text-align: center;">-->
-                                <!--<span th:case="0" class="badge" th:text="${iterStat.count}"></span>-->
-                                <!--<span th:case="1" class="badge badge-success" th:text="${iterStat.count}"></span>-->
-                                <!--<span th:case="2" class="badge badge-important" th:text="${iterStat.count}"></span>-->
-                                <!--<span th:case="3" class="badge badge-info" th:text="${iterStat.count}"></span>-->
-                            <!--</td>-->
-                            <!--<td  style="text-align: center;" th:text="${dep.depCompany}"></td>-->
-                            <!--<td  style="text-align: center;" th:text="${dep.depName}"></td>-->
-                            <!--<td  style="text-align: center;" th:text="${dep.depPricipal}"></td>-->
-                            <!--<td  style="text-align: center;" th:text="${dep.depAbbreviation}"></td>-->
-                            <!--<td style="text-align: center;">-->
-                                <!--<button class="btn btn-success btn-mini" th:id="check_+${dep.id}" th:attr="dep_id=${dep.id}"  >-->
-                                    <!--<i class=" icon-eye-open" ></i>-->
-                                    <!--查看-->
-                                <!--</button>-->
-                                <!--<button class="btn btn-warning btn-mini" th:id="mod_+${dep.id}" th:attr="dep_id=${dep.id}">-->
-                                    <!--<i class="icon-pencil"></i>-->
-                                    <!--修改-->
-                                <!--</button>-->
-                                <!--<button class="btn btn-danger btn-mini" th:id="del_+${dep.id}" th:attr="dep_id=${dep.id}">-->
-                                    <!--<i class=" icon-remove"></i>-->
-                                    <!--删除-->
-                                <!--</button>-->
-                            <!--</td>-->
-                        <!--</tr>-->
+                        <tr th:each="user,iterStat : ${userList}"  th:class="${iterStat.odd}?'odd gradeA':'even gradeC'">
+                            <td th:switch="${iterStat.index%4}" style="text-align: center;">
+                                <span th:case="0" class="badge" th:text="${iterStat.count}"></span>
+                                <span th:case="1" class="badge badge-success" th:text="${iterStat.count}"></span>
+                                <span th:case="2" class="badge badge-important" th:text="${iterStat.count}"></span>
+                                <span th:case="3" class="badge badge-info" th:text="${iterStat.count}"></span>
+                            </td>
+                            <td  style="text-align: center;" th:text="${user.account}"></td>
+                            <td  style="text-align: center;" th:text="${user.name}"></td>
+                            <td  style="text-align: center;" th:text="${user.sex}"></td>
+                            <td  style="text-align: center;" th:text="${user.phone}"></td>
+                            <td  style="text-align: center;" th:text="${user.status==0?'冻结':'可用'}"></td>
+                            <td style="text-align: center;">
+                                <button class="btn btn-success btn-mini" th:id="check_+${user.id}" th:attr="use_id=${user.id}"  >
+                                    <i class=" icon-eye-open" ></i>
+                                    查看
+                                </button>
+                                <button class="btn btn-warning btn-mini" th:id="fre_+${user.id}" th:attr="use_id=${user.id}">
+                                    <i class="icon-pencil"></i>
+                                    [[${user.status==0?'解冻':'冻结'}]]
+                                </button>
+                                <button class="btn btn-danger btn-mini" th:id="del_+${user.id}" th:attr="use_id=${user.id}">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
                         </tbody>
                     </table>
                 </div>
             </div>
+        </div>
+    </div>
+    <div id="single-user-info-Show" hidden>
+        <div class="row-fluid">
+            <div  class="span12">
+                <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"> <i class="icon-th"></i> </span>
+                        <h5 style="font-size: 18px;padding-right: 20px;">用户个人信息</h5>
+                    </div>
+                    <div class="widget-content nopadding">
+                        <table class="table table-bordered table-striped">
+                            <thead>
+                            <tr>
+                                <th style="width: 20%;">NAME</th>
+                                <th style="width: 80%;">VALUE</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr class="odd gradeX">
+                                <td>id</td>
+                                <td id="id"></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>账号名</td>
+                                <td id="account"></td>
+                            </tr>
+                            <tr class="even gradeX">
+                                <td>性别</td>
+                                <td id="sex"></td>
+                            </tr>
 
-            <div>
-                <p style="text-align: right;margin-right:100px;margin-top:20px;">
-                    <button class="btn btn-inverse " id="add_department"><i class=" icon-plus"></i>添加新部门</button>
-                </p>
-            </div>
-            <hr/>
-            <div style="margin-bottom:500px;">
-                <p style="text-align: center;">
-                    <button class="btn btn-primary btn-large" id="load_info"><i class="icon-spinner icon-spin"></i> 加载更多</button>
-                </p>
+                            <tr class="odd gradeX">
+                                <td>身份证号</td>
+                                <td id="idNum"></td>
+                            </tr>
+                            <tr class="even gradeX">
+                                <td>户籍</td>
+                                <td id="censusRegister"></td>
+                            </tr>
+
+                            <tr class="odd gradeX">
+                                <td>目前居住地址</td>
+                                <td id="addr"></td>
+                            </tr>
+                            <tr class="even gradeX">
+                                <td>companyNum</td>
+                                <td id="companyNum"></td>
+                            </tr>
+
+                            <tr class="odd gradeX">
+                                <td>所属公司</td>
+                                <td id="company"></td>
+                            </tr>
+                            <tr class="even gradeX">
+                                <td>departmentNum</td>
+                                <td id="departmentNum"></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>所属部门</td>
+                                <td id="department"></td>
+                            </tr>
+                            <tr class="even gradeX">
+                                <td>联系电话</td>
+                                <td id="phone"></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td >入职时间</td>
+                                <td id="time"></td>
+                            </tr>
+                            <tr class="even gradeX">
+                                <td >type</td>
+                                <td id="type"></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td >用户类型</td>
+                                <td id="typeName"></td>
+                            </tr>
+                            <tr class="even gradeX">
+                                <td >用户状态</td>
+                                <td id="status"></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td >备注</td>
+                                <td id="description"></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td >创建时间</td>
+                                <td id="createDate"></td>
+                            </tr>
+                            <tr class="odd gradeX">
+                                <td>更新时间</td>
+                                <td id="update"></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <hr/>
+                <div style="margin-bottom:500px;">
+                    <p style="text-align: center;">
+                        <button class="btn btn-primary btn-large" id="return-info"><i class="icon-repeat"></i>返回</button>
+                    </p>
+                </div>
             </div>
         </div>
-
-
-
+    </div>
+    <div id="local-info" class="row-fluid">
+        <hr/>
+        <div style="margin-bottom:500px;">
+            <p style="text-align: center;">
+                <button class="btn btn-primary btn-large" id="load_info"><i class="icon-spinner icon-spin"></i> 加载更多</button>
+            </p>
+        </div>
     </div>
 </div>
+<a style="display: none;" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() + '/'} " id="contextPath"></a>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
+<div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_users_management_script :: users_manage_script"></div>
 </body>
 </html>

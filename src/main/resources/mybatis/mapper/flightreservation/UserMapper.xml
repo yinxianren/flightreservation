@@ -3,96 +3,161 @@
 <mapper namespace="com.yilvtong.first.flightreservation.mapper.frontdesk.UserMapper" >
     <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.entity.frontdesk.User" >
         <id column="u_id" property="id" jdbcType="INTEGER" />
+        <result column="u_account" property="account" jdbcType="VARCHAR" />
         <result column="u_name" property="name" jdbcType="VARCHAR" />
         <result column="u_password" property="password" jdbcType="VARCHAR" />
-        <result column="u_addr" property="addr" jdbcType="VARCHAR" />
-        <result column="u_phone" property="phone" jdbcType="VARCHAR" />
         <result column="u_sex" property="sex" jdbcType="VARCHAR" />
+        <result column="u_idNum" property="idNum" jdbcType="VARCHAR" />
+        <result column="u_censusRegister" property="censusRegister" jdbcType="VARCHAR" />
+        <result column="u_addr" property="addr" jdbcType="VARCHAR" />
+        <result column="u_company" property="companyNum" jdbcType="INTEGER" />
+        <result column="company" property="company" jdbcType="VARCHAR" />
+        <result column="u_department" property="departmentNum" jdbcType="INTEGER" />
+        <result column="department" property="department" jdbcType="VARCHAR" />
+        <result column="u_phone" property="phone" jdbcType="VARCHAR" />
+        <result column="u_time" property="time" jdbcType="DATE" />
+        <result column="u_type" property="type" jdbcType="INTEGER" />
+        <result column="type_name" property="typeName" jdbcType="VARCHAR" />
+        <result column="u_status" property="status" jdbcType="INTEGER" />
+        <!--<result column="status_name" property="statusName" jdbcType="VARCHAR" />-->
+        <result column="description" property="description" jdbcType="VARCHAR" />
         <result column="c_date" property="createDate" jdbcType="DATE" />
         <result column="up_date" property="update" jdbcType="DATE" />
     </resultMap>
     <sql id="Base_Column_List" >
-        u_id, u_name, u_password, u_addr,u_phone,u_sex,c_date,up_date
+       u_id,u_account,u_name,u_sex,u_idNum,u_censusRegister,u_addr,u_company,c.cpy_com_name company,
+        u_department,d.dep_name department,u_phone,u_time ,u_type,t.ut_name type_name,u_status,u.description,u.c_date ,u.up_date
     </sql>
 
 
-    <select id="getUserById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
-        select
+    <select id="getAll" resultMap="BaseResultMap">
+        SELECT
         <include refid="Base_Column_List" />
-        from fr_user
-        where u_id = #{userId,jdbcType=INTEGER}
+        FROM fr_user u
+        LEFT JOIN fr_company c  ON c.cpy_id=u.u_company
+        LEFT JOIN fr_dep d ON d.dep_id=u.u_department
+        LEFT JOIN user_type t ON t.ut_id=u.u_type
+        LIMIT 0,100
     </select>
+    <select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fr_user u
+        LEFT JOIN fr_company c  ON c.cpy_id=u.u_company
+        LEFT JOIN fr_dep d ON d.dep_id=u.u_department
+        LEFT JOIN user_type t ON t.ut_id=u.u_type
+        WHERE u_id=#{id,jdbcType=INTEGER}
+    </select>
+    <delete id="delById" parameterType="java.lang.Integer" >
+        delete from fr_user
+        where u_id = #{id,jdbcType=INTEGER}
+    </delete>
+    <insert id="add" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.User" >
+       INSERT  INTO `fr_user`
+                    (
+                      u_account,
+                     `u_name`,
+                     `u_password`,
+                     `u_sex`,
+                     `u_idNum`,
+                     `u_censusRegister`,
+                     `u_addr`,
+                     `u_company`,
+                     `u_department`,
+                     `u_phone`,
+                     `u_time`,
+                     `u_type`,
+                     u_status,
+                     `description`,
+                     `c_date`,
+                     `up_date`
+                     )
+                 values (
+
+                     #{account,jdbcType=VARCHAR},
+                     #{name,jdbcType=VARCHAR},
+                     #{password,jdbcType=VARCHAR},
+                     #{sex,jdbcType=VARCHAR},
+                     #{idNum,jdbcType=VARCHAR}
+                     #{censusRegister,jdbcType=VARCHAR},
+                     #{addr,jdbcType=VARCHAR},
+                     #{companyNum,jdbcType=INTEGER},
+                     #{departmentNum,jdbcType=INTEGER}
+                     #{phone,jdbcType=VARCHAR},
+                     #{time,jdbcType=DATE},
+                     #{type,jdbcType=INTEGER}
+                     #{status,jdbcType=INTEGER},
+                     #{description,jdbcType=VARCHAR},
+                     #{createDate,jdbcType=DATE},
+                     #{update,jdbcType=DATE}
+                     )
+    </insert>
+    <update id="updataById" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.User" >
+        update fr_user
+        <set >
+            <if test="account != null" >
+                u_account = #{account,jdbcType=VARCHAR},
+            </if>
+            <if test="name != null" >
+                u_name = #{name,jdbcType=VARCHAR},
+            </if>
+            <if test="password != null" >
+                u_password = #{password,jdbcType=VARCHAR},
+            </if>
+            <if test="sex != null" >
+                u_sex = #{sex,jdbcType=VARCHAR},
+            </if>
+            <if test="idNum != null" >
+                u_idNum = #{idNum,jdbcType=VARCHAR},
+            </if>
+            <if test="censusRegister != null" >
+                u_censusRegister = #{censusRegister,jdbcType=VARCHAR},
+            </if>
+            <if test="addr != null" >
+                u_addr = #{addr,jdbcType=VARCHAR},
+            </if>
+            <if test="companyNum != null" >
+                u_company = #{companyNum,jdbcType=INTEGER},
+            </if>
+            <if test="departmentNum != null" >
+                u_department = #{departmentNum,jdbcType=INTEGER},
+            </if>
+            <if test="phone != null" >
+                u_phone = #{phone,jdbcType=VARCHAR},
+            </if>
+            <if test="time != null" >
+                u_time = #{time,jdbcType=DATE},
+            </if>
+            <if test="type != null" >
+                u_type = #{type,jdbcType=INTEGER},
+            </if>
+            <if test="status != null" >
+                u_status = #{status,jdbcType=INTEGER},
+            </if>
+            <if test="description != null" >
+                description = #{description,jdbcType=INTEGER},
+            </if>
+            <if test="createDate != null" >
+                c_date = #{createDate,jdbcType=DATE},
+            </if>
+            <if test="update != null" >
+                up_date = #{update,jdbcType=DATE}
+            </if>
+        </set>
+        where u_id=#{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="updataPassword" >
+          UPDATE  fr_user
+          set u_password = #{password,jdbcType=VARCHAR},up_date = #{update,jdbcType=DATE}
+          where  u_id=#{id,jdbcType=INTEGER}
+    </update>
+
+    <update id="freezeAccount" >
+        UPDATE  fr_user
+        set u_status = #{status,jdbcType=INTEGER},up_date = #{update,jdbcType=DATE}
+        where  u_id=#{id,jdbcType=INTEGER}
+    </update>
 
 
-
-
-    <!-- 这个方法是我自己加的 -->
-    <!--<select id="selectAllUser" resultMap="BaseResultMap">-->
-        <!--select-->
-        <!--<include refid="Base_Column_List" />-->
-        <!--from t_user-->
-    <!--</select>-->
-    <!--<delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >-->
-        <!--delete from t_user-->
-        <!--where user_id = #{userId,jdbcType=INTEGER}-->
-    <!--</delete>-->
-    <!--<insert id="insert" parameterType="com.winter.model.User" >-->
-        <!--insert into t_user (user_id, user_name, password,-->
-        <!--phone)-->
-        <!--values (#{userId,jdbcType=INTEGER}, #{userName,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR},-->
-        <!--#{phone,jdbcType=VARCHAR})-->
-    <!--</insert>-->
-    <!--<insert id="insertSelective" parameterType="com.winter.model.User" >-->
-        <!--insert into t_user-->
-        <!--<trim prefix="(" suffix=")" suffixOverrides="," >-->
-            <!--<if test="userId != null" >-->
-                <!--user_id,-->
-            <!--</if>-->
-            <!--<if test="userName != null" >-->
-                <!--user_name,-->
-            <!--</if>-->
-            <!--<if test="password != null" >-->
-                <!--password,-->
-            <!--</if>-->
-            <!--<if test="phone != null" >-->
-                <!--phone,-->
-            <!--</if>-->
-        <!--</trim>-->
-        <!--<trim prefix="values (" suffix=")" suffixOverrides="," >-->
-            <!--<if test="userId != null" >-->
-                <!--#{userId,jdbcType=INTEGER},-->
-            <!--</if>-->
-            <!--<if test="userName != null" >-->
-                <!--#{userName,jdbcType=VARCHAR},-->
-            <!--</if>-->
-            <!--<if test="password != null" >-->
-                <!--#{password,jdbcType=VARCHAR},-->
-            <!--</if>-->
-            <!--<if test="phone != null" >-->
-                <!--#{phone,jdbcType=VARCHAR},-->
-            <!--</if>-->
-        <!--</trim>-->
-    <!--</insert>-->
-    <!--<update id="updateByPrimaryKeySelective" parameterType="com.winter.model.User" >-->
-        <!--update t_user-->
-        <!--<set >-->
-            <!--<if test="userName != null" >-->
-                <!--user_name = #{userName,jdbcType=VARCHAR},-->
-            <!--</if>-->
-            <!--<if test="password != null" >-->
-                <!--password = #{password,jdbcType=VARCHAR},-->
-            <!--</if>-->
-            <!--<if test="phone != null" >-->
-                <!--phone = #{phone,jdbcType=VARCHAR},-->
-            <!--</if>-->
-        <!--</set>-->
-        <!--where user_id = #{userId,jdbcType=INTEGER}-->
-    <!--</update>-->
-    <!--<update id="updateByPrimaryKey" parameterType="com.winter.model.User" >-->
-        <!--update t_user-->
-        <!--set user_name = #{userName,jdbcType=VARCHAR},-->
-        <!--password = #{password,jdbcType=VARCHAR},-->
-        <!--phone = #{phone,jdbcType=VARCHAR}-->
-        <!--where user_id = #{userId,jdbcType=INTEGER}-->
-    <!--</update>-->
 </mapper>

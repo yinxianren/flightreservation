@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+
+<div th:fragment="users_manage_script">
+    <script th:inline="javascript" type="text/javascript">
+
+        var objs = [[${userList}]];
+        var array=new Array();
+        var contextPath = $('#contextPath').attr('href');
+
+        $.each( objs, function(i, n) {
+
+            //把后台传输过来的信息储存起来
+            array[i] = new Array();
+            array[i][0] = n.id;
+            array[i][1] = n.createDate;
+            array[i][2] = n.update;
+            array[i][3] = n.account;
+            array[i][4] = n.name;
+            array[i][5] = n.sex;
+            array[i][6] = n.idNum;
+            array[i][7] = n.censusRegister;
+            array[i][8] = n.addr;
+            array[i][9] = n.companyNum;
+            array[i][10] = n.departmentNum;
+            array[i][11] = n.company;
+            array[i][12] = n.department;
+            array[i][13] = n.phone;
+            array[i][14] = n.time;
+            array[i][15] = n.type;
+            array[i][16] = n.typeName;
+            array[i][17] = n.status;
+            array[i][18] = n.description
+
+            /**
+             * 点击查看信息
+             */
+            $("#check_"+n.id).click( function () {
+                var uid=$(this).attr("use_id");
+                for(var i=0;i<array.length;i++){
+                    if(array[i][0]==uid) {
+                        $("#id").html(array[i][0]);
+                        $("#createDate").html(array[i][1]);
+                        $("#update").html(array[i][2]);
+                        $("#account").html(array[i][3]);
+                        $("#name").html(array[i][4]);
+                        $("#sex").html(array[i][5]);
+                        $("#idNum").html(array[i][6]);
+                        $("#censusRegister").html(array[i][7]);
+                        $("#addr").html(array[i][8]);
+                        $("#companyNum").html(array[i][9]);
+                        $("#departmentNum").html(array[i][10]);
+                        $("#company").html(array[i][11]);
+                        $("#department").html(array[i][12]);
+                        $("#phone").html(array[i][13]);
+                        $("#type").html(array[i][15]);
+                        $("#time").html(array[i][14]);
+                        $("#typeName").html(array[i][16]);
+                        $("#status").html(array[i][17]==0?"冻结":"可用");
+                        $("#description").html(array[i][18]);
+                        $(window).scrollTop(0);
+                        $("#show-user-info").hide();
+                        $("#local-info").hide();
+                        $("#single-user-info-Show").show();
+                    }
+                }
+            });
+
+
+            //冻结
+            $("#fre_"+n.id).click( function () {
+
+                var uid=$(this).attr("use_id");
+                for(var i=0;i<array.length;i++){
+                    if(array[i][0]==uid) {
+                        $(window).scrollTop(0);
+                        unScroll();
+
+                        var status=array[i][17];
+                        var json = {
+                            title:"冻结/解冻操作！",
+                            msg:"确定修改<span style='color:#10b803;font-style: inherit;'> "+array[i][3]+"</span> 账户状态 ? ",
+                            buttons:[
+                                { title:"确定",color:"red",click:function(){
+                                    var sta=(status==0?"1":"0");
+                                    var data="id="+uid+"&status="+sta;
+                                    var path="body/systemsettingmanagement/institutional-framework-management/ifm_users_management/freeze";
+                                    use_ajax(path,data);
+                                } },
+                                { title:"取消",click:function(){
+                                    removeUnScroll();
+                                } }
+                            ]
+                        }
+                        $.alertView(json);
+                    }
+                }
+            });
+
+            //删除
+            $("#del_"+n.id).click( function () {
+                var uid=$(this).attr("use_id");
+                for(var i=0;i<array.length;i++){
+                    if(array[i][0]==uid) {
+                        $(window).scrollTop(0);
+                        unScroll();
+                        var json = {
+                            title:"删除操作！",
+                            msg:"确定将<span style='color:#10b803;font-style: inherit;'> "+array[i][3]+"</span> 账户删除？ ",
+                            buttons:[
+                                { title:"确定",color:"red",click:function(){
+                                    var sta=(status==0?"1":"0");
+                                    var data="id="+uid;
+                                    var path="body/systemsettingmanagement/institutional-framework-management/ifm_users_management/del";
+                                    use_ajax(path,data);
+                                } },
+                                { title:"取消",click:function(){
+                                    removeUnScroll();
+                                } }
+                            ]
+                        }
+                        $.alertView(json);
+                    }
+                }
+            });
+        });
+
+        /**
+         * 点击加载
+         */
+        $("#load_info").click(function () {
+           if(array.length<99){
+               $.alertView("没有更多相关用户信息！");
+           }
+
+        });
+
+
+        /**
+         * 点击返回
+         */
+
+
+        $("#return-info").click(function(){
+            $(window).scrollTop(0);
+            $("#show-user-info").show();
+            $("#local-info").show();
+            $("#single-user-info-Show").hide();
+        });
+
+        /**
+         *  ajax
+         * @param path
+         * @param data
+         */
+        function use_ajax(path,data) {
+            $.ajax({
+                url :contextPath+path,
+                type: "POST",
+                data: data,
+                dataType:"json",
+                error: function(request) {
+                    removeUnScroll();
+                    console.info(request)
+                    $.alertView("Connection error");
+                },
+
+                success: function(data) {
+
+                    if (data == true) {
+                        $.alertView("操作成功！");
+                        setTimeout(function(){
+                            location.reload();
+                        },1000);
+                    } else {
+                        $.alertView("服务繁忙，稍后再试！");
+                        setTimeout(function(){
+                            location.reload();
+                        },1000);
+                    }
+
+                    removeUnScroll();
+                }
+            });
+        }
+        //禁止滚动条滚动
+        function unScroll() {
+            var top = $(document).scrollTop();
+            $(document).on('scroll.unable',function (e) {
+                $(document).scrollTop(top);
+            })
+        }
+
+        //移除禁止滚动条滚动
+        function removeUnScroll() {
+            $(document).unbind("scroll.unable");
+        }
+    </script>
+</div>
+
+</body>
+
+</html>

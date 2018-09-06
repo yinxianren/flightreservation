@@ -173,12 +173,12 @@
             var bankNum= $("#bankNum").val().trim();
 
 
-            if(isEmpty(companyName)||!regName(companyName)||companyName.length<6||!(companyName.search("公司")!=-1)){
+            if(isEmpty(companyName)||!regName(companyName)||companyName.length<6||!companyName.search("公司")>0){
                 hint("公司名称不空、只能输入中文、符合公司命名规则");
                 return ;
             }
-            if(isEmpty(companyShareName)||!regName(companyShareName)||companyShareName.length<2||!(companyName.search(companyShareName)!=-1)){
-                hint("公司简称不空、只能输入中文、要符合简称要求");
+            if(isEmpty(companyShareName)||!regName(companyShareName)||companyName.length<2||!(companyName.search(companyShareName))>0){
+                hint("公司名称不空、只能输入中文");
                 return ;
             }
             if(isEmpty(businessLicense)||!regAlphabetAndNum(businessLicense)||businessLicense.length<16){

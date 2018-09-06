@@ -101,10 +101,14 @@
 
                                             if (data == true) {
                                                 $.alertView("删除成功！");
-                                                location.reload();
+                                                setTimeout(function(){
+                                                    location.reload();
+                                                },1000);
                                             } else {
                                                 $.alertView("服务繁忙，稍后再试！");
-                                                location.reload();
+                                                setTimeout(function(){
+                                                    location.reload();
+                                                },1000);
                                             }
 
                                             removeUnScroll();

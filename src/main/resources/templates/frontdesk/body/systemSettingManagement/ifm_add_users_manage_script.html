@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="user_add_script">
+    <script th:inline="javascript" type="text/javascript">
+        var contextPath = $('#contextPath').attr('href');
+       $("#companyNum").focusout(function () {
+          var id=$(this).val();
+          var data="id="+data;
+          var path="";
+          use_ajax(path,data)
+
+       });
+
+       /**
+        *  ajax
+        * @param path
+        * @param data
+        */
+       function use_ajax(path,data) {
+           $.ajax({
+               url :contextPath+path,
+               type: "POST",
+               data: data,
+               dataType:"json",
+               error: function(request) {
+                   removeUnScroll();
+                   console.info(request)
+                   $.alertView("Connection error");
+               },
+
+               success: function(data) {
+
+                   if (data == true) {
+                       $.alertView("操作成功！");
+                       setTimeout(function(){
+                           location.reload();
+                       },1000);
+                   } else {
+                       $.alertView("服务繁忙，稍后再试！");
+                       setTimeout(function(){
+                           location.reload();
+                       },1000);
+                   }
+
+                   removeUnScroll();
+               }
+           });
+       }
+
+    </script>
+</div>
+</body>
+
+</html>

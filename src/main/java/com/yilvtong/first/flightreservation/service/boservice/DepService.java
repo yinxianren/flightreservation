@@ -25,4 +25,16 @@ public class DepService {
        }
    }
 
+
+    public List<Dep> getDepByCompany(int id){
+        try {
+            List<Dep> depList= dapMapper.getDepByCompany(id);
+            return depList;
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+
 }

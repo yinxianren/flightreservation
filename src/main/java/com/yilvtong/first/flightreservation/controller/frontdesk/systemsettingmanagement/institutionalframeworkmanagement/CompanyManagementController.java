@@ -19,7 +19,7 @@ public class CompanyManagementController {
         List<Company> companyList=companyService.getAllService();
         map.put("companyList",companyList);
 
-        return "/frontdesk/body/systemSettingManagement/ifm-company-management";
+        return "/frontdesk/body/systemSettingManagement/ifm_company_management";
 
     }
 

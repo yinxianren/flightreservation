@@ -47,7 +47,7 @@ public class DepartmentManagementController  {
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_department_add_management")
     public String pageJumpToAdd(Map<String,Object> map) {
 
-        List<Cmpy> cmpyList=cmpyService.getAllDepartment();
+        List<Cmpy> cmpyList=cmpyService.getAllCompany();
         map.put("cmpyList",cmpyList);
         return "/frontdesk/body/systemSettingManagement/ifm_department_add_management";
 

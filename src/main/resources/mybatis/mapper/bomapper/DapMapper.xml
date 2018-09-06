@@ -1,14 +1,21 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-        <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.yilvtong.first.flightreservation.mapper.boMapper.DapMapper" >
 
-<resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.bo.Dep" >
-    <result column="dep_id" property="id" jdbcType="INTEGER" />
-    <result column="dep_name" property="name" jdbcType="VARCHAR" />
-</resultMap>
+    <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.bo.Dep" >
+        <result column="dep_id" property="id" jdbcType="INTEGER" />
+        <result column="dep_name" property="name" jdbcType="VARCHAR" />
+    </resultMap>
 
 
-<select id="getAll" resultMap="BaseResultMap">
+    <select id="getAll" resultMap="BaseResultMap">
     SELECT dep_id ,dep_name FROM fr_dep LIMIT 0,100
-</select>
+   </select>
+
+
+    <select id="getDepByCompany" resultMap="BaseResultMap">
+        SELECT dep_id ,dep_name FROM fr_dep where dep_company=#{id,jdbcType=INTEGER} LIMIT 0,100
+    </select>
+
+
 </mapper>

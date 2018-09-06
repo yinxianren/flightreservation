@@ -25,8 +25,14 @@
             </div>
             <div class="widget-content nopadding">
                 <form action="#" id="addAndUpdateForm" method="post" class="form-horizontal">
-
-
+                    <div class="control-group">
+                        <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>所属公司 :</label>
+                        <div class="controls">
+                            <select class="span11" name="companyNum" id="companyNum">
+                                <option th:each="company,itarStat :${companyList}" th:text="${company.name}" th:value="${company.id}"></option>
+                            </select>
+                        </div>
+                    </div>
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>用户名 :</label>
                         <div class="controls">
@@ -52,13 +58,21 @@
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>性别 :</label>
                         <div class="controls">
                             <label>
-                                <input type="radio" name="radios" />
+                                <input type="radio" name="sex" checked/>
                                  男
                             </label>
                             <label>
-                                <input type="radio" name="radios" />
+                                <input type="radio" name="sex" />
                                 女
                             </label>
+                        </div>
+                    </div>
+                    <div class="control-group">
+                        <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>所属部门 :</label>
+                        <div class="controls">
+                            <select class="span11">
+                                <option>请选择部门</option>
+                            </select>
                         </div>
                     </div>
                     <div class="control-group">
@@ -82,36 +96,7 @@
                             <span class="help-block"  id="hint_ph"></span>
                         </div>
                     </div>
-                    <div class="control-group">
-                        <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>所属公司 :</label>
-                        <div class="controls">
-                            <select >
-                                <option>First option</option>
-                                <option>Second option</option>
-                                <option>Third option</option>
-                                <option>Fourth option</option>
-                                <option>Fifth option</option>
-                                <option>Sixth option</option>
-                                <option>Seventh option</option>
-                                <option>Eighth option</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="control-group">
-                        <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>所属部门 :</label>
-                        <div class="controls">
-                            <select >
-                                <option>First option</option>
-                                <option>Second option</option>
-                                <option>Third option</option>
-                                <option>Fourth option</option>
-                                <option>Fifth option</option>
-                                <option>Sixth option</option>
-                                <option>Seventh option</option>
-                                <option>Eighth option</option>
-                            </select>
-                        </div>
-                    </div>
+
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>联系电话 :</label>
                         <div class="controls">
@@ -131,11 +116,11 @@
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>用户类型 :</label>
                         <div class="controls">
                             <label>
-                                <input type="radio" name="radios" />
+                                <input type="radio" name="type" value="10000" checked />
                                 普通用户
                             </label>
                             <label>
-                                <input type="radio" name="radios" />
+                                <input type="radio" name="type" value="10001"/>
                                 超级用户
                             </label>
                         </div>
@@ -164,7 +149,9 @@
 <script type="text/javascript" th:src="@{/common/bootstrap-datetimepicker-master/bootstrap/js/bootstrap.min.js}"></script>
 <script type="text/javascript" th:src="@{/common/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.js}" charset="UTF-8"></script>
 <script type="text/javascript" th:src="@{/private/frontdesk/body/js/bootstrap-datetimepicker.zh-CN.js}" charset="UTF-8"></script>
+<a style="display: none;" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() + '/'} " id="contextPath"></a>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
+<div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_add_users_manage_script :: user_add_script"></div>
 </body>
 <script type="text/javascript">
 

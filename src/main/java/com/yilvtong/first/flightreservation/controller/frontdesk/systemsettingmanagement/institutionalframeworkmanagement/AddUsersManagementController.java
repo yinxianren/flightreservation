@@ -1,19 +1,66 @@
 package com.yilvtong.first.flightreservation.controller.frontdesk.systemsettingmanagement.institutionalframeworkmanagement;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yilvtong.first.flightreservation.bo.Cmpy;
 import com.yilvtong.first.flightreservation.controller.frontdesk.IFrontDeskController;
+import com.yilvtong.first.flightreservation.entity.frontdesk.Company;
+import com.yilvtong.first.flightreservation.entity.frontdesk.User;
+import com.yilvtong.first.flightreservation.service.boservice.CmpyService;
+import com.yilvtong.first.flightreservation.service.frontdesk.CompanyService;
+import com.yilvtong.first.flightreservation.service.frontdesk.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import java.util.List;
+import java.util.Map;
 
 @Controller
 @RequestMapping("/body")
-public class AddUsersManagementController implements IFrontDeskController {
+public class AddUsersManagementController{
+
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private CmpyService cmpyService;
 
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage")
-    @Override
-    public String pageJump() {
+    public String pageJump(Map<String,Object> map) {
 
-
+        List<Cmpy>  companyList=cmpyService.getAllCompany();
+        map.put("companyList",companyList);
         return "/frontdesk/body/systemSettingManagement/ifm_add_users_manage";
 
     }
+
+
+    @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/add")
+    public String addUser(User user,Map<String,Object> map) {
+        boolean how=userService.add(user);
+        if(how){
+            return "redirect:/body/systemsettingmanagement/institutional-framework-management/ifm_users_management";
+        }
+        ObjectMapper mapper = new ObjectMapper();
+        String json = null;
+        try {
+            json = mapper.writeValueAsString(user);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+        map.put("message",json);
+        return "/frontdesk/body/error500";
+
+    }
+    @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/getDep")
+    @ResponseBody
+    public List<Object> getDepartment(int id){
+
+
+        return null;
+    }
+
+
 }

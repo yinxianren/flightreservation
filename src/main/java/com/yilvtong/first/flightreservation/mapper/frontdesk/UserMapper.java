@@ -1,18 +1,14 @@
 package com.yilvtong.first.flightreservation.mapper.frontdesk;
 
-import com.yilvtong.first.flightreservation.entity.frontdesk.User;
+import com.yilvtong.first.flightreservation.mapper.MapperModule;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 
 @Repository
-public interface UserMapper {
-    /**
-     *  根据id获取唯一用户
-     * @param id
-     * @return
-     */
-    User getUserById(int id);
+public interface UserMapper<User> extends MapperModule<User> {
 
-
+    boolean updataPassword(@Param("id")int id,@Param("password")String password,@Param("update")String update);
+    boolean freezeAccount(@Param("id")int id,@Param("status")int status,@Param("update")String update);
 
 }
