@@ -1,22 +1,33 @@
 package com.yilvtong.first.flightreservation.controller.frontdesk;
 
 
+import com.yilvtong.first.flightreservation.controller.ReturnResult;
+import com.yilvtong.first.flightreservation.entity.frontdesk.User;
+import com.yilvtong.first.flightreservation.service.frontdesk.UserService;
 import com.yilvtong.first.flightreservation.tool.VerifyUtil;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.websocket.server.PathParam;
 import java.awt.image.BufferedImage;
-import java.io.OutputStream;
+import java.io.*;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
 import java.util.HashMap;
 import java.util.Map;
 
 @Controller
 public class HomeController {
+
+    @Autowired
+    private UserService userService;
 
     /**
      *  http://localhost:8080/
@@ -53,14 +64,38 @@ public class HomeController {
 
     @ResponseBody
     @RequestMapping("/home/imageCode")
-    public Map<String,Object>  getVerifyCode(HttpSession session){
+    public ReturnResult  getVerifyCode(HttpSession session){
 
-        Map<String,Object> map=new HashMap<>();
-        map.put("status","imageCode");
-        map.put("content",session.getAttribute("imageCode"));
-        return map;
+        ReturnResult rr=new ReturnResult();
+        rr.setStatus("success");
+        String ic=(String)session.getAttribute("imageCode");
+        rr.setMessage(ic);
+        rr.setCode(202);
+        rr.setTitle("imageCode");
+        return rr;
     }
 
+
+    @ResponseBody
+    @RequestMapping("/home/login")
+    public ReturnResult checkLogin(@PathParam("name") String uname,
+                                   @PathParam("password") String password,
+                                   HttpSession session
+                                   ){
+        User user=(User)userService.getUserInfo(uname,password);
+        ReturnResult<User> rr=new ReturnResult<User>();
+        if(null!=user){
+            rr.setTitle("login");
+            rr.setCode(200);
+            rr.setStatus("success");
+            session.setAttribute("userInfo",user);
+            return rr;
+        }
+        rr.setTitle("login");
+        rr.setCode(401);
+        rr.setStatus("failed");
+        return rr;
+    }
 
 
 }

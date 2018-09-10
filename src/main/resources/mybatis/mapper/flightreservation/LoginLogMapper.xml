@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yilvtong.first.flightreservation.mapper.frontdesk.LoginLogMapper" >
+
+    <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.entity.frontdesk.LoginLog" >
+        <id column="id" property="id" jdbcType="INTEGER" />
+        <result column="u_account" property="account" jdbcType="VARCHAR" />
+        <result column="ip_addr" property="ipAddr" jdbcType="VARCHAR" />
+        <result column="c_date" property="createDate" jdbcType="DATE" />
+        <result column="up_date" property="update" jdbcType="DATE" />
+    </resultMap>
+
+
+    <select id="getAll" resultMap="BaseResultMap">
+        SELECT * FROM login_log LIMIT 0,100
+    </select>
+
+
+    <select id="getByAccount" resultMap="BaseResultMap">
+        SELECT * FROM login_log where u_account=#{account,jdbcType=VARCHAR}
+        ORDER BY ABS(NOW() - c_date) ASC
+        LIMIT 1;
+    </select>
+
+    <insert id="add" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.LoginLog">
+
+         INSERT  INTO `login_log`
+                    (
+                      u_account,
+                     `ip_addr`,
+                     `c_date`,
+                     `up_date`
+                     )
+                 values (
+                     #{account,jdbcType=VARCHAR},
+                     #{ipAddr,jdbcType=VARCHAR},
+                     #{createDate,jdbcType=DATE},
+                     #{update,jdbcType=DATE}
+                     )
+    </insert>
+</mapper>

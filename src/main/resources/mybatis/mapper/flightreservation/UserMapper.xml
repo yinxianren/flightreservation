@@ -39,6 +39,19 @@
         LEFT JOIN user_type t ON t.ut_id=u.u_type
         LIMIT 0,100
     </select>
+
+    <select id="getUserInfo" resultMap="BaseResultMap">
+        SELECT
+        <include refid="Base_Column_List" />
+        FROM fr_user u
+        LEFT JOIN fr_company c  ON c.cpy_id=u.u_company
+        LEFT JOIN fr_dep d ON d.dep_id=u.u_department
+        LEFT JOIN user_type t ON t.ut_id=u.u_type
+        WHERE u.u_account=#{account,jdbcType=VARCHAR}
+        AND u.u_password=#{password,jdbcType=VARCHAR}
+    </select>
+
+
     <select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Integer">
         SELECT
         <include refid="Base_Column_List" />
@@ -78,14 +91,14 @@
                      #{name,jdbcType=VARCHAR},
                      #{password,jdbcType=VARCHAR},
                      #{sex,jdbcType=VARCHAR},
-                     #{idNum,jdbcType=VARCHAR}
+                     #{idNum,jdbcType=VARCHAR},
                      #{censusRegister,jdbcType=VARCHAR},
                      #{addr,jdbcType=VARCHAR},
                      #{companyNum,jdbcType=INTEGER},
-                     #{departmentNum,jdbcType=INTEGER}
+                     #{departmentNum,jdbcType=INTEGER},
                      #{phone,jdbcType=VARCHAR},
                      #{time,jdbcType=DATE},
-                     #{type,jdbcType=INTEGER}
+                     #{type,jdbcType=INTEGER},
                      #{status,jdbcType=INTEGER},
                      #{description,jdbcType=VARCHAR},
                      #{createDate,jdbcType=DATE},

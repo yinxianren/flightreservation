@@ -11,6 +11,32 @@
         <script th:src="@{/private/frontdesk/body/js/matrix.js}"></script>
         <link th:href="@{/common/uiAlertView/css/uiAlertView-1.0.0.css}" rel="stylesheet" />
         <script th:src="@{/common/uiAlertView/js/jquery.uiAlertView-1.0.0.js}"></script>
+        <script th:inline="javascript" type="text/javascript">
+
+
+            //禁止滚动条滚动
+            function unScroll() {
+                var top = $(document).scrollTop();
+                $(document).on('scroll.unable',function (e) {
+                    $(document).scrollTop(top);
+                })
+            }
+
+            //移除禁止滚动条滚动
+            function removeUnScroll() {
+                $(document).unbind("scroll.unable");
+            }
+
+
+            //判断字符是否为空的方法
+            function isEmpty(obj){
+                if(typeof obj == "undefined" || obj == null || obj == ""){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+        </script>
     </th:block>
 </head>
 
@@ -31,7 +57,7 @@
         <li  class="dropdown" id="profile-messages" >
             <a title="" href="#" data-toggle="dropdown" data-target="#profile-messages" class="dropdown-toggle">
                 <i class="icon icon-user"></i>
-                <span class="text">欢迎 yinxianren</span>
+                <span class="text">欢迎 [[${session.userInfo.account}]]</span>
                 <b class="caret"></b>
             </a>
             <ul class="dropdown-menu">
@@ -89,7 +115,7 @@
 
     <ul>
         <!-- class="active" -->
-        <li><a href="#"><i class="icon icon-home"></i> <span>首页</span></a> </li>
+        <li th:class="${action=='home'}?'btn-success':'' "><a th:href="@{/body/index}"><i class="icon icon-home"></i> <span>首页</span></a> </li>
         <!-- 业务管理模块 -->
         <!--<li class="submenu  open btn-success">-->
         <li th:class="${action=='busi_manage'}?'submenu  open ':'submenu' "> <a href="#"><i class="icon icon-glass"></i> <span>业务管理</span> </a>
@@ -168,25 +194,6 @@
                 <li th:class=" ${sub_action=='promotional_info_manage'?'btn-success':''}"><a th:href="@{/body/webbackstagemanagement/promotional-info-management}">促销信息管理</a></li>
             </ul>
         </li>
-
-
-        <!--<li class="content"> <span>每个月带宽</span>-->
-        <!--<div class="progress progress-mini progress-danger active progress-striped">-->
-        <!--<div style="width: 77%;" class="bar"></div>-->
-        <!--</div>-->
-        <!--<span class="percent">77%</span>-->
-        <!--<div class="stat">21419.94 / 14000 MB</div>-->
-        <!--</li>-->
-
-        <!--<li class="content"> <span>Disk Space Usage</span>-->
-        <!--<div class="progress progress-mini active progress-striped">-->
-        <!--<div style="width: 87%;" class="bar"></div>-->
-        <!--</div>-->
-        <!--<span class="percent">87%</span>-->
-        <!--<div class="stat">604.44 / 4000 MB</div>-->
-        <!--</li>-->
-
-
     </ul>
 </div>
 <!--sidebar-menu-->

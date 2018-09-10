@@ -4,6 +4,7 @@ import com.yilvtong.first.flightreservation.mapper.frontdesk.UserMapper;
 import com.yilvtong.first.flightreservation.service.ServiceModule;
 import com.yilvtong.first.flightreservation.tool.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -103,5 +104,13 @@ public class UserService<User> implements ServiceModule<User> {
         return true;
     }
 
-
+    public User getUserInfo(String un,String ps){
+      try {
+          User user = (User) userMapper.getUserInfo(un, ps);
+          return user;
+      }catch(Exception e){
+          e.printStackTrace();
+          return null;
+      }
+    }
 }

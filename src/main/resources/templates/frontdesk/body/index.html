@@ -6,26 +6,23 @@
   <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
 </head>
 <body>
-<div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content"></div>
+<div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='home',sub_action='null')"></div>
 <!--main-container-part-->
-<div id="content">
 
-  <!--breadcrumbs-->
-  <div id="content-header">
-    <div id="breadcrumb"> <a href="index.html" title="Go to Home" class="tip-bottom"><i class="icon-home"></i> 首页</a></div>
-  </div>
+  <div id="content">
 
-  <hr/>
+    <hr/>
 
-  <div>
-    <p style="text-align: center;font-size:25px;color:red;margin-top:300px;margin-bottom: 500px;font-family:  Helvetica,'Helvetica Neue', Arial, sans-serif">
-      <i class="icon-spinner icon-spin"></i>
-      正在开发中......
-    </p>
-  </div>
-
-
+    <div>
+      <p style="text-align: center;font-size:25px;color:red;margin-top:300px;margin-bottom: 500px;font-family:  Helvetica,'Helvetica Neue', Arial, sans-serif">
+        <i class="icon-spinner icon-spin"></i>
+        正在开发中......
+      </p>
+    </div>
 </div>
+
+
+
 </div>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 </body>

@@ -186,18 +186,7 @@
                 }
             });
         }
-        //禁止滚动条滚动
-        function unScroll() {
-            var top = $(document).scrollTop();
-            $(document).on('scroll.unable',function (e) {
-                $(document).scrollTop(top);
-            })
-        }
 
-        //移除禁止滚动条滚动
-        function removeUnScroll() {
-            $(document).unbind("scroll.unable");
-        }
     </script>
 </div>
 

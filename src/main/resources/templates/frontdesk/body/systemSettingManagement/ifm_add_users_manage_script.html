@@ -6,49 +6,194 @@
 <div th:fragment="user_add_script">
     <script th:inline="javascript" type="text/javascript">
         var contextPath = $('#contextPath').attr('href');
-       $("#companyNum").focusout(function () {
-          var id=$(this).val();
-          var data="id="+data;
-          var path="";
-          use_ajax(path,data)
 
-       });
+        $(function () {
 
-       /**
-        *  ajax
-        * @param path
-        * @param data
-        */
-       function use_ajax(path,data) {
-           $.ajax({
-               url :contextPath+path,
-               type: "POST",
-               data: data,
-               dataType:"json",
-               error: function(request) {
-                   removeUnScroll();
-                   console.info(request)
-                   $.alertView("Connection error");
-               },
+            /*
+                公司选择框事件
+             */
+            $("#companyNum").change(function () {
+                var id=$(this).val();
+                var data="id="+id;
+                var path="body/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/getDep";
+                var msg=0;
+                use_ajax(path,data,msg);
 
-               success: function(data) {
+            });
 
-                   if (data == true) {
-                       $.alertView("操作成功！");
-                       setTimeout(function(){
-                           location.reload();
-                       },1000);
-                   } else {
-                       $.alertView("服务繁忙，稍后再试！");
-                       setTimeout(function(){
-                           location.reload();
-                       },1000);
-                   }
+            /*
+              点击部门选择框事件
+             */
+            $("#departmentNum").click(function () {
+//               console.info("部门id:"+$(this).val());
+                if(null!=$(this).val()){
+                    return ;
+                }else {
+                    var comId=$("#companyNum").val();
+//                   console.info("公司id:"+comId);
+                    var data="id="+comId;
+                    var path="body/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/getDep";
+                    var msg=1;
+                    use_ajax(path,data,msg);
+                }
+            });
 
-                   removeUnScroll();
-               }
-           });
-       }
+            $("#user-info-submit").click(function () {
+
+                var companyNum=$("#companyNum").val().trim();
+                if(isEmpty(companyNum)){
+                    hint("公司未选择");
+                    return false;
+                }
+
+                var account =$("#account").val().trim();
+                if(isEmpty(account)||!regAccount(account)){
+                    hint("账号不合法");
+                    return false;
+                }
+
+                var password=$("#password").val().trim();
+                if(isEmpty(password)||!regPassword(password)){
+                    hint("密码不合法");
+                    return false;
+                }
+
+                var name=$("#name").val().trim();
+                if(isEmpty(name)||!regName(name)||name.length<2||name.length>5){
+                    hint("名字不合法");
+                    return false;
+                }
+
+                var departmentNum=$("#departmentNum").val();
+                if(isEmpty(departmentNum)){
+                    hint("部门不能为空");
+                    return false;
+                }
+
+
+                var idNum=$("#idNum").val().trim();
+                if(isEmpty(idNum)||!id_Num(idNum)||idNum.length!=18){
+                    hint("身份证不合法");
+                    return false;
+                }
+
+
+                var censusRegister=$("#censusRegister").val().trim();
+                if(isEmpty(censusRegister)||!regCH_NUM_ALP(censusRegister)){
+                    hint("户籍地址不合法");
+                    return false;
+                }
+                var addr=$("#addr").val().trim();
+                if(isEmpty(addr)||!regCH_NUM_ALP(addr)){
+                    hint("现居住地址不合法");
+                    return false;
+                }
+                var phone=$("#phone").val().trim();
+                if(isEmpty(phone)||!regPhone(phone)){
+                    hint("手机号不合法");
+                    return false;
+                }
+
+                var time=$("#time").val().trim();
+                if(isEmpty(time)){
+                    hint("入职时间不能为空");
+                    return false;
+                }
+                var description=$("#description").val().trim();
+                if(isEmpty(description)){
+                    hint("备注一下，该用户的信息！");
+                    return false;
+                }
+
+
+            })
+
+
+
+
+
+
+
+        })
+
+        /**
+         * 提示信息
+         *
+         */
+        function hint(msg){
+            $(window).scrollTop(0);
+            unScroll();
+            var json = {
+                title:"<span style='color: red;font-size: 22px;'>警告!</span>",
+                msg:"<span style='color: #73680a;font-size: 18px;'>输入有误 (</span>"+msg+")!",
+                buttons:[
+                    { title:"取消",click:function(){
+                        removeUnScroll();
+                    }
+                    }
+                ]
+            }
+            $.alertView(json);
+        }
+        /**
+         *  ajax
+         * @param path
+         * @param data
+         */
+        function use_ajax(path,data,msg) {
+            if(msg==0) {
+                $(window).scrollTop(0);
+                unScroll();
+            }
+
+            $.ajax({
+                url :contextPath+path,
+                type: "POST",
+                data: data,
+                dataType:"json",
+                error: function(request) {
+                    if(msg==0){ removeUnScroll();}
+
+                    console.info(request)
+                    $.alertView("Connection error");
+                },
+
+                success: function(data) {
+                    console.info("返回结果："+data.length);
+                    var depObj=$("#departmentNum");
+                    depObj.empty();
+                    if(data.length==0){
+                        if(msg==0){
+                            $("#hint_co").css("color","red");
+                            $("#hint_co").html("该公司目前未添加任何相关部门信息，请到（部门管理）模块中进行添加！");
+                            depObj.attr("disabled","disabled");
+                        }
+                    }else if(data.length>0){
+                        if(msg==0) {
+                            $("#hint_co").html("该公司拥有以下部门：");
+                            $("#hint_co").css("color", "green");
+                        }
+                        var depObj=$("#departmentNum");
+                        $.each(data,function (i,n) {
+                            if(msg==0){$("#hint_co").html( $("#hint_co").html()+n.name+"!");}
+                            var opt="<option value="+n.id+"> "+n.name+"</option>";
+                            depObj.append(opt);
+                        })
+                        depObj.removeAttr("disabled");
+                    }else{
+                        depObj.attr("disabled","disabled");
+                    }
+                    if(msg==0){removeUnScroll();}
+
+                }
+            });
+        }
+
+
+
+
+
+
 
     </script>
 </div>

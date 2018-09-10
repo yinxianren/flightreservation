@@ -24,45 +24,43 @@
                 <h2>用户添加</h2>
             </div>
             <div class="widget-content nopadding">
-                <form action="#" id="addAndUpdateForm" method="post" class="form-horizontal">
+                <form action="/body/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/add" id="addAndUpdateForm" method="post" class="form-horizontal">
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>所属公司 :</label>
                         <div class="controls">
                             <select class="span11" name="companyNum" id="companyNum">
                                 <option th:each="company,itarStat :${companyList}" th:text="${company.name}" th:value="${company.id}"></option>
                             </select>
+                            <span class="help-block"  id="hint_co"></span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>用户名 :</label>
                         <div class="controls">
-                            <input value=""   type="text" class="span11" name="depCompany" id="company" />
-                            <span class="help-block"  id="hint_co"></span>
+                            <input value=""  placeholder="只能输入字母、数字和下划线，并且以字母开头，长度不小4" type="text" class="span11" name="account" id="account" />
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>密码 :</label>
                         <div class="controls">
-                            <input type="password" class="span11"  name="depName" id="name"/>
-                            <span class="help-block"  id="hint_na"></span>
+                            <input type="password" placeholder="以字母开头，长度在6~36之间" class="span11"  name="password" id="password"/>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>真实姓名 :</label>
                         <div class="controls">
-                            <input type="text" class="span11"  name="depPricipal" id="pricipal"/>
-                            <span class="help-block"  id="hint_pr"></span>
+                            <input type="text" class="span11" placeholder="只能输入中文，长度2~5" name="name" id="name"/>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>性别 :</label>
                         <div class="controls">
                             <label>
-                                <input type="radio" name="sex" checked/>
+                                <input type="radio" value="男" name="sex" checked/>
                                  男
                             </label>
                             <label>
-                                <input type="radio" name="sex" />
+                                <input type="radio" value="女" name="sex" />
                                 女
                             </label>
                         </div>
@@ -70,44 +68,41 @@
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>所属部门 :</label>
                         <div class="controls">
-                            <select class="span11">
-                                <option>请选择部门</option>
+                            <select class="span11" name="departmentNum"  id="departmentNum">
+
                             </select>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>身份证号 :</label>
                         <div class="controls">
-                            <input type="text" class="span11"  name="depPhone" id="phone"/>
-                            <span class="help-block"  id="hint_ph"></span>
+                            <input type="text" class="span11" placeholder="15位数字、18位数字或者17位数字，末尾位数x/X" name="idNum" id="idNum"/>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>户籍地址 :</label>
                         <div class="controls">
-                            <input type="text" class="span11"  name="depPhone" id="phone"/>
-                            <span class="help-block"  id="hint_ph"></span>
+                            <input type="text" class="span11"  placeholder="只能包含中文和数字、字母、下划线" name="censusRegister" id="censusRegister"/>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>现居地址 :</label>
                         <div class="controls">
-                            <input type="text" class="span11"  name="depPhone" id="phone"/>
-                            <span class="help-block"  id="hint_ph"></span>
+                            <input type="text" class="span11" placeholder="只能包含中文和数字、字母、下划线" name="addr" id="addr"/>
                         </div>
                     </div>
 
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>联系电话 :</label>
                         <div class="controls">
-                            <input type="text"  class="span11"  name="depAbbreviation" id="abbreviation" />
+                            <input type="text"  class="span11" placeholder="11位数字"  name="phone" id="phone" />
                             <span class="help-block"  id="hint_ab"></span>
                         </div>
                     </div>
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>入职时间 :</label>
                         <div  style="margin: 0 0;margin-left: 20px;" class="controls input-append date form_date" data-date="" data-date-format="yyyy-mm-dd" data-link-field="dtp_input2" data-link-format="yyyy-mm-dd" >
-                            <input  type="text" value="" readonly>
+                            <input  type="text"  name="time" id="time" readonly>
                             <span class="add-on"><i class="icon-remove"></i></span>
                             <span class="add-on"><i class="icon-th"></i></span>
                         </div>
@@ -130,12 +125,11 @@
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>备注 ：</label>
                         <div class="controls">
                             <textarea class="span11"   name="description" id="description" ></textarea>
-                            <span class="help-block"  id="hint_des"></span>
                         </div>
                     </div>
                     <div class="form-actions">
                         <p id="submitButton" style="text-align: center;">
-                            <button onclick="add_submit()"  style="margin-right: 25px;"  type="button" class="btn btn-large btn-inverse"><i class="icon-save"></i>提交</button>
+                            <button  style="margin-right: 25px;" id="user-info-submit"  type="submit" class="btn btn-large btn-inverse"><i class="icon-save"></i>提交</button>
                         </p>
                     </div>
                 </form>
@@ -152,6 +146,7 @@
 <a style="display: none;" th:href="${#httpServletRequest.getScheme() + '://' + #httpServletRequest.getServerName() + ':' + #request.getServerPort()  + #request.getContextPath() + '/'} " id="contextPath"></a>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 <div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_add_users_manage_script :: user_add_script"></div>
+<div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_department_modifyAndAdd_script :: regexp_script"></div>
 </body>
 <script type="text/javascript">
 
