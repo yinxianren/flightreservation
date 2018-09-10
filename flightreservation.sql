@@ -62,7 +62,7 @@ CREATE TABLE `fr_dep` (
   PRIMARY KEY (`dep_id`),
   KEY `fk_dep_company` (`dep_company`),
   CONSTRAINT `fk_dep_company` FOREIGN KEY (`dep_company`) REFERENCES `fr_company` (`cpy_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10026 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='部门表';
+) ENGINE=InnoDB AUTO_INCREMENT=10023 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='部门表';
 
 /*Data for the table `fr_dep` */
 
@@ -74,6 +74,7 @@ DROP TABLE IF EXISTS `fr_user`;
 
 CREATE TABLE `fr_user` (
   `u_id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长ID',
+  `u_account` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '账号名',
   `u_name` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '用户名',
   `u_password` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '用户密码',
   `u_sex` varchar(2) COLLATE utf8_bin NOT NULL COMMENT '性别',
@@ -83,7 +84,7 @@ CREATE TABLE `fr_user` (
   `u_company` int(11) NOT NULL COMMENT '所属公司',
   `u_department` int(11) NOT NULL COMMENT '所属部门',
   `u_phone` varchar(11) COLLATE utf8_bin NOT NULL COMMENT '用户手机号码',
-  `u_time` date DEFAULT NULL COMMENT '入职时间',
+  `u_time` date DEFAULT NULL,
   `u_type` int(11) NOT NULL COMMENT '用户类型',
   `u_status` tinyint(2) NOT NULL COMMENT '用户状态，0冻结、1可用',
   `description` varchar(256) COLLATE utf8_bin DEFAULT NULL COMMENT '描述',
@@ -96,11 +97,28 @@ CREATE TABLE `fr_user` (
   CONSTRAINT `fk_user_company` FOREIGN KEY (`u_company`) REFERENCES `fr_company` (`cpy_id`),
   CONSTRAINT `fk_user_dep` FOREIGN KEY (`u_department`) REFERENCES `fr_dep` (`dep_id`),
   CONSTRAINT `fk_user_type` FOREIGN KEY (`u_type`) REFERENCES `user_type` (`ut_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=10003 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=10005 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='用户表';
 
 /*Data for the table `fr_user` */
 
-insert  into `fr_user`(`u_id`,`u_name`,`u_password`,`u_sex`,`u_idNum`,`u_censusRegister`,`u_addr`,`u_company`,`u_department`,`u_phone`,`u_time`,`u_type`,`u_status`,`description`,`c_date`,`up_date`) values (10000,'root','123456','男','350425199856214785','福建省厦门市思明区镇海路民盛大厦8楼804','福建省厦门市思明区镇海路民盛大厦8楼804',10000,10000,'15887452596','2018-09-04',10000,1,NULL,'2018-09-04 09:56:59','2018-09-04 09:57:03'),(10001,'root','123456','男','350425199856214785','福建省厦门市思明区镇海路民盛大厦8楼804','福建省厦门市思明区镇海路民盛大厦8楼804',10000,10000,'15887452596','2018-09-04',10000,1,NULL,'2018-09-04 09:56:59','2018-09-04 09:57:03'),(10002,'root','123456','男','350425199856214785','福建省厦门市思明区镇海路民盛大厦8楼804','福建省厦门市思明区镇海路民盛大厦8楼804',10000,10000,'15887452596','2018-09-04',10000,1,NULL,'2018-09-04 09:56:59','2018-09-04 09:57:03');
+insert  into `fr_user`(`u_id`,`u_account`,`u_name`,`u_password`,`u_sex`,`u_idNum`,`u_censusRegister`,`u_addr`,`u_company`,`u_department`,`u_phone`,`u_time`,`u_type`,`u_status`,`description`,`c_date`,`up_date`) values (10000,'root','张三','123456','男','350425199856214785','福建省厦门市思明区镇海路民盛大厦8楼804','福建省厦门市思明区镇海路民盛大厦8楼804',10000,10000,'15887452596','2018-09-04',10000,1,NULL,'2018-09-04 09:56:59','2018-09-04 09:57:03'),(10001,'root','张三','123456789','男','350425199856214785','福建省厦门市思明区镇海路民盛大厦8楼804','福建省厦门市思明区镇海路民盛大厦8楼804',10000,10000,'15887452596','2018-09-04',10000,1,NULL,'2018-09-04 09:56:59','2018-09-07 10:58:12'),(10004,'asdfs','收到撒旦法','ADFASFSDFAS','男','352415888965478541','是大法师的发','范德萨发沙发',10000,10001,'14785236985','2018-09-07',10000,0,'safsa','2018-09-07 17:30:26','2018-09-07 17:30:26');
+
+/*Table structure for table `login_log` */
+
+DROP TABLE IF EXISTS `login_log`;
+
+CREATE TABLE `login_log` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '自增长ID',
+  `u_account` varchar(64) COLLATE utf8_bin NOT NULL COMMENT '用户名',
+  `ip_addr` varchar(64) COLLATE utf8_bin NOT NULL COMMENT 'ip地址',
+  `c_date` datetime DEFAULT NULL COMMENT '创建时间',
+  `up_date` datetime DEFAULT NULL COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=11 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='用户登入记录表';
+
+/*Data for the table `login_log` */
+
+insert  into `login_log`(`id`,`u_account`,`ip_addr`,`c_date`,`up_date`) values (1,'root','0:0:0:0:0:0:0:1',NULL,'2018-09-10 18:22:21'),(2,'root','127.0.0.1',NULL,'2018-09-10 18:25:50'),(3,'root','127.0.0.1','2018-09-10 18:26:27',NULL),(4,'root','192.168.0.107','2018-09-10 18:28:36',NULL),(5,'root','192.168.0.107','2018-09-10 18:29:39',NULL),(6,'root','192.168.0.107','2018-09-10 18:29:55',NULL),(7,'root','192.168.0.107','2018-09-10 18:31:28',NULL),(8,'root','117.28.173.223','2018-09-10 18:36:07',NULL),(9,'root','117.28.173.223','2018-09-10 18:37:28',NULL),(10,'root','117.28.173.223','2018-09-10 18:37:45',NULL);
 
 /*Table structure for table `user_type` */
 
