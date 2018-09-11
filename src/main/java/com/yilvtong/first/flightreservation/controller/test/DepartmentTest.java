@@ -22,7 +22,7 @@ public class DepartmentTest {
      */
     @GetMapping("/test/getDepartmentById")
     public Department getDepartmentById(int id){
-        return departmentService.getDepartmentById(id);
+        return (Department)departmentService.getById(id);
     }
 
 
@@ -33,7 +33,7 @@ public class DepartmentTest {
     @GetMapping("/test/getAllDepartment")
     public List<Department> getAllDepartment() {
 
-               return departmentService.getAllDepartment();
+               return departmentService.getAll();
     }
 
 

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import java.util.Arrays;
 import java.util.List;
 
-@Configuration
+@Configuration   //开放中注释掉，事件应用要打开
 public class LoginWebMvcConfigurer implements WebMvcConfigurer {
 
 

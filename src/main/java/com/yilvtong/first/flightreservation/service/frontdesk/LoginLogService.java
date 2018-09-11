@@ -7,6 +7,10 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+/**
+ * 最新版本不推荐直接实现ServiceModule，而是采用继承抽象类ServiceParent
+ * @param <LoginLog>
+ */
 @Service
 public class LoginLogService<LoginLog>  implements ServiceModule<LoginLog> {
 

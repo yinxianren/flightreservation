@@ -2,6 +2,7 @@ package com.yilvtong.first.flightreservation.controller.frontdesk.systemsettingm
 
 import com.yilvtong.first.flightreservation.entity.frontdesk.Company;
 import com.yilvtong.first.flightreservation.service.frontdesk.CompanyService;
+import com.yilvtong.first.flightreservation.tool.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,9 +15,13 @@ import java.util.Map;
 @RequestMapping("/body")
 public class CompanyManagementController {
 
+    @Autowired
+    private CompanyService companyService;
+
+
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management")
     public String pageJump(Map<Object,Object> map) {
-        List<Company> companyList=companyService.getAllService();
+        List<Company> companyList=companyService.getAll();
         map.put("companyList",companyList);
 
         return "/frontdesk/body/systemSettingManagement/ifm_company_management";
@@ -24,14 +29,13 @@ public class CompanyManagementController {
     }
 
 
-    @Autowired
-    private CompanyService companyService;
+
 
 
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/get")
     public Company getByIdController(int id) {
-        Company company= (Company) companyService.getByIdService(id);
+        Company company= (Company) companyService.getById(id);
         if(null==company){
             return null;
         }
@@ -41,7 +45,7 @@ public class CompanyManagementController {
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/getAll")
     public List<Company> getAllController() {
-        List<Company> companyList=companyService.getAllService();
+        List<Company> companyList=companyService.getAll();
         if(null==companyList){
             return null;
         }
@@ -51,7 +55,8 @@ public class CompanyManagementController {
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/del")
     public boolean delByIdController(int id) {
-        boolean isTrue=companyService.delByIdService(id);
+
+        boolean isTrue=companyService.delById(id);
         if(isTrue){
             return true;
         }
@@ -61,8 +66,8 @@ public class CompanyManagementController {
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/upData")
     public boolean updataByIdController( Company company) {
-
-        boolean isTrue=companyService.updataByIdService(company);
+        company.setUpdate(DateTimeUtils.getCurrentDateTimeStr2());
+        boolean isTrue=companyService.updataById(company);
         if(isTrue){
             return true;
         }
@@ -72,7 +77,11 @@ public class CompanyManagementController {
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/add")
     public boolean addController(Company company) {
-        boolean isTrue=companyService.addService(company);
+
+        String time= DateTimeUtils.getCurrentDateTimeStr2();
+        company.setUpdate(time);
+        company.setCreateDate(time);
+        boolean isTrue=companyService.add(company);
         if(isTrue){
             return true;
         }

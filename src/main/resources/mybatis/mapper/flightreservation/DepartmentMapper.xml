@@ -26,7 +26,7 @@
     </sql>
 
 
-    <select id="getDepartmentById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    <select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
         select
         <include refid="Base_Column_List" />
         FROM  fr_dep dep
@@ -35,7 +35,7 @@
         where dep_id = #{id,jdbcType=INTEGER}
     </select>
 
-    <select id="getAllDepartment" resultMap="BaseResultMap">
+    <select id="getAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
         FROM  fr_dep dep
@@ -45,7 +45,7 @@
     </select>
 
 
-    <insert id="addDepartment" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Department">
+    <insert id="add" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Department">
         INSERT  INTO fr_dep
         <trim prefix="(" suffix=")" suffixOverrides="," >
             <if test="depCompany != null" >
@@ -109,12 +109,12 @@
     </insert>
 
 
-    <delete id="delDepartmentById" parameterType="java.lang.Integer" >
+    <delete id="delById" parameterType="java.lang.Integer" >
         delete from fr_dep
         where dep_id = #{id,jdbcType=INTEGER}
     </delete>
 
-    <update id="updateDepartmentById" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Department" >
+    <update id="updataById" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Department" >
         update fr_dep
         <set >
             <if test="depCompany != null" >

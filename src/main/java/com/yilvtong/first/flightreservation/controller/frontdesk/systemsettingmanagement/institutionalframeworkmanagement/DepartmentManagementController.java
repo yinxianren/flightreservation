@@ -9,6 +9,7 @@ import com.yilvtong.first.flightreservation.entity.frontdesk.Department;
 import com.yilvtong.first.flightreservation.service.boservice.CmpyService;
 import com.yilvtong.first.flightreservation.service.boservice.DepService;
 import com.yilvtong.first.flightreservation.service.frontdesk.DepartmentService;
+import com.yilvtong.first.flightreservation.tool.DateTimeUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,7 +33,7 @@ public class DepartmentManagementController  {
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_department_management")
     public String pageJump(Map<String,Object> map) {
 
-        List<Department> list= departmentService.getAllDepartment();//对象全
+        List<Department> list= departmentService.getAll();//对象全
         map.put("lists",list);
 
         return "/frontdesk/body/systemSettingManagement/ifm_department_management";
@@ -63,7 +64,7 @@ public class DepartmentManagementController  {
     public String pageJumpToModify(@RequestParam("id") int id,
                                    Map<String,Object> map) {
 
-        Department department=departmentService.getDepartmentById(id);
+        Department department= (Department) departmentService.getById(id);
         map.put("department",department);
         return "/frontdesk/body/systemSettingManagement/ifm_department_modify_management";
 
@@ -79,7 +80,7 @@ public class DepartmentManagementController  {
     @ResponseBody
     @PostMapping("/systemsettingmanagement/institutional-framework-management/ifm_department_management/del")
     public boolean delDepartmentById(int id){
-        Boolean  how=departmentService.delDepartmentById(id);
+        Boolean  how=departmentService.delById(id);
         if(how){
             return true;
         }else {
@@ -96,7 +97,11 @@ public class DepartmentManagementController  {
      */
     @PostMapping("/systemsettingmanagement/institutional-framework-management/ifm_department_management/mod")
     public String modDepartmentById(Department dep,Map<String,Object> map){
-        Boolean  how=departmentService.updateDepartmentById(dep);
+
+        dep.setUpdate(DateTimeUtils.getCurrentDateTimeStr2());
+        dep.setCompanyName(null); //不更新
+        dep.setDepName(null);//不更新
+        Boolean  how=departmentService.updataById(dep);
         if(how){
             return "redirect:/body/systemsettingmanagement/institutional-framework-management/ifm_department_management";
 //            return RedirectToAction("/body/systemsettingmanagement/institutional-framework-management/ifm_department_management");
@@ -122,7 +127,11 @@ public class DepartmentManagementController  {
      */
     @PostMapping("/systemsettingmanagement/institutional-framework-management/ifm_department_management/add")
     public String addDepartmentById(Department dep,Map<String,Object> map){
-        Boolean  how=departmentService.addDepartment(dep);
+
+        String date= DateTimeUtils.getCurrentDateTimeStr2();
+        dep.setCreateDate(date);
+        dep.setUpdate(date);
+        Boolean  how=departmentService.add(dep);
         if(how){
             return "redirect:/body/systemsettingmanagement/institutional-framework-management/ifm_department_management";
         }
