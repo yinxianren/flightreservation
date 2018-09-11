@@ -149,14 +149,11 @@
          *
          */
         function hint(msg){
-            $(window).scrollTop(0);
-            unScroll();
             var json = {
                 title:"<span style='color: red;font-size: 22px;'>警告!</span>",
                 msg:"<span style='color: #73680a;font-size: 18px;'>输入有误 (</span>"+msg+")!",
                 buttons:[
                     { title:"取消",click:function(){
-                        removeUnScroll();
                     }
                     }
                 ]
@@ -280,7 +277,7 @@
         }
         //账户
         function regAccount(account){
-            var patt=/^[a-zA-Z][a-zA-Z0-9_]{4,}$/;
+            var patt=/^[a-zA-Z0-9_]{2,}$/;
             return patt.test(account);
         }
 

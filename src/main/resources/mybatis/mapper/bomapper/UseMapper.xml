@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yilvtong.first.flightreservation.mapper.boMapper.UseMapper" >
+
+    <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.bo.User" >
+        <id column="u_id" property="id" jdbcType="INTEGER" />
+        <result column="u_account" property="account" jdbcType="VARCHAR" />
+        <result column="u_name" property="name" jdbcType="VARCHAR" />
+        <result column="u_password" property="oldPassword" jdbcType="VARCHAR" />
+        <result column="up_date" property="update" jdbcType="DATE" />
+    </resultMap>
+
+
+
+    <select id="getByIdAndAccount" resultMap="BaseResultMap">
+        SELECT
+              u_id,u_account, u_name,u_password
+        FROM fr_user
+        WHERE u_id=#{id,jdbcType=INTEGER}
+        AND u_account=#{account,jdbcType=INTEGER}
+    </select>
+
+</mapper>

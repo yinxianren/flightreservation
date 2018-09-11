@@ -17,6 +17,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.websocket.server.PathParam;
 import java.util.List;
 import java.util.Map;
 
@@ -65,6 +66,11 @@ public class AddUsersManagementController{
         return "/frontdesk/body/error500";
 
     }
+
+
+
+
+
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/getDep")
     @ResponseBody
     public List<Dep> getDepartment(int id){
@@ -76,6 +82,13 @@ public class AddUsersManagementController{
     }
 
 
-
-
+    @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/checkAccount")
+    @ResponseBody
+    public boolean checkAccount(@PathParam("account") String account){
+        int in=userService.checkAccount(account);
+        if(in>0){
+            return false;
+        }
+        return true;
+    }
 }

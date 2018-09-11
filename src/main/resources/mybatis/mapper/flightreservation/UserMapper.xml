@@ -61,6 +61,16 @@
         LEFT JOIN user_type t ON t.ut_id=u.u_type
         WHERE u_id=#{id,jdbcType=INTEGER}
     </select>
+
+    <select id="checkAccount"
+            resultType="java.lang.Integer"
+           >
+        SELECT COUNT(u_account)
+        FROM fr_user
+        WHERE u_account=#{account,jdbcType=VARCHAR}
+    </select>
+
+
     <delete id="delById" parameterType="java.lang.Integer" >
         delete from fr_user
         where u_id = #{id,jdbcType=INTEGER}

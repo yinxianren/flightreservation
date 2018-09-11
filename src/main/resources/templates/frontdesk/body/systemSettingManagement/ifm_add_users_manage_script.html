@@ -6,8 +6,11 @@
 <div th:fragment="user_add_script">
     <script th:inline="javascript" type="text/javascript">
         var contextPath = $('#contextPath').attr('href');
-
+        var checkAccount=true;
         $(function () {
+
+            $("#account").val("");
+            $("#password").val("");
 
             /*
                 公司选择框事件
@@ -38,7 +41,24 @@
                 }
             });
 
+
+
+            $("#account").focusout(function () {
+
+                var account  =$(this).val().trim();
+                var data="account="+account;
+                var path="body/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/checkAccount";
+                var msg=33;
+                use_ajax(path,data,msg);
+            });
+
+
+
+
             $("#user-info-submit").click(function () {
+
+
+
 
                 var companyNum=$("#companyNum").val().trim();
                 if(isEmpty(companyNum)){
@@ -49,6 +69,10 @@
                 var account =$("#account").val().trim();
                 if(isEmpty(account)||!regAccount(account)){
                     hint("账号不合法");
+                    return false;
+                }
+                if(checkAccount==false){
+                    hint("该账号已经存在，请重新输入");
                     return false;
                 }
 
@@ -105,6 +129,7 @@
                     return false;
                 }
 
+                $("#password").val(hex_md5(password));
 
             })
 
@@ -121,14 +146,11 @@
          *
          */
         function hint(msg){
-            $(window).scrollTop(0);
-            unScroll();
             var json = {
                 title:"<span style='color: red;font-size: 22px;'>警告!</span>",
                 msg:"<span style='color: #73680a;font-size: 18px;'>输入有误 (</span>"+msg+")!",
                 buttons:[
                     { title:"取消",click:function(){
-                        removeUnScroll();
                     }
                     }
                 ]
@@ -141,10 +163,6 @@
          * @param data
          */
         function use_ajax(path,data,msg) {
-            if(msg==0) {
-                $(window).scrollTop(0);
-                unScroll();
-            }
 
             $.ajax({
                 url :contextPath+path,
@@ -152,13 +170,23 @@
                 data: data,
                 dataType:"json",
                 error: function(request) {
-                    if(msg==0){ removeUnScroll();}
-
                     console.info(request)
-                    $.alertView("Connection error");
                 },
 
                 success: function(data) {
+
+                    if(msg==33){
+                        if(data==false){
+                            checkAccount=false;
+                           $("#hint_acc").html("该账号已经存在，请重新输入");
+                           return;
+                        }
+                        $("#hint_acc").html("");
+                        checkAccount=true;
+                        return;
+                    }
+
+
                     console.info("返回结果："+data.length);
                     var depObj=$("#departmentNum");
                     depObj.empty();
@@ -169,6 +197,8 @@
                             depObj.attr("disabled","disabled");
                         }
                     }else if(data.length>0){
+
+
                         if(msg==0) {
                             $("#hint_co").html("该公司拥有以下部门：");
                             $("#hint_co").css("color", "green");
@@ -183,7 +213,10 @@
                     }else{
                         depObj.attr("disabled","disabled");
                     }
-                    if(msg==0){removeUnScroll();}
+
+
+
+
 
                 }
             });

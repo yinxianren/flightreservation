@@ -37,7 +37,8 @@
                     <div class="control-group">
                         <label class="control-label"><i style="color: red;" class=" icon-bell-alt"></i>用户名 :</label>
                         <div class="controls">
-                            <input value=""  placeholder="只能输入字母、数字和下划线，并且以字母开头，长度不小4" type="text" class="span11" name="account" id="account" />
+                            <input value=""  placeholder="只能输入字母、数字和下划线，长度不小2" type="text" class="span11" name="account" id="account" />
+                            <span style="color: red;" class="help-block"  id="hint_acc"></span>
                         </div>
                     </div>
                     <div class="control-group">
@@ -147,6 +148,7 @@
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 <div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_add_users_manage_script :: user_add_script"></div>
 <div th:replace="../templates/frontdesk/body/systemSettingManagement/ifm_department_modifyAndAdd_script :: regexp_script"></div>
+<script th:src="@{/common/js/MD5.js}"></script>
 </body>
 <script type="text/javascript">
 

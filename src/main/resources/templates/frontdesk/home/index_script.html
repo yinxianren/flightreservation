@@ -80,7 +80,7 @@
                    $(".error-box").html('输入有误！');
                    return false;
                }else{
-                   var password = $("#password").val();
+                   var password = hex_md5($("#password").val());
                    var username = $("#username").val();
                    var data="uname="+username+"&password="+password;
                    requestToService("/home/login",data);
