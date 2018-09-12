@@ -17,5 +17,10 @@
         SELECT dep_id ,dep_name FROM fr_dep where dep_company=#{id,jdbcType=INTEGER} LIMIT 0,100
     </select>
 
+    <select id="countDepAndAccount"  resultType="java.lang.Integer" parameterType="java.lang.Integer"  >
+        SELECT COUNT(u_id) FROM fr_user WHERE u_department=#{id,jdbcType=INTEGER}
+    </select>
+
+
 
 </mapper>

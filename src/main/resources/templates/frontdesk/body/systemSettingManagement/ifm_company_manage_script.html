@@ -78,21 +78,17 @@
                 var comId=$(this).attr("del_id");
                 for(var i=0;i<array.length;i++){
                     if(array[i][0]==comId) {
-                        $(window).scrollTop(0);
-                        unScroll();
                         //----------------------------
                         var json = {
                             title:"删除操作",
                             msg:"确定删除<span style='color:#10b803;font-style: inherit;'> "+array[i][3]+"</span> ? 删除后将无法恢复！！",
                             buttons:[
                                 { title:"确定删除",color:"red",click:function(){
-
                                     var path="body/systemsettingmanagement/institutional-framework-management/ifm-company-management/del";
                                     var data="id="+comId;
                                     company_ajax(path,data);
                                 } },
                                 { title:"取消",click:function(){
-                                    removeUnScroll();
                                 }
                                 }
                             ]
@@ -114,8 +110,6 @@
          */
         function company_ajax(path,data){
 
-            $(window).scrollTop(0);
-            unScroll();
             $.ajax({
                 url :contextPath+path,
                 type: "POST",
@@ -124,22 +118,20 @@
                 error: function(request) {
                     console.log(request);
                     $.alertView(" 连接错误 ！");
-                    removeUnScroll();
                 },
                 success: function(data) {
-                    if (data == true) {
-                        $.alertView("成功！");
+                    if (data.code == 200) {
+                        $.alertView(data.status);
                         setTimeout(function(){
                             location.reload();
-                        },1000);
+                        },3000);
 
                     } else {
-                        $.alertView("服务繁忙，稍后再试！");
+                        $.alertView(data.message);
                         setTimeout(function(){
                             location.reload();
-                        },1000);
+                        },3000);
                     }
-                    removeUnScroll();
                 }
             });
         }
@@ -189,7 +181,7 @@
                 hint("公司地址,只能包含中文、字母、数字");
                 return ;
             }
-            if(isEmpty(legalRepresentative)||!regName(legalRepresentative)||!(legalRepresentative.length>2&&legalRepresentative.length<6)){
+            if(isEmpty(legalRepresentative)||!regName(legalRepresentative)||!(legalRepresentative.length>1&&legalRepresentative.length<6)){
                 hint("法定代表人,名字要符合中国取名规则");
                 return ;
             }
@@ -249,14 +241,11 @@
          *
          */
         function hint(msg){
-            $(window).scrollTop(0);
-            unScroll();
             var json = {
                 title:"<span style='color: red;font-size: 22px;'>警告!</span>",
                 msg:"<span style='color: #73680a;font-size: 18px;'>输入有误(</span>"+msg+")",
                 buttons:[
                     { title:"取消",click:function(){
-                        removeUnScroll();
                     }
                     }
                 ]

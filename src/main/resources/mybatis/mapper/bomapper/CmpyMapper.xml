@@ -11,4 +11,12 @@
     <select id="getAll" resultMap="BaseResultMap">
        SELECT cpy_id,cpy_com_name FROM fr_company LIMIT 0,100
     </select>
+
+    <select id="countComAndDep" resultType="java.lang.Integer" parameterType="java.lang.Integer"  >
+        SELECT COUNT(dep_id)
+        FROM fr_dep
+        WHERE dep_company=#{id,jdbcType=VARCHAR}
+    </select>
+
+
 </mapper>

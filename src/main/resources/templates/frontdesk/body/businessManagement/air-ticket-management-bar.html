@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="air-ticket-management-bar(action)">
+
+
+    <div class="quick-actions_homepage">
+        <ul class="quick-actions">
+
+
+            <li class="bg_g1">
+                <a th:href="@{/body/BusinessManagement/AirTicketManagement/RestrictedFileMaintenanceController}">
+                    <i class=" icon-file-alt"></i>
+                    <span class="label label-success">[[${action=='rfm'?'✔':''}]]</span>
+                    限制文件维护
+                </a>
+            </li>
+
+
+            <li class="bg_p1">
+                <a th:href="@{/body/BusinessManagement/AirTicketManagement/CompartmentDiscountMaintenanceController}">
+                    <i class=" icon-barcode"></i>
+                    <span class="label label-success">[[${action=='cdm'?'✔':''}]]</span>
+                    舱位折扣维护
+                </a>
+            </li>
+
+
+            <li class="bg_lv2">
+                <a th:href="@{/body/BusinessManagement/AirTicketManagement/YCompartmentPriceMaintenanceController}">
+                    <i class="icon-legal "></i>
+                    <span class="label label-success">[[${action=='ycpm'?'✔':''}]]</span>
+                    Y舱价格维护
+                </a>
+            </li>
+
+
+            <li class="bg_lb">
+                <a th:href="@{/body/BusinessManagement/AirTicketManagement/RestrictedFileEnteringController}">
+                    <i class="icon-align-justify"></i>
+                    <span class="label label-success">[[${action=='rfe'?'✔':''}]]</span>
+                    限制文件录入
+                </a>
+            </li>
+
+
+            <li class="bg_dy">
+                <a th:href="@{/body/BusinessManagement/AirTicketManagement/CompartmentDiscountEnteringController}">
+                    <i class="icon-table"></i>
+                    <span class="label label-success">[[${action=='cde'?'✔':''}]]</span>
+                    舱位折扣录入
+                </a>
+            </li>
+        </ul>
+
+    </div>
+    <a style="display: none;"
+       th:href="${#httpServletRequest.getScheme() + '://'
+              + #httpServletRequest.getServerName()
+              + ':'
+              + #request.getServerPort()
+              + #request.getContextPath()
+              + '/'} "
+       id="contextPath"></a>
+</div>
+</body>
+
+</html>

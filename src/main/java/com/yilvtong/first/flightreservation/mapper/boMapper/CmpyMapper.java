@@ -6,4 +6,13 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CmpyMapper<Cmpy> extends MapperModule<Cmpy> {
 
+    /**
+     *  统计传入的公司id 被多少个部门所依赖
+     * @param id
+     * @return
+     */
+    int countComAndDep(int id);
+
+
+
 }

@@ -1,8 +1,11 @@
 package com.yilvtong.first.flightreservation.controller.frontdesk.systemsettingmanagement.institutionalframeworkmanagement;
 
+import com.yilvtong.first.flightreservation.controller.ReturnResult;
 import com.yilvtong.first.flightreservation.entity.frontdesk.Company;
+import com.yilvtong.first.flightreservation.service.boservice.CmpyService;
 import com.yilvtong.first.flightreservation.service.frontdesk.CompanyService;
 import com.yilvtong.first.flightreservation.tool.DateTimeUtils;
+import com.yilvtong.first.flightreservation.tool.StatusCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +20,8 @@ public class CompanyManagementController {
 
     @Autowired
     private CompanyService companyService;
-
+    @Autowired
+    private CmpyService cmpyService;
 
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management")
     public String pageJump(Map<Object,Object> map) {
@@ -54,37 +58,61 @@ public class CompanyManagementController {
 
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/del")
-    public boolean delByIdController(int id) {
+    public ReturnResult delByIdController(int id) {
+
+        ReturnResult rr=new ReturnResult();
+        int num=cmpyService.countCmpAndDep(id);
+        rr.setCode(StatusCode.INTERNAL_ERROR_500_100.getCode());
+        rr.setStatus(StatusCode.SUCCESS.getMsg());
+        if(num>0){
+            rr.setMessage("该公司目前还有"+num+"个相关部门依赖此公司！");
+            return  rr;
+        }
+
 
         boolean isTrue=companyService.delById(id);
         if(isTrue){
-            return true;
+            rr.setCode(StatusCode.SUCCESS.getCode());
+            rr.setStatus(StatusCode.SUCCESS.getMsg());
+            rr.setMessage("删除成功！");
+            return  rr;
         }
-        return false;
+        return  rr;
     }
 
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/upData")
-    public boolean updataByIdController( Company company) {
+    public ReturnResult updataByIdController( Company company) {
+
+        ReturnResult rr=new ReturnResult();
         company.setUpdate(DateTimeUtils.getCurrentDateTimeStr2());
         boolean isTrue=companyService.updataById(company);
         if(isTrue){
-            return true;
+            rr.setCode(StatusCode.SUCCESS.getCode());
+            rr.setStatus(StatusCode.SUCCESS.getMsg());
+            return  rr;
+        }else{
+            rr.setCode(StatusCode.INTERNAL_ERROR_500_100.getCode());
+            rr.setStatus(StatusCode.INTERNAL_ERROR_500_100.getMsg());
+            return  rr;
         }
-        return false;
     }
 
     @ResponseBody
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm-company-management/add")
-    public boolean addController(Company company) {
-
+    public ReturnResult addController(Company company) {
+        ReturnResult rr=new ReturnResult();
         String time= DateTimeUtils.getCurrentDateTimeStr2();
         company.setUpdate(time);
         company.setCreateDate(time);
         boolean isTrue=companyService.add(company);
         if(isTrue){
-            return true;
+            rr.setCode(StatusCode.SUCCESS.getCode());
+            rr.setStatus(StatusCode.SUCCESS.getMsg());
+            return  rr;
         }
-        return false;
+        rr.setCode(StatusCode.INTERNAL_ERROR_500_100.getCode());
+        rr.setStatus(StatusCode.INTERNAL_ERROR_500_100.getMsg());
+        return  rr;
     }
 }

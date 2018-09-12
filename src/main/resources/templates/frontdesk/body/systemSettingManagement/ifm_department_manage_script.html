@@ -78,8 +78,6 @@
                 var depId=$(this).attr("dep_id");
                 for(var i=0;i<array.length;i++){
                     if(array[i][0]==depId){
-                        $(window).scrollTop(0);
-                        unScroll();
                         var json = {
                             title:"删除操作！",
                             msg:"确定删除<span style='color:#10b803;font-style: inherit;'> "+array[i][2]+"</span> ? 删除后将无法恢复！！",
@@ -93,31 +91,28 @@
                                         data: "id="+depId,
                                         dataType:"json",
                                         error: function(request) {
-                                            removeUnScroll();
                                             alert("Connection error");
                                         },
 
                                         success: function(data) {
 
-                                            if (data == true) {
-                                                $.alertView("删除成功！");
+                                            if (data.code == 200) {
+                                                $.alertView(data.status);
                                                 setTimeout(function(){
                                                     location.reload();
-                                                },1000);
+                                                },2000);
                                             } else {
-                                                $.alertView("服务繁忙，稍后再试！");
+                                                $.alertView(data.message);
                                                 setTimeout(function(){
                                                     location.reload();
                                                 },1000);
                                             }
 
-                                            removeUnScroll();
                                         }
                                     });
                                     //************************************************
                                 } },
                                 { title:"取消",click:function(){
-                                    removeUnScroll();
                                 } }
                             ]
                         }

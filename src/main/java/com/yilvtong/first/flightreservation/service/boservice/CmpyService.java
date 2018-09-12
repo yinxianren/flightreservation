@@ -25,4 +25,15 @@ public class CmpyService {
        }
    }
 
+
+   public int countCmpAndDep(int id){
+       try {
+           int num = cmpyMapper.countComAndDep(id);
+           return num;
+       }catch(Exception e){
+           e.printStackTrace();
+           return 0;
+       }
+   }
+
 }

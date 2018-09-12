@@ -14,6 +14,16 @@ public class DepService {
    @Autowired
    private DapMapper dapMapper;
 
+   public int countDepAndAccount(int id){
+       try {
+           int num = dapMapper.countDepAndAccount(id);
+           return num;
+       }catch(Exception e){
+           e.printStackTrace();
+           return 0;
+       }
+   }
+
 
    public List<Dep> getAllDepartment(){
        try {
