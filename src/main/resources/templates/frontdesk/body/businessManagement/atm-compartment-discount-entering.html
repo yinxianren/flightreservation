@@ -4,6 +4,12 @@
     <title>舱位折扣录入</title>
     <meta charset="UTF-8" />
     <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
+    <link rel="stylesheet" th:href="@{/private/frontdesk/body/css/select2.css}" />
+    <script th:src="@{/private/frontdesk/body/js/bootstrap.min.js}"></script>
+    <script th:src="@{/private/frontdesk/body/js/jquery.uniform.js}"></script>
+    <script th:src="@{/private/frontdesk/body/js/select2.min.js}"></script>
+    <script th:src="@{/private/frontdesk/body/js/matrix.form_common.js}"></script>
+
 </head>
 <body>
 <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='busi_manage',sub_action='air_ticket_manage')"></div>
@@ -13,6 +19,128 @@
         <div th:replace="../templates/frontdesk/body/businessManagement/air-ticket-management-bar :: air-ticket-management-bar(action='cde')"></div>
         <div class="row-fluid"></div>
         <hr/>
+
+
+        <div class="row-fluid">
+            <div class="span3">
+                <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"> <i class=" icon-bell-alt"></i> </span>
+                        <h5>提示信息</h5>
+                    </div>
+                    <div class="widget-content nopadding" style="color: #0fb608;">
+                        <p>1.折扣提示，<1.00> 表示原价出售、<0.95>表示95折，以此类推！</p>
+                        <p>2.其他，避免胡乱输入其他不相干信息，输入的信息在其他地方可能会被显示出来，避免视觉污染！！</p>
+                    </div>
+                </div>
+            </div>
+            <div class="span1">
+
+            </div>
+            <div class="span6" style="border:1px groove #a5a5a5;">
+                <div class="widget-box">
+                    <div class="widget-title"> <span class="icon"> <i class="icon-plane"></i> </span>
+                        <h2>添加舱位</h2>
+                    </div>
+                    <div class="widget-content nopadding">
+                        <form action="#" method="get" class="form-horizontal">
+
+                            <div class="control-group">
+                                <label class="control-label">航空公司 ：</label>
+                                <div class="controls">
+                                    <select style="width: 92%;">
+                                        <option>First option</option>
+                                        <option>Second option</option>
+                                        <option>Third option</option>
+                                        <option>Fourth option</option>
+                                        <option>Fifth option</option>
+                                        <option>Sixth option</option>
+                                        <option>Seventh option</option>
+                                        <option>Eighth option</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
+                                <label class="control-label">舱位名称 :</label>
+                                <div class="controls">
+                                    <input style="width: 92%;" type="text" class="span11" placeholder="Last name" />
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">折扣率 ：</label>
+                                <div class="controls">
+                                    <select style="width: 92%;">
+                                        <option checked>1.00</option>
+                                        <option>0.95</option>
+                                        <option>0.90</option>
+                                        <option>0.85</option>
+                                        <option>0.80</option>
+                                        <option>0.75</option>
+                                        <option>0.70</option>
+                                        <option>0.65</option>
+                                        <option>0.60</option>
+                                        <option>0.55</option>
+                                        <option>0.50</option>
+                                        <option>0.45</option>
+                                        <option>0.40</option>
+                                        <option>0.35</option>
+                                        <option>0.30</option>
+                                        <option>0.25</option>
+                                        <option>0.20</option>
+                                        <option>0.15</option>
+                                        <option>0.10</option>
+                                        <option>0.05</option>
+                                        <option>0.00</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">出发城市 ：</label>
+                                <div class="controls">
+                                    <select style="width: 92%;">
+                                        <option>First option</option>
+                                        <option>Second option</option>
+                                        <option>Third option</option>
+                                        <option>Fourth option</option>
+                                        <option>Fifth option</option>
+                                        <option>Sixth option</option>
+                                        <option>Seventh option</option>
+                                        <option>Eighth option</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">到达城市 ：</label>
+                                <div class="controls">
+                                    <select style="width: 92%;">
+                                        <option>First option</option>
+                                        <option>Second option</option>
+                                        <option>Third option</option>
+                                        <option>Fourth option</option>
+                                        <option>Fifth option</option>
+                                        <option>Sixth option</option>
+                                        <option>Seventh option</option>
+                                        <option>Eighth option</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="control-group">
+                                <label class="control-label">备注信息 ：</label>
+                                <div class="controls">
+                                    <textarea  style="width: 92%;" class="span11" ></textarea>
+                                </div>
+                            </div>
+                            <div class="form-actions">
+                                <p style="text-align: center;">
+                                    <button type="submit" class="btn btn-info">保存/提交</button>
+                                </p>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
 
 
 
