@@ -13,9 +13,8 @@
     <style type="text/css">
         .info-table tr td{padding: 5px;margin: 5px;color: #190840;font-size: 15px;}
         .info-table tr td:nth-child(1){text-align: left;}
+        .icao-code-info td{text-align:center;}
     </style>
-    info-table
-
 </head>
 <body>
 <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='busi_manage',sub_action='air_ticket_manage')"></div>
@@ -25,12 +24,8 @@
         <div th:replace="../templates/frontdesk/body/businessManagement/air-ticket-management-bar :: air-ticket-management-bar(action='ycpm')"></div>
         <div class="row-fluid"></div>
         <hr/>
-
-
-
-        <div class="row-fluid">
+        <div class="row-fluid" style="margin-bottom: 50px;">
             <div class="span1"> </div>
-
             <div class="span4" style="border:1px solid #a5a5a5; ">
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon" style="font-size: 15px;color: #391a73;"> <i class=" icon-pencil "></i> </span>
@@ -71,11 +66,6 @@
                     </div>
                 </div>
             </div>
-
-
-
-
-
             <div class="span1"> </div>
             <div class="span6">
                 <div class="widget-box">
@@ -118,35 +108,242 @@
                                         </tr>
                                         <tr>
                                             <td>简称（abbreviation） ：<span id="abbreviation">MGZJG </span></td>
-                                            <td></td>
+                                            <td>创建人：<span id="create-person">李广大 </span> </td>
                                         </tr>
 
                                         <tr>
                                             <td>三字码（ICAO Code） ：<span id="code">AZJ </span></td>
-                                            <td></td>
+                                            <td>上次修改对象：<span id="updata-person">李广大 </span> </td>
                                         </tr>
                                     </table>
-
-
-
-                               </div>
+                                </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="row-fluid"></div>
+        <hr/>
 
 
+        <div class="row-fluid" style="margin-top: 10px; margin-bottom: 200px;">
+            <div class="widget-box" >
+                <div class="widget-title">
+                    <h5 style="font-size: 20px;">部门信息</h5>
+                </div>
+                <div class="widget-content nopadding">
+                    <table class="table table-bordered table-striped" style="border:1px solid #a5a5a5; ">
+                        <thead>
+                        <tr>
+                            <th>序号</th>
+                            <th>NATIONALITY(国家)</th>
+                            <th>CITY (城市)</th>
+                            <th>ABBREVIATION(简称)</th>
+                            <th>ICAO CODE(三字码) </th>
+                            <th>操作(OPERATION)</th>
+                        </tr>
+                        </thead>
+
+                        <tbody>
+                        <tr class="icao-code-info">
+                            <td><span class="badge">1</span></td>
+                            <td>中国</td>
+                            <td>北京</td>
+                            <td>ZGBJ</td>
+                            <td>CBJ </td>
+                            <td>
+                                <button class="btn btn-warning btn-mini">
+                                    <i class="icon-pencil"></i>
+                                    修改
+                                </button>
+                                <button class="btn btn-danger btn-mini">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+
+                        <tr class="icao-code-info">
+                            <td><span class="badge">1</span></td>
+                            <td>中国</td>
+                            <td>北京</td>
+                            <td>ZGBJ</td>
+                            <td>CBJ </td>
+                            <td>
+                                <button class="btn btn-warning btn-mini">
+                                    <i class="icon-pencil"></i>
+                                    修改
+                                </button>
+                                <button class="btn btn-danger btn-mini">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+
+
+                        <tr class="icao-code-info">
+                            <td><span class="badge">1</span></td>
+                            <td>中国</td>
+                            <td>北京</td>
+                            <td>ZGBJ</td>
+                            <td>CBJ </td>
+                            <td>
+                                <button class="btn btn-warning btn-mini">
+                                    <i class="icon-pencil"></i>
+                                    修改
+                                </button>
+                                <button class="btn btn-danger btn-mini">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+
+
+
+                        <tr class="icao-code-info">
+                            <td><span class="badge">1</span></td>
+                            <td>中国</td>
+                            <td>北京</td>
+                            <td>ZGBJ</td>
+                            <td>CBJ </td>
+                            <td>
+                                <button class="btn btn-warning btn-mini">
+                                    <i class="icon-pencil"></i>
+                                    修改
+                                </button>
+                                <button class="btn btn-danger btn-mini">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+
+
+
+                        <tr class="icao-code-info">
+                            <td><span class="badge">1</span></td>
+                            <td>中国</td>
+                            <td>北京</td>
+                            <td>ZGBJ</td>
+                            <td>CBJ </td>
+                            <td>
+                                <button class="btn btn-warning btn-mini">
+                                    <i class="icon-pencil"></i>
+                                    修改
+                                </button>
+                                <button class="btn btn-danger btn-mini">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+
+
+                        <tr class="icao-code-info">
+                            <td><span class="badge">1</span></td>
+                            <td>中国</td>
+                            <td>北京</td>
+                            <td>ZGBJ</td>
+                            <td>CBJ </td>
+                            <td>
+                                <button class="btn btn-warning btn-mini">
+                                    <i class="icon-pencil"></i>
+                                    修改
+                                </button>
+                                <button class="btn btn-danger btn-mini">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+
+
+
+                        <tr class="icao-code-info">
+                            <td><span class="badge">1</span></td>
+                            <td>中国</td>
+                            <td>北京</td>
+                            <td>ZGBJ</td>
+                            <td>CBJ </td>
+                            <td>
+                                <button class="btn btn-warning btn-mini">
+                                    <i class="icon-pencil"></i>
+                                    修改
+                                </button>
+                                <button class="btn btn-danger btn-mini">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+
+
+
+                        <tr class="icao-code-info">
+                            <td><span class="badge">1</span></td>
+                            <td>中国</td>
+                            <td>北京</td>
+                            <td>ZGBJ</td>
+                            <td>CBJ </td>
+                            <td>
+                                <button class="btn btn-warning btn-mini">
+                                    <i class="icon-pencil"></i>
+                                    修改
+                                </button>
+                                <button class="btn btn-danger btn-mini">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+
+
+
+                        <tr class="icao-code-info">
+                            <td><span class="badge">1</span></td>
+                            <td>中国</td>
+                            <td>北京</td>
+                            <td>ZGBJ</td>
+                            <td>CBJ </td>
+                            <td>
+                                <button class="btn btn-warning btn-mini">
+                                    <i class="icon-pencil"></i>
+                                    修改
+                                </button>
+                                <button class="btn btn-danger btn-mini">
+                                    <i class=" icon-remove"></i>
+                                    删除
+                                </button>
+                            </td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="pagination" style="text-align: right; margin-right: 100px;" >
+                <ul>
+                    <li><a href="#">第一页</a></li>
+                    <li><a href="#">上一页</a></li>
+                    <li class="active"> <a href="#">1</a> </li>
+                    <li><a href="#">2</a></li>
+                    <li><a href="#">3</a></li>
+                    <li><a href="#">4</a></li>
+                    <li><a href="#">5</a></li>
+                    <li><a href="#">下一页</a></li>
+                    <li><a href="#">末尾页</a></li>
+                </ul>
+            </div>
         </div>
 
 
 
-
-
-
     </div>
+
+
+
 </div>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 </body>
