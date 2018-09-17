@@ -14,6 +14,8 @@ public class LoginWebMvcConfigurer implements WebMvcConfigurer {
     //跳过拦截对象
     private static List<String> pathList= Arrays.asList(
             "/",
+            "/test/**/*",
+            "/ueditor/**/*",
             "/home/valicode",
             "/home/imageCode",
             "/home/login",
@@ -21,6 +23,7 @@ public class LoginWebMvcConfigurer implements WebMvcConfigurer {
             "/**/*.css",
             "/**/*.js",
             "/**/*.db",
+            "/**/*.html",
             "/**/*.gif",
             "/**/*.png",
             "/**/*.jpg",
@@ -32,6 +35,8 @@ public class LoginWebMvcConfigurer implements WebMvcConfigurer {
         registry.addInterceptor(new LoginHandlerInterceptorAdapter()).addPathPatterns("/**")
                 .excludePathPatterns(pathList);//这些是不拦截的
     }
+
+
 
 
 }
