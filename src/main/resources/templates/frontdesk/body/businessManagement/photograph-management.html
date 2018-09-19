@@ -8,10 +8,11 @@
 </head>
 <body>
 <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='busi_manage',sub_action='photo_manage')"></div>
-
-
-
 <div id="content">
+    <div class="container-fluid">
+        <div th:replace="../templates/frontdesk/body/businessManagement/photo-manage-bar :: phme-bar(action='rfe')"></div>
+        <div class="row-fluid"></div>
+    </div>
 
     <div class="container-fluid">
         <div class="row-fluid">
@@ -27,7 +28,7 @@
                             <li class="span2">
                                 <a> <img src="http://2197b82t91.iask.in:8080/images/gallery/imgbox3.jpg" alt="" > </a>
                                 <div class="actions">
-                                    <a title="" class="" href="#">
+                                    <a title="" info-id="1001" class="lightbox_trigger_info" href="#">
                                         <i class="icon-pencil"></i>
                                     </a>
                                     <a class="lightbox_trigger" href="http://2197b82t91.iask.in:8080/images/gallery/imgbox3.jpg">
@@ -35,8 +36,14 @@
                                     </a>
                                 </div>
                             </li>
-                            <li class="span2" > <a> <img src="http://2197b82t91.iask.in:8080/images/gallery/imgbox4.jpg" alt="" > </a>
-                                <div class="actions"> <a title="" href="#"><i class="icon-pencil"></i></a> <a class="lightbox_trigger" href="http://2197b82t91.iask.in:8080/images/gallery/imgbox3.jpg"><i class="icon-search"></i></a> </div>
+                            <li class="span2" >
+                                <a> <img src="http://2197b82t91.iask.in:8080/images/gallery/imgbox4.jpg" alt="" > </a>
+                                <div class="actions">
+                                    <a title=""  info-id="1002" class="lightbox_trigger_info"  href="#"><i class="icon-pencil"></i></a>
+                                    <a class="lightbox_trigger" href="http://2197b82t91.iask.in:8080/images/gallery/imgbox3.jpg">
+                                        <i class="icon-search"></i>
+                                    </a>
+                                </div>
                             </li>
                             <li class="span2"> <a > <img src="http://2197b82t91.iask.in:8080/images/gallery/imgbox5.jpg" alt="" > </a>
                                 <div class="actions"> <a title="" href="#"><i class="icon-pencil"></i></a> <a class="lightbox_trigger" href="http://2197b82t91.iask.in:8080/images/gallery/imgbox3.jpg"><i class="icon-search"></i></a> </div>
@@ -192,10 +199,7 @@
         </div>
     </div>
 </div>
-
-
-
-
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 </body>
+<div th:replace="../templates/frontdesk/body/businessManagement/photograph-management-script :: photo-script"></div>
 </html>

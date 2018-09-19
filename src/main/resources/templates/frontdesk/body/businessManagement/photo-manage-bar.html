@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="phme-bar(action)">
+
+
+    <div class="quick-actions_homepage">
+        <ul class="quick-actions">
+
+
+            <li class="bg_ls">
+                <a th:href="@{/photo/businessmanagement/photomanage/UploadPictureController}">
+                    <i class=" icon-cloud"></i>
+                    <span class="label label-success">[[${action=='upload'?'✔':''}]]</span>
+                    上传照片
+                </a>
+            </li>
+
+            <li class="bg_g1">
+                <a th:href="@{/photo/businessmanagement/photomanage/ImageSearchController}">
+                    <i class="  icon-search"></i>
+                    <span class="label label-success">[[${action=='search'?'✔':''}]]</span>
+                    照片搜索
+                </a>
+            </li>
+
+        </ul>
+
+    </div>
+    <a style="display: none;"
+       th:href="${#httpServletRequest.getScheme() + '://'
+              + #httpServletRequest.getServerName()
+              + ':'
+              + #request.getServerPort()
+              + #request.getContextPath()
+              + '/'} "
+       id="contextPath"></a>
+</div>
+</body>
+
+</html>

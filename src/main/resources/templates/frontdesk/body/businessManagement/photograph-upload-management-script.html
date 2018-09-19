@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="photo-script">
+    <script th:inline="javascript" type="text/javascript">
+        var contextPath = $('#contextPath').attr('href');
+
+
+        $(document).ready(function(){
+
+
+            $(".lightbox_trigger_info").click(function(e){
+
+                var infoId = $(this).attr("info-id");
+
+                var lightbox =
+                    '<div id="lightbox" style="display:none;">' +
+                       '<div id="imgbox-bg">' +
+                         '<div>'+
+                           'asdfasdfaaaadsffasf<hr/>'+
+                    'asdfasdfaaaadsffasf<hr/>'+
+                    'asdfasdfaaaadsffasf<hr/>'+
+                    'asdfasdfaaaadsffasf<hr/>'+
+                    'asdfasdfaaaadsffasf<hr/>'+
+                         '</div>'+
+                         '<p ><i style="color:#000000;" class="icon-remove icon-white"></i></p>' +
+                      '</div>' +
+                    '</div>';
+
+                $('body').append(lightbox);
+                $('#lightbox').slideDown(500);
+
+            });
+
+            $('#lightbox').live('click', function() {
+                $('#lightbox').hide(200);
+            });
+
+
+
+
+//            $('.lightbox_trigger').click(function(e) {
+//
+//                e.preventDefault();
+//
+//                var image_href = $(this).attr("href");
+//
+//                if ($('#lightbox').length > 0) {
+//
+//                    $('#imgbox').html('<img src="' + image_href + '" /><p><i class="icon-remove icon-white"></i></p>');
+//
+//                    $('#lightbox').slideDown(500);
+//                }
+//
+//                else {
+//                    var lightbox =
+//                        '<div id="lightbox" style="display:none;">' +
+//                        '<div id="imgbox"><img src="' + image_href +'" />' +
+//                        '<p><i class="icon-remove icon-white"></i></p>' +
+//                        '</div>' +
+//                        '</div>';
+//
+//                    $('body').append(lightbox);
+//                    $('#lightbox').slideDown(500);
+//                }
+//
+//            });
+//
+//
+//            $('#lightbox').live('click', function() {
+//                $('#lightbox').hide(200);
+//            });
+//
+
+
+
+
+
+        });
+    </script>
+
+</div>
+</body>
+
+</html>
