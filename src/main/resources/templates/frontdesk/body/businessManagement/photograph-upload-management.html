@@ -5,6 +5,11 @@
     <meta charset="UTF-8" />
     <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
     <script th:src="@{/private/frontdesk/body/js/bootstrap.min.js}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
+    <style type="text/css">
+        .camanJS-editor span:nth-child(1){font-size: 16px;font-weight: bolder;color: #1a1a1a;}
+
+    </style>
 </head>
 <body>
 <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='busi_manage',sub_action='photo_manage')"></div>
@@ -26,14 +31,16 @@
                     <div class="widget-content nopadding" style="color: #0fb608;">
                         <p>（1）标题：可以认为是图片的分类目录，方便图片搜索定位！</p>
                         <p>（2）命名：可以这么说，你要给这张图片起个名字！</p>
+                        <p>（3）照片编辑：确认选择照片后，窗口下拉，可见编辑模块！</p>
+                        <p>（5）如要更换编辑图片，直接再次点击<span style="color: red;font-weight: bolder;">点击查找照片</span>”,便可以替换原来的图片！</p>
                     </div>
-
                 </div>
+
             </div>
             <div class="span1" ></div>
             <div class="span6" style="border:10px groove #216abf;font-family:Sans-Serif, Arial, Helvetica, Tahoma, Verdana">
                 <div class="widget-box">
-                    <div class="widget-title"> <span class="icon"> <i class="icon-plane"></i> </span>
+                    <div class="widget-title"> <span class="icon"> <i class="icon-tasks"></i> </span>
                         <h2 style="color: #2595ff">照片上传</h2>
                     </div>
                     <div class="widget-content nopadding">
@@ -51,6 +58,23 @@
                                     <input style="width: 92%;" type="text" name="photoName" class="span11" />
                                 </div>
                             </div>
+
+                            <div class="control-group">
+                                <label class="control-label">选择照片 :</label>
+                                <div class="controls">
+                                    <div class="  btn btn-inverse" onclick="document.getElementById('photoInput').click()">点击查找照片</div>
+                                    <input style="display: none;" type="file" name="photoName" id="photoInput"  onchange="photoEven(this)"   accept="image/*" />
+                                </div>
+                            </div>
+
+
+                            <div class="control-group" >
+                                <label class="control-label">原照片名 :</label>
+                                <div class="controls">
+                                    <input id="imgPath" style="width:92%;font: bold 15px/20px arial,sans-serif;color: red;letter-spacing:1px;" value="目前为选择任何照片！" type="text" name="photoPath" readonly class="span11" />
+                                </div>
+                            </div>
+
                             <div class="form-actions">
                                 <p style="text-align: center;">
                                     <button type="submit" class="btn btn-info">保存/提交</button>
@@ -61,12 +85,7 @@
                 </div>
             </div>
         </div>
-
-
-
     </div>
-
-
     <!-- 列表  -->
     <div class="container-fluid">
         <div class="row-fluid">
@@ -74,18 +93,72 @@
                 <div class="widget-box">
                     <hr/>
                     <div class="widget-title"> <span class="icon"> <i class="icon-picture"></i> </span>
-                        <h5 style="font-size: 18px;font-weight: bolder;color: #000000">图片列表</h5>
+                        <h5 style="font-size: 18px;font-weight: bolder;color: #000000">照片编辑</h5>
                     </div>
                     <hr/>
-                    <div class="widget-content" style="border:1px solid #a5a5a5;">
-                        <ul class="thumbnails">
-                            <li class="span1"> <a> <img src="http://2197b82t91.iask.in:8080/images/gallery/imgbox1.jpg" alt="" > </a>
-                                <div class="actions"> <a title="" href="#"><i class="icon-pencil"></i></a> <a class="lightbox_trigger" href="http://2197b82t91.iask.in:8080/images/gallery/imgbox3.jpg"><i class="icon-search"></i></a> </div>
-                            </li>
-                            <li class="span1"> <a> <img src="http://2197b82t91.iask.in:8080/images/gallery/imgbox2.jpg" alt="" > </a>
-                                <div class="actions"> <a title="" href="#"><i class="icon-pencil"></i></a> <a class="lightbox_trigger" href="http://2197b82t91.iask.in:8080/images/gallery/imgbox3.jpg"><i class="icon-search"></i></a> </div>
-                            </li>
-                        </ul>
+                    <div class="widget-box"  style="display: none;"  id="photo-display">
+                        <div class="widget-content span8" id="photoDiv" style="border:10px groove #37fe0a;text-align: center;">
+
+                        </div>
+                        <div class="widget-content span4">
+                            <div class="camanJS-editor">
+                                <span>亮度：</span>
+                                <button id="light-add" style="margin-left: 10px;" class="btn">+</button>
+                                <button id="light-sub" class="btn">-</button>
+                                <span style="font-size: 14px;font-weight: bolder;color: #ff0000; margin-left: 60px;">阀值：</span>
+                                <input type="text" value="1" id="light-val" style="width: 30px;margin-top: 10px;"/>
+                            </div>
+                            <div class="camanJS-editor">
+                                <span>对比：</span>
+                                <button id="contrast-add" style="margin-left: 10px;background-color: #bfbfbd;" class="btn">+</button>
+                                <button id="contrast-sub" style="background-color: #bfbfbd;" class="btn">-</button>
+                                <span style="font-size: 14px;font-weight: bolder;color: #ff0000; margin-left: 60px;">阀值：</span>
+                                <input type="text" value="1" id="contrast-val" style="width: 30px;margin-top: 10px;"/>
+                            </div>
+                            <div class="camanJS-editor">
+                                <span>饱和：</span>
+                                <button id="saturation-add" style="margin-left: 10px;background-color: #bf9d7b" class="btn">+</button>
+                                <button id="saturation-sub" style="background-color: #bf9d7b;" class="btn ">-</button>
+                                <span style="font-size: 14px;font-weight: bolder;color: #ff0000; margin-left: 60px;">阀值：</span>
+                                <input type="text" value="5" id="saturation-val" style="width: 30px;margin-top: 10px;"/>
+                            </div>
+                            <div class="camanJS-editor">
+                                <span>饱和：</span>
+                                <button id="vibrance-add" style="margin-left: 10px;background-color: #dcba90" class="btn">+</button>
+                                <button id="vibrance-sub" style="background-color: #dcba90;" class="btn ">-</button>
+                                <span style="font-size: 14px;font-weight: bolder;color: #ff0000; margin-left: 60px;">阀值：</span>
+                                <input type="text" value="5" id="vibrance-val" style="width: 30px;margin-top: 10px;"/>
+                            </div>
+                            <div class="camanJS-editor">
+                                <span>棕褐：</span>
+                                <button id="sepia-add" style="margin-left: 10px;background-color: #644e38" class="btn">+</button>
+                                <button id="sepia-sub" style="background-color: #644e38;" class="btn ">-</button>
+                                <span style="font-size: 14px;font-weight: bolder;color: #ff0000; margin-left: 60px;">阀值：</span>
+                                <input type="text" value="5" id="sepia-val" style="width: 30px;margin-top: 10px;"/>
+                            </div>
+
+                            <div class="camanJS-editor">
+                                <span>色相：</span>
+                                <button id="hue-add"  style="margin-left: 10px;background-color:#967bbf" class="btn">+</button>
+                                <button id="hue-sub" style="background-color: #967bbf;" class="btn">-</button>
+                                <span style="font-size: 14px;font-weight: bolder;color: #ff0000; margin-left: 60px;">阀值：</span>
+                                <input type="text" id="hue-val" value="5" style="width: 30px;margin-top: 10px;"/>
+                            </div>
+                            <div class="camanJS-editor">
+                                <span>杂色：</span>
+                                <button id="noise-add" style="margin-left: 10px;background-color: #e4c197;" class="btn">+</button>
+                                <button id="noise-sub" style="background-color: #e4c197;" class="btn">-</button>
+                                <span style="font-size: 14px;font-weight: bolder;color: #ff0000; margin-left: 60px;">阀值：</span>
+                                <input type="text" value="5" id="noise-val" style="width: 30px;margin-top: 10px;"/>
+                            </div>
+                            <button class="btn" id="invert" style="background-color: #3be10a">反色</button>
+                            <button class="btn" id="greyscale" style="background-color: #bb9b79">黑白</button>
+                            <button class="btn" id="love" style="background-color: #ff6c42">暖色</button>
+                            <button class="btn" id="hazyDays" style="background-color: #ece9cd">加蒙</button>
+                            <button class="btn" id="clarity" style="background-color: #d0e4e4">净度</button>
+                            <button class="btn" id="sunrise" style="background-color: #f3f3f3">黎明</button>
+
+                        </div>
                     </div>
                 </div>
             </div>
@@ -94,9 +167,8 @@
 
 
 
-
 </div>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 </body>
-<div th:replace="../templates/frontdesk/body/businessManagement/photograph-management-script :: photo-script"></div>
+<div th:replace="../templates/frontdesk/body/businessManagement/photograph-upload-management-script :: photo-upload-script"></div>
 </html>
