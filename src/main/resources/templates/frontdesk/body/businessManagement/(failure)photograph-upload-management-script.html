@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="photo-upload-script">
+    <script th:inline="javascript" type="text/javascript">
+        var contextPath = $('#contextPath').attr('href');
+
+
+        $("#light-val").val(1);  //初始化阀值为1
+        $("#contrast-val").val(1);
+        $("#hue-val").val(5);
+        $("#noise-val").val(5);
+        $("#saturation-val").val(5);
+        $("#sepia-val").val(5);
+        $("#vibrance-val").val(5);
+
+        $("#imgPath").val("目前为选择任何照片！");
+
+
+        $(document).ready(function(){
+
+
+
+            /*
+                暖色
+             */
+            $("#love").click(function () {
+                Caman("#photoEditor", function () {
+                    this.love().render();
+                });
+            });
+
+
+            $("#clarity").click(function () {
+                Caman("#photoEditor", function () {
+                    this.clarity().render();
+                });
+            });
+
+            $("#sunrise").click(function () {
+                Caman("#photoEditor", function () {
+                    this.sunrise().render();
+                });
+            });
+
+            /*
+               加蒙
+              */
+            $("#hazyDays").click(function () {
+                Caman("#photoEditor", function () {
+                    this.hazyDays().render();
+                });
+            });
+            /*
+              反色
+            */
+            $("#invert").click(function () {
+                Caman("#photoEditor", function () {
+                    this.invert().render();
+                });
+            });
+            /*
+            黑白
+            */
+            $("#greyscale").click(function () {
+                Caman("#photoEditor", function () {
+                    this.greyscale().render();
+                });
+            });
+
+
+            /*
+           增加饱和2
+           */
+            $("#vibrance-add").click(function () {
+
+                var vibranceValue=$("#vibrance-val").val(); //阀值
+                vibranceValue=parseInt(vibranceValue);
+                Caman('#photoEditor', function () {
+                    this.vibrance(vibranceValue);
+                    this.render();
+                });
+            });
+
+            /*
+                  减少饱和2
+                  */
+            $("#vibrance-sub").click(function () {
+
+                var vibranceValue=$("#vibrance-val").val(); //阀值
+                vibranceValue=parseInt(vibranceValue);
+                Caman('#photoEditor', function () {
+                    this.vibrance(-vibranceValue);
+                    this.render();
+                });
+            });
+
+
+
+            /*
+                增加褐色
+              */
+            $("#sepia-add").click(function () {
+
+                var sepiaValue=$("#sepia-val").val(); //阀值
+                sepiaValue=parseInt(sepiaValue);
+                Caman('#photoEditor', function () {
+                    this.sepia(sepiaValue);
+                    this.render();
+                });
+            });
+            /*
+               减少褐色
+             */
+            $("#sepia-sub").click(function () {
+
+                var sepiaValue=$("#sepia-val").val(); //阀值
+                sepiaValue=parseInt(sepiaValue);
+                Caman('#photoEditor', function () {
+                    this.sepia(-sepiaValue);
+                    this.render();
+                });
+            });
+            /*
+             增加饱和1
+             */
+            $("#saturation-add").click(function () {
+
+                var saturationValue=$("#saturation-val").val(); //阀值
+                saturationValue=parseInt(saturationValue);
+                Caman('#photoEditor', function () {
+                    this.saturation(saturationValue);
+                    this.render();
+                });
+            });
+
+            /*
+               减少饱和1
+             */
+            $("#saturation-sub").click(function () {
+
+                var saturationValue=$("#saturation-val").val(); //阀值
+                saturationValue=parseInt(saturationValue);
+                Caman('#photoEditor', function () {
+                    this.saturation(-saturationValue);
+                    this.render();
+                });
+            });
+
+            /*
+               增加杂色
+               */
+            $("#noise-add").click(function () {
+
+                var noiseValue=$("#noise-val").val(); //阀值
+                noiseValue=parseInt(noiseValue);
+                Caman('#photoEditor', function () {
+                    this.noise(noiseValue);
+                    this.render();
+                });
+            });
+
+            /*
+               减少杂色
+             */
+            $("#noise-sub").click(function () {
+                var noiseValue=$("#noise-val").val(); //阀值
+                noiseValue=parseInt(noiseValue);
+                Caman('#photoEditor', function () {
+                    this.noise(-noiseValue);
+                    this.render();
+                });
+            });
+
+            /*
+                 增加亮度
+             */
+            $("#light-add").click(function () {
+
+                var lightValue=$("#light-val").val(); //阀值
+                lightValue=parseInt(lightValue);
+                Caman('#photoEditor', function () {
+                    this.brightness(lightValue);
+                    this.render();
+                });
+            });
+            /*
+               减轻亮度
+              */
+            $("#light-sub").click(function () {
+                var lightValue=$("#light-val").val(); //阀值
+                lightValue=parseInt(lightValue);
+                Caman('#photoEditor', function () {
+                    this.brightness(-lightValue);
+                    this.render();
+                });
+            });
+
+            /*
+              增加对比
+             */
+            $("#contrast-add").click(function () {
+                var contrastValue=$("#contrast-val").val(); //阀值
+                contrastValue=parseInt(contrastValue);
+                Caman('#photoEditor', function () {
+                    this.contrast(contrastValue);
+                    this.render();
+                });
+
+            });
+
+            /*
+              减少对比
+              */
+            $("#contrast-sub").click(function () {
+                var contrastValue=$("#contrast-val").val(); //阀值
+                contrastValue=parseInt(contrastValue);
+                Caman('#photoEditor', function () {
+                    this.contrast(-contrastValue);
+                    this.render();
+                });
+
+            });
+
+
+            /*
+             增加色相
+            */
+            $("#hue-add").click(function () {
+                var hueValue=$("#hue-val").val(); //阀值
+                hueValue=parseInt(hueValue);
+                Caman('#photoEditor', function () {
+                    this.hue(hueValue);
+                    this.render();
+                });
+
+            });
+
+            /*
+              减少色相
+              */
+            $("#hue-sub").click(function () {
+
+                var hueValue=$("#hue-val").val(); //阀值
+                hueValue=parseInt(hueValue);
+                Caman('#photoEditor', function () {
+                    this.hue(-hueValue);
+                    this.render();
+                });
+
+            });
+
+
+
+            $("#submitPhoto").on('click',function(){
+
+                var photoTitle=$("#photoTitle").val().trim();
+                var photoName=$("#photoName").val().trim();
+
+
+                var Caman = require('caman').Caman;
+                Caman('#photoEditor', function () {
+                    this.render(function () {
+                        this.save("d:\\aa.png");
+                    });
+                });
+
+
+                var src=$("#photoEditor").attr('src');
+                console.info($("#photoEditor"));
+                if(isEmpty(photoTitle)){
+                    hint("标题");
+                    return false;
+                }
+                if(isEmpty(photoName)){
+                    hint("命名");
+                    return false;
+                }
+
+
+                if(isEmpty(src)){
+                    hint("没有图片");
+                    return false;
+                }
+
+
+
+
+//                console.info($("#test").attr("src"));
+                //http://2197b82t91.iask.in:8090/
+//                var path="photo/upload/singlePhoto";
+//                var data="src="+src
+//                        +"&photoTitle="+photoTitle
+//                        +"&photoName="+photoName;
+//                photoAjax(path,data)
+                return false;
+
+            });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        });
+
+
+        function photoAjax(path,data){
+
+
+            $.ajax({
+                url :contextPath+path,
+                type: "POST",
+                data: data,
+                dataType:"json",
+                error: function(request) {
+
+                    console.info(request);
+                    $.alertView("Connection error");
+//                    setTimeout(function(){
+//                        location.reload();
+//                    },1000);
+                },
+
+                success: function(data) {
+
+                console.info(data);
+//                $("#test").attr("src",data)
+
+
+
+                }
+            });
+        }
+
+
+
+        /**
+         * 提示信息
+         *
+         */
+        function hint(msg){
+            var json = {
+                title:"<span style='color: red;font-size: 22px;'>警告!</span>",
+                msg:"<span style='color: #73680a;font-size: 18px;'>输入信息为空！--></span>"+"《"+msg+"》",
+                buttons:[
+                    { title:"取消",click:function(){
+                    }
+                    }
+                ]
+            }
+            $.alertView(json);
+        }
+
+
+
+        function photoEven(evn){
+            var imgObj= $("#imgPath");
+            $(imgObj).val(evn.value.substring(evn.value.lastIndexOf('\\')+1));
+
+            var oFReader = new FileReader();
+            var file = document.getElementById('photoInput').files[0];
+            oFReader.readAsDataURL(file);
+            oFReader.onloadend = function(oFRevent){
+                var src = oFRevent.target.result;
+                var pd= ("#photoDiv");
+                $(pd).empty();
+                var imgObj=" <img  id=\"photoEditor\"  style=\"width: 100%;height: 100%;\" >";
+                $(pd).append(imgObj);
+                $('#photoEditor').attr('src',src);
+                $("#photo-display").show();
+            }
+        }
+
+
+
+
+
+
+
+
+
+    </script>
+
+</div>
+</body>
+
+</html>
