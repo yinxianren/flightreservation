@@ -23,27 +23,38 @@
     <!--上传  -->
     <div class="container-fluid">
         <div class="row-fluid"  style="margin-bottom: 200px;">
-            <div class="span3">
+            <div class="span5">
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"> <i class=" icon-bell-alt"></i> </span>
-                        <h5>提示信息</h5>
+                        <h5 style="color: #2595ff">提示信息</h5>
                     </div>
                     <div class="widget-content nopadding" style="color: #0fb608;">
                         <p>（1）标题：可以认为是图片的分类目录，方便图片搜索定位！</p>
                         <p>（2）命名：可以这么说，你要给这张图片起个名字！</p>
-                        <p>（3）照片编辑：确认选择照片后，窗口下拉，可见编辑模块！</p>
-                        <p>（5）如要更换编辑图片，直接再次点击<span style="color: red;font-weight: bolder;">点击查找照片</span>”,便可以替换原来的图片！</p>
+                        <p>（3）图片预览区：可以看到图片照片，点击可看到更大的照片信息！</p>
+                        <p>（5）照片信息：点击<span style="color: red;font-weight: bolder;">移除该照片</span>”,便可以将照片删除！</p>
                     </div>
-                    <div class="widget-title"> <span class="icon"> <i class="  icon-zoom-in"></i> </span>
-                        <h5 style="color:#ff1493;">图片预览</h5>
+                    <div class="widget-title"> <span class="icon"> <i class="  icon-barcode"></i> </span>
+                        <h5 style="color: #2595ff">照片信息</h5>
                     </div>
-                    <div id="photoDiv" style="width: 200px;height: 200px;border:5px groove #bfa91b;margin: 0 auto;">
+                    <div class="widget-content nopadding">
+                        <table class="table table-bordered table-striped with-check" style="border:5px groove #07bf0c;font-family:Sans-Serif, Arial, Helvetica, Tahoma, Verdana" >
+                            <thead style="text-align: center;font-size: 14px;">
+                            <tr >
+                                <th style="text-align: center;font-size: 14px;width:30px;">序号</th>
+                                <th style="text-align: center;font-size: 14px;">原照片名</th>
+                                <th style="text-align: center;font-size: 14px;">标题</th>
+                                <th style="text-align: center;font-size: 14px;">命名</th>
+                                <th style="text-align: center;font-size: 14px;">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="tbodyContent">
 
+                            </tbody>
+                        </table>
                     </div>
-
 
                 </div>
-
             </div>
             <div class="span1" ></div>
             <div class="span6" style="border:10px groove #216abf;font-family:Sans-Serif, Arial, Helvetica, Tahoma, Verdana">
@@ -52,7 +63,7 @@
                         <h2 style="color: #2595ff">照片上传</h2>
                     </div>
                     <div class="widget-content nopadding">
-                        <form  th:action="@{/photo/upload/singlePhoto}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <form  th:action="@{/photo/upload/singlePhoto}" method="post" id="upBox" enctype="multipart/form-data" class="form-horizontal">
 
                             <div class="control-group">
                                 <label class="control-label">标题 :</label>
@@ -66,29 +77,22 @@
                                     <input style="width: 92%;" type="text" name="photoName" id="photoName" class="span11" />
                                 </div>
                             </div>
-
-
-
-
                             <div class="control-group">
                                 <label class="control-label">选择照片 :</label>
                                 <div class="controls">
                                     <div class="  btn btn-inverse" onclick="document.getElementById('photoObject').click()">点击查找照片</div>
-                                    <input style="display: none;" type="file" name="photoObject" id="photoObject"  onchange="photoEven(this)"   accept="image/*" />
+                                    <input style="display: none;" type="file" multiple="multiple" name="photoObject" id="photoObject"  onchange="photoEven(this)"   accept="image/*" />
                                 </div>
                             </div>
-
-
                             <div class="control-group" >
                                 <label class="control-label">原照片名 :</label>
                                 <div class="controls">
                                     <input id="imgPath" style="width:92%;font: bold 15px/20px arial,sans-serif;color: red;letter-spacing:1px;" value="目前为选择任何照片！" type="text" name="photoPath" readonly class="span11" />
                                 </div>
                             </div>
-
                             <div class="form-actions">
                                 <p style="text-align: center;">
-                                    <button id="submitPhoto" type="submit" class="btn btn-info">保存/提交</button>
+                                    <button id="submitPhoto" type="button" class="btn btn-info">保存/提交</button>
                                 </p>
                             </div>
                         </form>
@@ -97,8 +101,23 @@
             </div>
         </div>
     </div>
+
+    <!--图片展示  -->
+    <div class="container-fluid" style="margin-top: -100px;">
+        <hr/>
+        <div class="widget-box">
+            <div class="widget-title"> <span class="icon"> <i class="icon-tasks"></i> </span>
+                <h2 style="color: #2595ff">图片预览区</h2>
+            </div>
+        </div>
+        <div  id="imgBox" class="row-fluid span12"  style="margin-top: 25px;">
+        </div>
+
+    </div>
+    <div style="margin-bottom: 150px;"></div>
 </div>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
+</div>
 </body>
 <div th:replace="../templates/frontdesk/body/businessManagement/photograph-upload-management-script :: photo-upload-script"></div>
 </html>

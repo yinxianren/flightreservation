@@ -1,8 +1,14 @@
 package com.yilvtong.first.flightreservation.controller.frontdesk.businessmanagement.photomanage;
 
 
+import com.yilvtong.first.flightreservation.entity.frontdesk.Photo;
+import com.yilvtong.first.flightreservation.entity.frontdesk.User;
+import com.yilvtong.first.flightreservation.service.frontdesk.PhotoService;
 import com.yilvtong.first.flightreservation.tool.BASE64DecodedMultipartFile;
+import com.yilvtong.first.flightreservation.tool.DateTimeUtils;
 import org.apache.commons.net.ftp.FTPClient;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,12 +20,26 @@ import javax.servlet.http.HttpSession;
 import javax.websocket.server.PathParam;
 import java.awt.image.BufferedImage;
 import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 @Controller
 @RequestMapping("/photo")
 public class UploadPictureController {
 
+    @Autowired
+    private  PhotoService PhotoService;
+
+
+    @Value("${web.photo.service.host}")
+    private String host;
+
+    @Value("${web.photo.service.port}")
+    private int port;
+
+    @Value("${web.photo.service.domain}")
+    private String domain;
 
     @RequestMapping("/businessmanagement/photomanage/UploadPictureController")
     public String pageJump(Map<String,Object> map) {
@@ -28,13 +48,47 @@ public class UploadPictureController {
         return "/frontdesk/body/businessManagement/photograph-upload-management";
     }
 
+    @ResponseBody
+    @RequestMapping("/upload/uploadMultiplePhoto")
+    public String  uploadMultiplePhoto(@PathParam("photoObject")MultipartFile photoObject[],
+                                       @PathParam("imgNewName")String[] imgNewName,
+                                       @PathParam("imgTitle") String[] imgTitle,
+                                       HttpSession session){
+        User user=(User)session.getAttribute("userInfo");
+        List<Photo> photoList=new ArrayList<>();
+        String time= DateTimeUtils.getCurrentDateTimeStr2();
+        for(int i=0;i<photoObject.length;i++){
+            Photo ph=new Photo();
+            ph.setAccount(user.getId());
+            ph.setDomainName(domain);
+            ph.setHost(host);
+            String oldName=photoObject[i].getOriginalFilename();
+            String[] st= oldName.split("\\.");
+            ph.setOldPhotoName(oldName);
+            String photoSuffic=st[st.length-1];
+            ph.setNewPhotoName(imgNewName[i]+"."+photoSuffic);
+            String path=domain+"images/"+imgTitle[i]+"/"+imgNewName[i]+"."+photoSuffic;
+            ph.setSavePath(path);
+            ph.setCreateDate(time);
+            ph.setUpdate(time);
+            photoList.add(ph);
+        }
+
+
+
+
+        return "success";
+    }
+
+
+
 
     @RequestMapping("/upload/singlePhoto")
     public String  uploadSinglePhoto(@PathParam("photoTitle") String photoTitle,
                                      @PathParam("photoName") String photoName,
                                      @PathParam("file") MultipartFile photoObject,
                                      HttpSession session
-                                     ){
+    ){
 
 
         //连接ftp服务器
@@ -68,13 +122,13 @@ public class UploadPictureController {
 
 
 
-//    @ResponseBody
+    //    @ResponseBody
 //    @RequestMapping("/upload/singlePhoto")
     public String uploadSinglePhoto1(@PathParam("src") String src,
-                                  @PathParam("photoTitle") String photoTitle,
-                                  @PathParam("photoName") String photoName,
-                                  HttpSession session
-                                  ){
+                                     @PathParam("photoTitle") String photoTitle,
+                                     @PathParam("photoName") String photoName,
+                                     HttpSession session
+    ){
         MultipartFile m= base64ToMultipart(src);
         try {
 
@@ -99,7 +153,7 @@ public class UploadPictureController {
 
 
 
-    return "success";
+        return "success";
 
     }
 

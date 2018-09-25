@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+
+<mapper namespace="com.yilvtong.first.flightreservation.mapper.frontdesk.PhotoMapper" >
+
+    <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.entity.frontdesk.Photo" >
+        <id column="hp_id" property="id" jdbcType="INTEGER" />
+        <result column="ph_usr_id" property="account" jdbcType="INTEGER" />
+        <result column="ph_host" property="host" jdbcType="VARCHAR" />
+        <result column="ph_domain_name" property="domainName" jdbcType="VARCHAR" />
+        <result column="ph_old_name" property="oldPhotoName" jdbcType="VARCHAR" />
+        <result column="ph_new_name" property="newPhotoName" jdbcType="VARCHAR" />
+        <result column="ph_save_path" property="savePath" jdbcType="VARCHAR" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+        <result column="c_date" property="createDate" jdbcType="DATE" />
+        <result column="up_date" property="update" jdbcType="DATE" />
+    </resultMap>
+
+
+
+
+
+
+    <sql id="Base_Column_List" >
+    `hp_id`,
+    `ph_usr_id`,
+    `ph_host`,
+    `ph_domain_name`,
+    `ph_old_name` ,
+    `ph_new_name` ,
+    `ph_save_path` ,
+    `c_date` ,
+    `up_date` ,
+    `is_delete`
+    </sql>
+
+    <select id="getById" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+        select
+        <include refid="Base_Column_List" />
+        from fr_photo
+        where hp_id = #{id,jdbcType=INTEGER}  AND is_delete=1
+    </select>
+
+    <select id="getAll" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from fr_photo AND is_delete=1
+        LIMIT 0,100
+    </select>
+
+    <insert id="add" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Photo">
+        INSERT  INTO fr_photo
+        <trim prefix="(" suffix=")" suffixOverrides="," >
+            <if test="account != null" >
+                ph_usr_id,
+            </if>
+            <if test="host != null" >
+                ph_host,
+            </if>
+            <if test="domainName != null" >
+                ph_domain_name,
+            </if>
+            <if test="oldPhotoName != null" >
+                ph_old_name,
+            </if>
+            <if test="newPhotoName != null" >
+                ph_new_name,
+            </if>
+            <if test="savePath != null" >
+                ph_save_path,
+            </if>
+            <if test="createDate != null" >
+                c_date,
+            </if>
+            <if test="update != null" >
+                up_date
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides="," >
+            <if test="account != null" >
+                #{account,jdbcType=INTEGER},
+            </if>
+            <if test="host != null" >
+                #{host,jdbcType=VARCHAR},
+            </if>
+            <if test="domainName != null" >
+                #{domainName,jdbcType=VARCHAR},
+            </if>
+            <if test="oldPhotoName != null" >
+                #{oldPhotoName,jdbcType=VARCHAR},
+            </if>
+            <if test="newPhotoName != null" >
+                #{newPhotoName,jdbcType=VARCHAR},
+            </if>
+            <if test="savePath != null" >
+                #{savePath,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="update != null" >
+                #{createDate,jdbcType=VARCHAR},
+            </if>
+        </trim>
+
+
+
+    </insert>
+
+
+    <delete id="delById" parameterType="java.lang.Integer" >
+        update fr_photo SET  is_delete=0
+        where hp_id = #{id,jdbcType=INTEGER} AND is_delete=1
+    </delete>
+
+    <update id="updataById" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Photo" >
+        update fr_photo
+        <set>
+
+            <if test="account != null" >
+                ph_usr_id= #{account,jdbcType=INTEGER},
+            </if>
+            <if test="host != null" >
+                ph_host= #{host,jdbcType=VARCHAR},
+            </if>
+            <if test="domainName != null" >
+                ph_domain_name= #{domainName,jdbcType=VARCHAR},
+            </if>
+            <if test="oldPhotoName != null" >
+                ph_old_name= #{oldPhotoName,jdbcType=VARCHAR},
+            </if>
+            <if test="newPhotoName != null" >
+                ph_new_name=#{newPhotoName,jdbcType=VARCHAR},
+            </if>
+            <if test="savePath != null" >
+                ph_save_path=#{savePath,jdbcType=VARCHAR},
+            </if>
+            <if test="createDate != null" >
+                c_date= #{createDate,jdbcType=VARCHAR},
+            </if>
+            <if test="update != null" >
+                up_date= #{update,jdbcType=VARCHAR}
+            </if>
+        </set>
+        where hp_id = #{id,jdbcType=INTEGER} AND is_delete=1
+    </update>
+
+</mapper>
