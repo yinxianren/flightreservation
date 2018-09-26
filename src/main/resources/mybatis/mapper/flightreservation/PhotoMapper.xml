@@ -41,6 +41,15 @@
         where hp_id = #{id,jdbcType=INTEGER}  AND is_delete=1
     </select>
 
+
+    <select id="getPhotoPath"  parameterType="java.lang.Integer" resultType="java.util.List">
+        select
+        ph_save_path
+        from fr_photo where ph_usr_id = #{accountId,jdbcType=INTEGER}  AND is_delete=1
+    </select>
+
+
+
     <select id="getAll" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List" />
@@ -106,6 +115,29 @@
 
 
     </insert>
+
+    <insert id="addPhotoBatch" parameterType="java.util.List" >
+        INSERT  INTO fr_photo  values
+        <foreach collection ="list" item="photoItem" index= "index" separator =",">
+            (
+                 null,
+                #{photoItem.account,jdbcType=INTEGER},
+                #{photoItem.host,jdbcType=VARCHAR},
+                #{photoItem.domainName,jdbcType=VARCHAR},
+                #{photoItem.oldPhotoName,jdbcType=VARCHAR},
+                #{photoItem.newPhotoName,jdbcType=VARCHAR},
+                #{photoItem.savePath,jdbcType=VARCHAR},
+                #{photoItem.createDate,jdbcType=VARCHAR},
+                #{photoItem.update,jdbcType=VARCHAR},
+                 1
+            )
+        </foreach >
+
+
+    </insert>
+
+
+
 
 
     <delete id="delById" parameterType="java.lang.Integer" >

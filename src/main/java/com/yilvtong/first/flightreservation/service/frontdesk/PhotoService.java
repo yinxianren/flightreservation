@@ -5,6 +5,8 @@ import com.yilvtong.first.flightreservation.mapper.frontdesk.PhotoMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class PhotoService extends ServiceParent<Photo> {
 
@@ -17,11 +19,39 @@ public class PhotoService extends ServiceParent<Photo> {
     }
 
 
-
-    public boolean inseterMultiple(){
-
-      return true;
+    /**
+     *  批量插入照片相关信息
+     * @param list
+     * @return
+     */
+    public boolean addPhotoBatch(List<Photo> list){
+        try {
+            photoMapper.addPhotoBatch(list);
+            return true;
+        }catch (Exception e){
+            e.printStackTrace();
+            return false;
+        }
     }
+
+    /**
+     *  根据账号ID获取该账号下所有图片保存路径
+     *  @param accountId
+     *  @return
+     */
+    public List<String> getPhotoPath(int accountId){
+        try {
+            return photoMapper.getPhotoPath(accountId);
+        }catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+
+
+
 
 
 }
