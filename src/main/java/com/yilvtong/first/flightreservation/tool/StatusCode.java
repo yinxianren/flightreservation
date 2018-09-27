@@ -13,6 +13,7 @@ public enum StatusCode {
     INTERNAL_ERROR_500_100(500,"内部服务器错误,该操作可能导致系统内部错误！"),
     INTERNAL_ERROR_500_13(500,"内部服务器错误, 服务器太忙 ！"),
     INTERNAL_ERROR_500_14_01(500,"应用程序无效, 插入数据失败！"),
+    INTERNAL_ERROR_500_14_02(500,"应用程序无效, 上傳圖片失敗！"),
     INTERNAL_ERROR_500_11(500,"内部服务器错误, 服务器关闭！");
 
 

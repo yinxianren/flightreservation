@@ -14,7 +14,15 @@
                 <a th:href="@{/photo/businessmanagement/photomanage/UploadPictureController}">
                     <i class=" icon-cloud"></i>
                     <span class="label label-success">[[${action=='upload'?'✔':''}]]</span>
-                    上传照片
+                    单照片上传
+                </a>
+            </li>
+
+            <li class="bg_ly">
+                <a th:href="@{/photo/businessmanagement/photomanage/UploadPictureController/multiple}">
+                    <i class=" icon-cloud"></i>
+                    <span class="label label-success">[[${action=='multiple_upload'?'✔':''}]]</span>
+                    多照片上传
                 </a>
             </li>
 

@@ -17,10 +17,6 @@
     </resultMap>
 
 
-
-
-
-
     <sql id="Base_Column_List" >
     `hp_id`,
     `ph_usr_id`,
@@ -47,6 +43,17 @@
         ph_save_path
         from fr_photo where ph_usr_id = #{accountId,jdbcType=INTEGER}  AND is_delete=1
     </select>
+
+
+
+     <select id="getAllPhotoPath" resultMap="BaseResultMap" >
+        select
+        ph_usr_id,ph_save_path
+        from fr_photo where  is_delete=1
+     </select>
+
+
+
 
 
 
@@ -86,6 +93,7 @@
             </if>
         </trim>
         <trim prefix="values (" suffix=")" suffixOverrides="," >
+
             <if test="account != null" >
                 #{account,jdbcType=INTEGER},
             </if>
@@ -117,10 +125,19 @@
     </insert>
 
     <insert id="addPhotoBatch" parameterType="java.util.List" >
-        INSERT  INTO fr_photo  values
+        INSERT  INTO fr_photo(
+        ph_usr_id,
+        ph_host,
+        ph_domain_name,
+        ph_old_name,
+        ph_new_name,
+        ph_save_path,
+        c_date,
+        up_date
+        )  values
         <foreach collection ="list" item="photoItem" index= "index" separator =",">
             (
-                 null,
+
                 #{photoItem.account,jdbcType=INTEGER},
                 #{photoItem.host,jdbcType=VARCHAR},
                 #{photoItem.domainName,jdbcType=VARCHAR},
@@ -128,8 +145,7 @@
                 #{photoItem.newPhotoName,jdbcType=VARCHAR},
                 #{photoItem.savePath,jdbcType=VARCHAR},
                 #{photoItem.createDate,jdbcType=VARCHAR},
-                #{photoItem.update,jdbcType=VARCHAR},
-                 1
+                #{photoItem.update,jdbcType=VARCHAR}
             )
         </foreach >
 

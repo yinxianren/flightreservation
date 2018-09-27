@@ -6,179 +6,19 @@
 <div th:fragment="photo-upload-script">
     <script th:inline="javascript" type="text/javascript">
         var contextPath = $('#contextPath').attr('href');
-        var imgSrc = [];  //存放图片路径
-        var imgFile = []; //存放文件流
-        var imgName = []; //存放图片名字
-        var imgNewName=[];//存放图片新名字
-        var imgTitle=[];  //存放图片标题
+
+
 
         $(document).ready(function(){
-            $("#submitPhoto").click(function(){
-                var url=contextPath+"photo/upload/uploadMultiplePhoto";
-                var fd=new FormData($("#upBox")[0]);
-                 console.info(fd);
 
-                //由于fd对象中已经包含<input type='file'>的input标签，如果不删除，就会造成重复上传
-                fd.delete("photoObject")
 
-                for(var i=0;i<imgFile.length;i++){
-                    fd.append("photoObject",imgFile[i]);
-                    fd.append("imgNewName",imgNewName[i]);
-                    fd.append("imgTitle",imgTitle[i]);
-                }
-                console.info(fd);
-                imgUpload(url,fd);
-            });
         });
 
-        /*
-           输入框点击事件
-        */
-        function  photoEven(obj){
-
-
-            if(imgFile.length==6) {
-                if (isEmpty(photoName)) {
-                    var json = {
-                        title: "<span style='color: red;font-size: 22px;'>警告!</span>",
-                        msg: "<span style='color: #73680a;font-size: 18px;'>一次上传，最大限制6张照片！</span>",
-                        buttons: [
-                            {
-                                title: "取消", click: function () {
-                            }
-                            }
-                        ]
-                    }
-                    $.alertView(json);
-                }
-                return;
-            }
-
-            var photoTitle=$("#photoTitle").val().trim();
-            if(isEmpty(photoTitle)){
-                hint("标题");
-                return;
-            }
-
-            var photoName=$("#photoName").val().trim();
-            if(isEmpty(photoName)){
-                hint("命名");
-                return;
-            }
 
 
 
 
-            //获取type=file的input
-            var fileImg = $(obj)[0];//[object HTMLInputElement]
-            //得到所有的图片列表
-            var fileList = fileImg.files;//[object FileList]
-            for (var i = 0; i < fileList.length; i++) {
 
-                //得到每个图片的路径
-                var imgSrcI = getObjectURL(fileList[i]);//blob:http://2197b82t91.iask.in:8090/aa25403a-50d6-40b8-969a-7daabb90a572
-                //向文件名的数组末尾添加此文件名
-                imgName.push(fileList[i].name);//20180731115736.png
-                $("#imgPath").val(fileList[i].name);
-                //向路径的数组末尾添加路径
-                imgSrc.push(imgSrcI);
-                //在文件流数组的末尾添加文件
-                imgFile.push(fileList[i]);//File { name: "2180731115708.png", lastModified: 1533009440507, webkitRelativePath: "", size: 494170, type: "image/png" }
-                //存放图片新的命名
-                imgNewName.push(photoName);
-                //存放标题
-                imgTitle.push(photoTitle);
-            }
-            //将图片展示出去
-            addNewContent();
-            //显示图片信息
-            addNewTable();
-            //输入的信息清空
-            $("#photoTitle").val("");
-            $("#photoName").val("")
-        }
-
-        //显示图片信息
-        function addNewTable(){
-            var tbodyContent=$("#tbodyContent");
-            $(tbodyContent).empty();
-
-            for(var i=0;i<imgFile.length;i++){
-                $(tbodyContent).append("<tr >\n" +
-                     "                     <td style=\"text-align: center;font-size: 10px;color: black;\"><span class=\"date badge badge-warning\">"+ (i+1) +"</span></td>\n" +
-                    "                     <td style=\"text-align: center;font-size: 10px;color: black;\">"+imgName[i]+"</td>\n" +
-                     "                     <td style=\"text-align: center;font-size: 10px;color: black;\">"+imgTitle[i]+"</td>\n" +
-                     "                     <td style=\"text-align: center;font-size: 10px;color: black;\">"+imgNewName[i]+"</td>\n" +
-                     "                     <td style=\"text-align: center;font-size: 10px;width:80px;\">\n" +
-                     "                     <button class=\"btn btn-warning btn-mini\" onclick=\"removeImg("+i+")\">移除该照片</button>\n" +
-                     "                     </td>\n" +
-                     "                 </tr>");
-            }
-        }
-
-
-        //图片移除
-        function removeImg(index){
-
-            imgSrc.splice(index, 1);
-            imgFile.splice(index, 1);
-            imgName.splice(index, 1);
-            imgNewName.splice(index, 1);
-            imgTitle.splice(index, 1);
-            //清空原图片名字
-            $("#imgPath").val("");
-            //将图片展示出去
-            addNewContent();
-            //显示图片信息
-            addNewTable();
-        }
-
-
-        //图片展示
-        function addNewContent() {
-
-            var imBox=$("#imgBox");
-            $(imBox).html("");
-
-            for(var i = 0; i < imgSrc.length; i++) {
-                var pdi="photoDiv"+i;
-                var imgid="img"+i;
-                var imgDiv="<div  class='span2 row-fluid'  id="+pdi+" style='border:5px groove #bfa91b;'></div>";
-                var imgObj="<img src="+imgSrc[i]+" id="+imgid+"  imgSrc_id="+i+" style='width: 100%;height: 100%;' alt="+imgName[i]+" onclick='imgDisplay(this)' />";
-                $(imBox).append(imgDiv);
-                $("#"+pdi).append(imgObj);
-            }
-        }
-
-
-        //图片预览路径
-        function getObjectURL(file) {
-            var url = null;
-            if (window.createObjectURL != undefined) { // basic
-                url = window.createObjectURL(file);
-            } else if (window.URL != undefined) { // mozilla(firefox)
-                url = window.URL.createObjectURL(file);
-            } else if (window.webkitURL != undefined) { // webkit or chrome
-                url = window.webkitURL.createObjectURL(file);
-            }
-            return url;
-        }
-
-
-        //当鼠标移到图片上时，显示x删除
-        function imgDisplay(obj) {
-            var src = $(obj).attr("src");
-            var imgHtml = '<div style="width: 100%;height: 100vh;overflow: auto;background: rgba(0,0,0,0.5);' +
-                'text-align: center;position: fixed;top: 0;left: 0;z-index: 1000;">' +
-                '<img src=' + src + ' style="margin-top: 100px;width: 70%;margin-bottom: 100px;"/>' +
-                '<p style="font-size: 50px;position: fixed;top: 30px;right: 30px;color: white;cursor: pointer;" ' +
-                'onclick="closePicture(this)">×</p></div>'
-            $('body').append(imgHtml);
-        }
-        //关闭
-        function closePicture(obj) {
-            $(obj).parent("div").remove();
-        }
         /**
          * 提示信息
          *
@@ -197,27 +37,27 @@
         }
 
 
-        /**
-         * 上传图片
-         */
-        function  imgUpload(url,data){
+        function photoEven(evn){
+            console.info(evn);
+            var imgObj= $("#imgPath");
+            $(imgObj).val(evn.value.substring(evn.value.lastIndexOf('\\')+1));
 
-            $.ajax({
-                type: "post",
-                url: url,
-                async: true,
-                data: data,
-                //下面这两个要写成false，要不然上传不了。
-                processData: false,
-                contentType: false,
-                success: function(dat) {
-                    console.log(dat);
-                },
-                error: function(error) {
-                    console.log(error);
-                }
-            });
+            var oFReader = new FileReader();
+            var file = document.getElementById('photoObject').files[0];
+            console.info(file);
+
+            oFReader.readAsDataURL(file);
+            oFReader.onloadend = function(oFRevent){
+                var src = oFRevent.target.result;
+
+                var pd= ("#photoDiv");
+                $(pd).empty();
+                var imgObj=" <img  id=\"photoPreview\"  style=\"width: 100%;height: 100%;\" >";
+                $(pd).append(imgObj);
+                $('#photoPreview').attr('src',src);
+            }
         }
+
     </script>
 
 </div>

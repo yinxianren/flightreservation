@@ -49,8 +49,19 @@ public class PhotoService extends ServiceParent<Photo> {
 
     }
 
+    /**
+     *  獲取所有圖片路徑
+     * @return
+     */
+    public List<Photo> getAllPhotoPath(){
+        try {
+            return photoMapper.getAllPhotoPath();
+        }catch(Exception e){
+            e.printStackTrace();
+            return null;
+        }
 
-
+    }
 
 
 

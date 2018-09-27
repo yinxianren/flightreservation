@@ -25,4 +25,11 @@ public interface PhotoMapper extends MapperModule<Photo> {
    boolean addPhotoBatch(List<Photo> list);
 
 
+    /**
+     *  獲取所有圖片路徑
+     * @return
+     */
+   List<Photo> getAllPhotoPath();
+
+
 }

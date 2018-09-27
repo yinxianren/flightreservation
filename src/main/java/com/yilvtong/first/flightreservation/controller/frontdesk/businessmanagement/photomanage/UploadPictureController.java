@@ -28,17 +28,42 @@ public class UploadPictureController {
 
     @Autowired
     private  PhotoService PhotoService;
+
+    @Autowired
+    private MyCollections myCollections;
+
+
+
     @Value("${web.photo.service.host}")
     private String host;
     @Value("${web.photo.service.domain}")
     private String domain;
 
+    /**
+     *  跳转到单图片上传
+     * @param map
+     * @return
+     */
     @RequestMapping("/businessmanagement/photomanage/UploadPictureController")
     public String pageJump(Map<String,Object> map) {
 
 
         return "/frontdesk/body/businessManagement/photograph-upload-management";
     }
+
+    /**
+     * 跳转到多图片上传
+     * @param map
+     * @return
+     */
+
+    @RequestMapping("/businessmanagement/photomanage/UploadPictureController/multiple")
+    public String pageJumpToMultipleUploadPhoto(Map<String,Object> map) {
+
+
+        return "/frontdesk/body/businessManagement/photograph-multiple-upload-management";
+    }
+
 
     /**
      *   多图片上传
@@ -54,23 +79,26 @@ public class UploadPictureController {
                                             @PathParam("imgNewName")String[] imgNewName,
                                             @PathParam("imgTitle") String[] imgTitle,
                                             HttpSession session){
-
-        List<Photo> photoList=processingPhotoData(photoObject,imgNewName,imgTitle,session);
-        boolean isSuccess=PhotoService.addPhotoBatch(photoList);//批量插入
         ReturnResult<Photo> rr=new ReturnResult<Photo>();
+        List<Photo> photoList=processingPhotoData(photoObject,imgNewName,imgTitle,session);
 
-        rr.setList(photoList);
+        boolean isSuccessUpload=uploadeToPhotoService(session);
+        if(!isSuccessUpload){
+            rr.setCode(StatusCode.INTERNAL_ERROR_500_14_02.getCode());
+            rr.setMessage(StatusCode.INTERNAL_ERROR_500_14_02.getMsg());
+            return rr;
+        }
+
+        boolean isSuccess=PhotoService.addPhotoBatch(photoList);//批量插入
         rr.setTitle("uploadMultiplePhoto");
         if(!isSuccess){
             rr.setCode(StatusCode.INTERNAL_ERROR_500_14_01.getCode());
             rr.setMessage(StatusCode.INTERNAL_ERROR_500_14_01.getMsg());
             return rr;
         }
-
-        uploadeToPhotoService();
-
-
-        return null;
+        rr.setCode(StatusCode.SUCCESS.getCode());
+        rr.setMessage(StatusCode.SUCCESS.getMsg());
+        return rr;
     }
 
     /**
@@ -79,7 +107,7 @@ public class UploadPictureController {
      *
      *
      */
-    private  boolean  uploadeToPhotoService(){
+    private  boolean  uploadeToPhotoService(HttpSession session){
 
         List<PhotoInfo> photoInfos= getPhotoInfos();
 
@@ -94,21 +122,22 @@ public class UploadPictureController {
         ftpClientConnectionPool.setMaxConnectNum(photoInfos.size());//设置初始连接数
         ftpClientConnectionPool.inits();
         List<FTPClient> ftpClientList = ftpClientConnectionPool.getFtpClientList();
+        User user=(User)session.getAttribute("userInfo");
+        List<String> pathList=myCollections.getPhotoPathList(user.getId());
         for (int i = 0; i < photoInfos.size(); i++) {
             PhotoInfo photoInfo = photoInfos.get(i);
-
             Photo photo=photoInfo.getPhoto();
             MultipartFile photoObject = photoInfo.getPhotoObject();
             FTPClient ftpClient = ftpClientList.get(i);
            try {
-             new Thread(new UploadPhotoThread(photo, photoObject, ftpClient)).start();
+               Thread photoThread=new Thread(new UploadPhotoThread(photo, photoObject, ftpClient,pathList,myCollections));
+               photoThread.start();
+               photoThread.join();
            }catch (Exception e){
               e.printStackTrace();
+              return false;
            }
-
-
         }
-
         return true;
     }
 
