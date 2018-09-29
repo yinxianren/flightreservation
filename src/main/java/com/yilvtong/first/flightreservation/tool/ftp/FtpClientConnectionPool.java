@@ -1,25 +1,26 @@
-package com.yilvtong.first.flightreservation.tool;
+package com.yilvtong.first.flightreservation.tool.ftp;
 
 import org.apache.commons.net.ftp.FTPClient;
-import org.apache.commons.net.ftp.FTPClientConfig;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
-@Component
+
 public class FtpClientConnectionPool {
 
     private int maxConnectionNum=6; //默认最多连接6,和上图图片最大数量保存一直
+
     private String host="192.168.0.120";
+
     private int port=21;
+
     private String userName="ftpuser";
+
     private String password="123456";
+
     private List<FTPClient> ftpClientList= Collections.synchronizedList(new ArrayList<FTPClient>());
 
 
@@ -44,7 +45,7 @@ public class FtpClientConnectionPool {
         try {
             for(int i=0;i<this.maxConnectionNum;i++){
                 FTPClient ftpClient = new FTPClient();
-                ftpClient.setControlEncoding("GBK");
+                ftpClient.setControlEncoding("utf-8");
                 ftpClient.connect(host, port);
                 ftpClient.login(userName,password);
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);//指定传输的是图片类型

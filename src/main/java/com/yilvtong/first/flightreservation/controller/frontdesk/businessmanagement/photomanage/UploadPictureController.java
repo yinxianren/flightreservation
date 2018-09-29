@@ -3,13 +3,20 @@ package com.yilvtong.first.flightreservation.controller.frontdesk.businessmanage
 
 import com.yilvtong.first.flightreservation.controller.ReturnResult;
 import com.yilvtong.first.flightreservation.entity.frontdesk.Photo;
+import com.yilvtong.first.flightreservation.entity.frontdesk.Title;
 import com.yilvtong.first.flightreservation.entity.frontdesk.User;
 import com.yilvtong.first.flightreservation.service.frontdesk.PhotoService;
+import com.yilvtong.first.flightreservation.service.frontdesk.TitleService;
 import com.yilvtong.first.flightreservation.tool.*;
+import com.yilvtong.first.flightreservation.tool.entity.PhotoInfo;
+import com.yilvtong.first.flightreservation.tool.ftp.FtpClientConnectionPool;
+import com.yilvtong.first.flightreservation.tool.ftp.SingleFtpClientConnection;
+import com.yilvtong.first.flightreservation.tool.thread.UploadPhotoThread;
 import org.apache.commons.net.ftp.FTPClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
@@ -30,9 +37,7 @@ public class UploadPictureController {
     private  PhotoService PhotoService;
 
     @Autowired
-    private MyCollections myCollections;
-
-
+    private TitleService titleService;
 
     @Value("${web.photo.service.host}")
     private String host;
@@ -45,9 +50,11 @@ public class UploadPictureController {
      * @return
      */
     @RequestMapping("/businessmanagement/photomanage/UploadPictureController")
-    public String pageJump(Map<String,Object> map) {
+    public String pageJump(Map<String,Object> map,HttpSession session) {
 
-
+        User user=(User)session.getAttribute("userInfo");
+        List<Title>  titleList = titleService.getByUserID(user.getId());
+        map.put("titleList",titleList);
         return "/frontdesk/body/businessManagement/photograph-upload-management";
     }
 
@@ -58,9 +65,10 @@ public class UploadPictureController {
      */
 
     @RequestMapping("/businessmanagement/photomanage/UploadPictureController/multiple")
-    public String pageJumpToMultipleUploadPhoto(Map<String,Object> map) {
-
-
+    public String pageJumpToMultipleUploadPhoto(Map<String,Object> map,HttpSession session) {
+        User user=(User)session.getAttribute("userInfo");
+        List<Title>  titleList = titleService.getByUserID(user.getId());
+        map.put("titleList",titleList);
         return "/frontdesk/body/businessManagement/photograph-multiple-upload-management";
     }
 
@@ -80,15 +88,21 @@ public class UploadPictureController {
                                             @PathParam("imgTitle") String[] imgTitle,
                                             HttpSession session){
         ReturnResult<Photo> rr=new ReturnResult<Photo>();
+
+        if(null==photoObject||null==imgNewName||null==imgTitle){
+            rr.setCode(StatusCode.INTERNAL_ERROR_400_04_01.getCode());
+            rr.setMessage(StatusCode.INTERNAL_ERROR_400_04_01.getMsg());
+            return rr;
+        }
+
         List<Photo> photoList=processingPhotoData(photoObject,imgNewName,imgTitle,session);
 
-        boolean isSuccessUpload=uploadeToPhotoService(session);
+        boolean isSuccessUpload=uploadeToPhotoService();
         if(!isSuccessUpload){
             rr.setCode(StatusCode.INTERNAL_ERROR_500_14_02.getCode());
             rr.setMessage(StatusCode.INTERNAL_ERROR_500_14_02.getMsg());
             return rr;
         }
-
         boolean isSuccess=PhotoService.addPhotoBatch(photoList);//批量插入
         rr.setTitle("uploadMultiplePhoto");
         if(!isSuccess){
@@ -107,7 +121,7 @@ public class UploadPictureController {
      *
      *
      */
-    private  boolean  uploadeToPhotoService(HttpSession session){
+    private  boolean  uploadeToPhotoService(){
 
         List<PhotoInfo> photoInfos= getPhotoInfos();
 
@@ -122,21 +136,19 @@ public class UploadPictureController {
         ftpClientConnectionPool.setMaxConnectNum(photoInfos.size());//设置初始连接数
         ftpClientConnectionPool.inits();
         List<FTPClient> ftpClientList = ftpClientConnectionPool.getFtpClientList();
-        User user=(User)session.getAttribute("userInfo");
-        List<String> pathList=myCollections.getPhotoPathList(user.getId());
         for (int i = 0; i < photoInfos.size(); i++) {
             PhotoInfo photoInfo = photoInfos.get(i);
             Photo photo=photoInfo.getPhoto();
             MultipartFile photoObject = photoInfo.getPhotoObject();
             FTPClient ftpClient = ftpClientList.get(i);
-           try {
-               Thread photoThread=new Thread(new UploadPhotoThread(photo, photoObject, ftpClient,pathList,myCollections));
-               photoThread.start();
-               photoThread.join();
-           }catch (Exception e){
-              e.printStackTrace();
-              return false;
-           }
+            try {
+                Thread photoThread=new Thread(new UploadPhotoThread(photo, photoObject, ftpClient));
+                photoThread.start();
+                photoThread.join();
+            }catch (Exception e){
+                e.printStackTrace();
+                return false;
+            }
         }
         return true;
     }
@@ -209,37 +221,75 @@ public class UploadPictureController {
      * @param session
      * @return
      */
+    @ResponseBody
     @RequestMapping("/upload/singlePhoto")
-    public String  uploadSinglePhoto(@PathParam("photoTitle") String photoTitle,
-                                     @PathParam("photoName") String photoName,
-                                     @PathParam("file") MultipartFile photoObject,
-                                     HttpSession session
+    public ReturnResult  uploadSinglePhoto(@PathParam("photoTitle") String photoTitle,
+                                           @PathParam("photoName") String photoName,
+                                           @PathParam("file") MultipartFile photoObject,
+                                           HttpSession session
     ){
 
+        photoTitle=photoTitle.trim();
+        photoName=photoName.trim();
+        ReturnResult<Photo> rr=new ReturnResult<Photo>();
+        if(StringUtils.isEmpty(photoTitle)||StringUtils.isEmpty(photoName)||null==photoObject){
+            rr.setCode(StatusCode.INTERNAL_ERROR_400_04_01.getCode());
+            rr.setMessage(StatusCode.INTERNAL_ERROR_400_04_01.getMsg());
+            return rr;
+        }
+        User user=(User)session.getAttribute("userInfo");
+        SingleFtpClientConnection singleFtpClientConnection=new SingleFtpClientConnection();
+        singleFtpClientConnection.init();
+        boolean how=singleFtpClientConnection.changeWorkingDirectory("/home/ftpuser/www/images/"+user.getAccount()+"/"+photoTitle);
+        boolean hows=true;
+        if(!how){
+            how=singleFtpClientConnection.changeWorkingDirectory("/home/ftpuser/www/images/"+user.getAccount());
+            if(!how){
+                singleFtpClientConnection.mkdir("/home/ftpuser/www/images/"+user.getAccount());
+                singleFtpClientConnection.mkdir("/home/ftpuser/www/images/"+user.getAccount()+"/"+photoTitle);
+                hows=singleFtpClientConnection.changeWorkingDirectory("/home/ftpuser/www/images/"+user.getAccount()+"/"+photoTitle);//切换目录
+            }else{
+                singleFtpClientConnection.mkdir("/home/ftpuser/www/images/"+user.getAccount()+"/"+photoTitle);
+                hows=singleFtpClientConnection.changeWorkingDirectory("/home/ftpuser/www/images/"+user.getAccount()+"/"+photoTitle);//切换目录
+            }
+        }
+        if(!hows){//创建目录失败
+            rr.setCode(StatusCode.INTERNAL_ERROR_500_14_03.getCode());
+            rr.setMessage(StatusCode.INTERNAL_ERROR_500_14_03.getMsg());
+            return rr;
+        }
+        String oldName=photoObject.getOriginalFilename();
+        String[] st= oldName.split("\\.");
+        String photoSuffic=st[st.length-1];
 
-        //连接ftp服务器
-        FTPClient ftpClient = new FTPClient();
-        try {
-            ftpClient.connect("192.168.0.120", 21);
-            //登录ftp服务器
-            ftpClient.login("ftpuser", "123456");
-            //指定上传目录
-            ftpClient.changeWorkingDirectory("/home/ftpuser/www/images/lo");
-            // 指定文件类型
-            ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);
 
-            ftpClient.storeFile("photo.jpg",photoObject.getInputStream());  //存储图片
-            //5、退出登录
-            ftpClient.logout();
 
-        } catch (IOException e) {
-            e.printStackTrace();
+        if(!singleFtpClientConnection.upload(photoObject,photoName+"."+photoSuffic)){//上传失败
+            rr.setCode(StatusCode.INTERNAL_ERROR_500_14_02.getCode());
+            rr.setMessage(StatusCode.INTERNAL_ERROR_500_14_02.getMsg());
+            return rr;
         }
 
+        Photo pt=new Photo();
+        pt.setOldPhotoName(oldName);
+        pt.setNewPhotoName(photoName+"."+photoSuffic);
+        String time= DateTimeUtils.getCurrentDateTimeStr2();
+        pt.setUpdate(time);
+        pt.setCreateDate(time);
+        pt.setAccount(user.getId());
+        pt.setSavePath(user.getAccount()+"/"+photoTitle+"/");
+        pt.setHost(host);
+        pt.setDomainName(domain);
 
+        if(!PhotoService.add(pt)){//数据保存失败
+            rr.setCode(StatusCode.INTERNAL_ERROR_500_14_01.getCode());
+            rr.setMessage(StatusCode.INTERNAL_ERROR_500_14_01.getMsg());
+            return rr;
+        }
 
-
-        return null;
+        rr.setCode(StatusCode.SUCCESS.getCode());
+        rr.setMessage(StatusCode.SUCCESS.getMsg());
+        return rr;
     }
 
 

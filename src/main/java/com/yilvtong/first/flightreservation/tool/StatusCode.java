@@ -9,11 +9,14 @@ public enum StatusCode {
     INTERNAL_ERROR_400_01(401,"未授权：登录失败！"),
     INTERNAL_ERROR_400_01_03(40103,"未授权：禁止访问资源！"),
     INTERNAL_ERROR_400_02(402,"未授权：服务器配置问题导致登录失败 ！"),
+    INTERNAL_ERROR_400_04_01(40401,"未找到： 空参数 ！"),
 
     INTERNAL_ERROR_500_100(500,"内部服务器错误,该操作可能导致系统内部错误！"),
     INTERNAL_ERROR_500_13(500,"内部服务器错误, 服务器太忙 ！"),
     INTERNAL_ERROR_500_14_01(500,"应用程序无效, 插入数据失败！"),
     INTERNAL_ERROR_500_14_02(500,"应用程序无效, 上傳圖片失敗！"),
+    INTERNAL_ERROR_500_14_03(500,"应用程序无效,  ftp创建目录失败！"),
+    INTERNAL_ERROR_500_14_05(5001405,"应用程序无效, 目标对象已经存在！"),
     INTERNAL_ERROR_500_11(500,"内部服务器错误, 服务器关闭！");
 
 

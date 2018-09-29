@@ -6,9 +6,11 @@
     <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
     <script th:src="@{/private/frontdesk/body/js/bootstrap.min.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
+    <link rel="stylesheet" th:href="@{/private/frontdesk/body/css/uniform.css}" />
+    <link rel="stylesheet" th:href="@{/private/frontdesk/body/css/select2.css}" />
     <style type="text/css">
         .camanJS-editor span:nth-child(1){font-size: 16px;font-weight: bolder;color: #1a1a1a;}
-
+        div.uploader span.action ,div.uploader span.filename,div.uploader{display: none;}
     </style>
 </head>
 <body>
@@ -29,7 +31,11 @@
                         <h5 style="color: #2595ff">提示信息</h5>
                     </div>
                     <div class="widget-content nopadding" style="color: #0fb608;">
-                        <p>（1）标题：可以认为是图片的分类目录，方便图片搜索定位！</p>
+                        <p>（1）标题：可以认为是图片的分类目录，方便图片搜索定位！<br>
+                            <span style="color: red;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果你还未添加任何<<<b>标题</b>>>
+                                <a style="color: #391a73" th:href="@{/photo/businessmanagement/photomanage/SettingController}">点击添加</a>
+                            </span>
+                        </p>
                         <p>（2）命名：可以这么说，你要给这张图片起个名字！</p>
                         <p>（3）图片预览区：可以看到图片照片，点击可看到更大的照片信息！</p>
                         <p>（5）照片信息：点击<span style="color: red;font-weight: bolder;">移除该照片</span>”,便可以将照片删除！</p>
@@ -68,7 +74,12 @@
                             <div class="control-group">
                                 <label class="control-label">标题 :</label>
                                 <div class="controls">
-                                    <input style="width: 92%;" type="text" name="photoTitle"  id="photoTitle" class="span11" />
+
+                                    <select class="span11"  name="photoTitle"  id="photoTitle"    style="margin:0;padding:4px;width: 92%;height: 100%;  ">
+                                    <span th:if="${titleList} ne null ">
+                                        <option th:each=" tt,iterStat :${titleList}"   th:text="${tt.title}" ></option>
+                                    </span>
+                                    </select>
                                 </div>
                             </div>
                             <div class="control-group">
@@ -124,4 +135,8 @@
 </div>
 </body>
 <div th:replace="../templates/frontdesk/body/businessManagement/photograph-multiple-upload-management-script :: photo-upload-script"></div>
+<script th:src="@{/private/frontdesk/body/js/bootstrap.min.js}"></script>
+<script th:src="@{/private/frontdesk/body/js/jquery.uniform.js}"></script>
+<script th:src="@{/private/frontdesk/body/js/select2.min.js}"></script>
+<script th:src="@{/private/frontdesk/body/js/matrix.form_common.js}"></script>
 </html>

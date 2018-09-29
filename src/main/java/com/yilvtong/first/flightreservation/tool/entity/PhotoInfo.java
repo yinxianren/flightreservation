@@ -1,4 +1,4 @@
-package com.yilvtong.first.flightreservation.tool;
+package com.yilvtong.first.flightreservation.tool.entity;
 
 import com.yilvtong.first.flightreservation.entity.frontdesk.Photo;
 import lombok.Getter;

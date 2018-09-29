@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yilvtong.first.flightreservation.mapper.viewmapper.PhotoViewMapper" >
+
+
+    <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.entity.view.PhotoView" >
+        <result column="ph_usr_id" property="id" jdbcType="INTEGER" />
+        <result column="ph_domain_name" property="domainName" jdbcType="VARCHAR" />
+        <result column="ph_new_name" property="name" jdbcType="VARCHAR" />
+        <result column="ph_save_path" property="savePath" jdbcType="VARCHAR" />
+        <result column="up_date" property="update" jdbcType="VARCHAR" />
+        <result column="short_up_date" property="shortUpDate" jdbcType="DATE" />
+    </resultMap>
+
+
+    <select id="getByUidAndLimit"  resultMap="BaseResultMap">
+       SELECT
+       ph_domain_name,
+       ph_new_name,
+       ph_save_path,
+       up_date,
+       short_up_date
+       FROM view_fr_photo
+       WHERE ph_usr_id=#{uid} LIMIT #{offset},#{rowNum};
+    </select>
+
+
+
+</mapper>

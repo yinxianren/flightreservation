@@ -11,30 +11,68 @@
 
         $(document).ready(function(){
 
+              $("#submitPhoto").click(function(){
+                  var photoTitle=$("#photoTitle").val();
+                  if(isEmpty(photoTitle)){
+                      hint("标题");
+                      return;
+                  }
+                  photoTitle=photoTitle.trim();
+                  if(isEmpty(photoTitle)){
+                      hint("标题");
+                      return;
+                  }
+                  if(isEmpty($("#photoName").val().trim())){
+                      hint("命名");
+                      return false;
+                  }
+                  var fd=new FormData($("#upBox")[0]);
+                  imgUpload(contextPath+"photo/upload/singlePhoto",fd)
+                  $.alertView( "<i class='icon-spinner icon-spin'></i>正在上传中......请稍等！");
+              });
+
+
 
         });
 
 
 
 
-
-
         /**
-         * 提示信息
-         *
+         * 上传图片
          */
-        function hint(msg){
-            var json = {
-                title:"<span style='color: red;font-size: 22px;'>警告!</span>",
-                msg:"<span style='color: #73680a;font-size: 18px;'>输入信息为空！--></span>"+"《"+msg+"》",
-                buttons:[
-                    { title:"取消",click:function(){
+        function  imgUpload(url,data){
+
+            $.ajax({
+                type: "post",
+                url: url,
+                async: true,
+                data: data,
+                //下面这两个要写成false，要不然上传不了。
+                processData: false,
+                contentType: false,
+                success: function(data) {
+//                    console.log(data);
+                    if(data.code==200){
+                        $.alertView("上传完成！");
+                        setTimeout(function(){
+                            window.location.href = contextPath+"body/busi-manage/photograph-management";
+                        },1000);
+                    }else{
+                        $.alertView(data.message);
+                        setTimeout(function(){
+                            location.reload();
+                        },1000);
                     }
-                    }
-                ]
-            }
-            $.alertView(json);
+                },
+                error: function(error) {
+                    console.log(error);
+                    $.alertView("内部错误！无法完成照片上传！");
+                }
+            });
         }
+
+
 
 
         function photoEven(evn){

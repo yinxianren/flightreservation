@@ -6,9 +6,79 @@
 <div th:fragment="photo-script">
     <script th:inline="javascript" type="text/javascript">
         var contextPath = $('#contextPath').attr('href');
+        var objs = [[${photoList}]];
+        var array=new Array();
+        var photos=new Array();
 
-
+        var shortUpDateList=new Array();
         $(document).ready(function(){
+
+            //过滤重复日期
+            $.each(objs,function(index, obj){
+                var shortUpDate= obj.shortUpDate;
+                if(shortUpDateList.length==0){
+                    shortUpDateList[0]=shortUpDate;
+                }else{
+                    if(shortUpDateList[shortUpDateList.length-1]!=shortUpDate){
+                        shortUpDateList.push(shortUpDate);
+                    }
+                }
+            });
+
+             //后台数据保存到数组中
+            $.each(objs,function(index, obj){
+                var shortUpDate= obj.shortUpDate;
+                var domainName=obj.domainName;
+                var name =obj.name;
+                var savePath =obj.savePath;
+                var update =obj.update;
+                var photo=new Array();
+                photo[0]= domainName;
+                photo[1]= savePath;
+                photo[2]= name;
+                photo[3]= update;
+                photo[4]= shortUpDate;
+                photos.push(photo);
+            });
+
+            //数据渲染
+            var photoDiv=$("#photoDiv");
+            for(var i=0;i<shortUpDateList.length;i++){
+                var me_ul=' <ul class="thumbnails " id="'+shortUpDateList[i]+'" > </ul>  ';
+                $(photoDiv).append(me_ul);
+
+
+                for(var j=0;j<photos.length;j++){
+                    if(shortUpDateList[i]== photos[j][4]){
+                        console.info(shortUpDateList[i]== photos[j][3]);
+                       var me_li=' <li class="span2">\n' +
+                           '           <a> <img src=" '+photos[j][0]+photos[j][1]+photos[j][2]+' " alt=" '+photos[j][2]+' " > </a>\n' +
+                           '           <div class="actions">\n' +
+                           '             <a title="" info-id="'+shortUpDateList[i]+'" class="lightbox_trigger_info" href="#">\n' +
+                           '                 <i class="icon-pencil"></i>\n' +
+                           '              </a>\n' +
+                           '               <a class="lightbox_trigger" href=" '+photos[j][0]+photos[j][1]+photos[j][2]+'">\n' +
+                           '                  <i class="icon-search"></i>\n' +
+                           '               </a>\n' +
+                           '          </div>\n' +
+                           '       </li> ';
+                       $("#"+shortUpDateList[i]).append(me_li);
+                    }
+                }
+            }
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
             $(".lightbox_trigger_info").click(function(e){
@@ -17,16 +87,16 @@
 
                 var lightbox =
                     '<div id="lightbox" style="display:none;">' +
-                       '<div id="imgbox-bg">' +
-                         '<div>'+
-                           'asdfasdfaaaadsffasf<hr/>'+
+                    '<div id="imgbox-bg">' +
+                    '<div>'+
                     'asdfasdfaaaadsffasf<hr/>'+
                     'asdfasdfaaaadsffasf<hr/>'+
                     'asdfasdfaaaadsffasf<hr/>'+
                     'asdfasdfaaaadsffasf<hr/>'+
-                         '</div>'+
-                         '<p ><i style="color:#000000;" class="icon-remove icon-white"></i></p>' +
-                      '</div>' +
+                    'asdfasdfaaaadsffasf<hr/>'+
+                    '</div>'+
+                    '<p ><i style="color:#000000;" class="icon-remove icon-white"></i></p>' +
+                    '</div>' +
                     '</div>';
 
                 $('body').append(lightbox);

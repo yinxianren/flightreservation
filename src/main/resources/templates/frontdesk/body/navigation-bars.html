@@ -35,6 +35,22 @@
                     return false;
                 }
             }
+            /**
+             * 提示信息
+             *
+             */
+            function hint(msg){
+                var json = {
+                    title:"<span style='color: red;font-size: 22px;'>警告!</span>",
+                    msg:"<span style='color: #73680a;font-size: 18px;'>输入信息为空！--></span>"+"《"+msg+"》",
+                    buttons:[
+                        { title:"取消",click:function(){
+                        }
+                        }
+                    ]
+                }
+                $.alertView(json);
+            }
         </script>
     </th:block>
 </head>

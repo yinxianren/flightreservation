@@ -1,4 +1,4 @@
-package com.yilvtong.first.flightreservation.tool;
+package com.yilvtong.first.flightreservation.tool.collections;
 
 
 import com.yilvtong.first.flightreservation.entity.frontdesk.Photo;
@@ -9,7 +9,11 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 import java.util.stream.Stream;
 
-@Component
+
+/**
+ *  弃用
+ */
+//@Component
 public  class MyCollections {
 
     @Autowired

@@ -33,7 +33,13 @@
                     照片搜索
                 </a>
             </li>
-
+            <li style="background-color: #3f3936;">
+                <a th:href="@{/photo/businessmanagement/photomanage/SettingController}">
+                    <i class="   icon-cog"></i>
+                    <span class="label label-success">[[${action=='set'?'✔':''}]]</span>
+                    设置
+                </a>
+            </li>
         </ul>
 
     </div>

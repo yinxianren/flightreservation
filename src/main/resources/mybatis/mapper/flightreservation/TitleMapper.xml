@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.yilvtong.first.flightreservation.mapper.frontdesk.TitleMapper" >
+    <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.entity.frontdesk.Title" >
+        <id column="pt_id" property="id" jdbcType="INTEGER" />
+        <result column="pt_usr_id" property="userId" jdbcType="VARCHAR" />
+        <result column="pt_title" property="title" jdbcType="VARCHAR" />
+        <result column="c_date" property="createDate" jdbcType="DATE" />
+        <result column="up_date" property="update" jdbcType="DATE" />
+        <result column="is_delete" property="isDelete" jdbcType="INTEGER" />
+    </resultMap>
+    <sql id="Base_Column_List" >
+           pt_id,
+           pt_usr_id ,
+           pt_title ,
+           c_date ,
+           up_date,
+           is_delete
+    </sql>
+
+    <select id="getByUserID"  resultMap="BaseResultMap" parameterType="java.lang.Integer">
+        select
+        <include refid="Base_Column_List" />
+        from fr_photo_title
+        where pt_usr_id = #{id,jdbcType=INTEGER}  AND is_delete=1
+    </select>
+
+    <select id="countByTitleAnd"  resultType="java.lang.Integer"  >
+         SELECT COUNT(pt_id) FROM `fr_photo_title` WHERE is_delete=1 AND  pt_title=#{title,jdbcType=VARCHAR} AND pt_usr_id=#{id,jdbcType=INTEGER}
+    </select>
+
+
+
+    <insert id="add" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Title" >
+       INSERT  INTO fr_photo_title
+                    (
+                   pt_usr_id,
+                   pt_title ,
+                   c_date ,
+                   up_date
+                     )
+                 values (
+                     #{userId,jdbcType=VARCHAR},
+                     #{title,jdbcType=VARCHAR},
+                     #{createDate,jdbcType=DATE},
+                     #{update,jdbcType=DATE}
+                     )
+    </insert>
+</mapper>

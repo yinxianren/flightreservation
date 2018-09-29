@@ -6,9 +6,11 @@
     <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
     <script th:src="@{/private/frontdesk/body/js/bootstrap.min.js}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/camanjs/4.1.2/caman.full.min.js"></script>
+    <link rel="stylesheet" th:href="@{/private/frontdesk/body/css/uniform.css}" />
+    <link rel="stylesheet" th:href="@{/private/frontdesk/body/css/select2.css}" />
     <style type="text/css">
         .camanJS-editor span:nth-child(1){font-size: 16px;font-weight: bolder;color: #1a1a1a;}
-
+        div.uploader span.action ,div.uploader span.filename,div.uploader{display: none;}
     </style>
 </head>
 <body>
@@ -23,13 +25,17 @@
     <!--上传  -->
     <div class="container-fluid">
         <div class="row-fluid"  style="margin-bottom: 200px;">
-            <div class="span3">
+            <div class="span5">
                 <div class="widget-box">
                     <div class="widget-title"> <span class="icon"> <i class=" icon-bell-alt"></i> </span>
                         <h5>提示信息</h5>
                     </div>
                     <div class="widget-content nopadding" style="color: #0fb608;">
                         <p>（1）标题：可以认为是图片的分类目录，方便图片搜索定位！</p>
+
+                        <p style="color: red;"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;如果你还未添加任何<<<b>标题</b>>>
+                                <a style="color: #391a73" th:href="@{/photo/businessmanagement/photomanage/SettingController}">点击添加</a>
+                            </p>
                         <p>（2）命名：可以这么说，你要给这张图片起个名字！</p>
                         <p>（3）照片编辑：确认选择照片后，窗口下拉，可见编辑模块！</p>
                         <p>（5）如要更换编辑图片，直接再次点击<span style="color: red;font-weight: bolder;">点击查找照片</span>”,便可以替换原来的图片！</p>
@@ -37,7 +43,7 @@
                     <div class="widget-title"> <span class="icon"> <i class="  icon-zoom-in"></i> </span>
                         <h5 style="color:#ff1493;">图片预览</h5>
                     </div>
-                    <div id="photoDiv" style="width: 200px;height: 200px;border:5px groove #bfa91b;margin: 0 auto;">
+                    <div id="photoDiv" style="width: 400px;height: 400px;border:5px groove #bfa91b;margin: 0 auto;">
 
                     </div>
 
@@ -52,12 +58,17 @@
                         <h2 style="color: #2595ff">照片上传</h2>
                     </div>
                     <div class="widget-content nopadding">
-                        <form  th:action="@{/photo/upload/singlePhoto}" method="post" enctype="multipart/form-data" class="form-horizontal">
+                        <form  th:action="@{/photo/upload/singlePhoto}" method="post" id="upBox" enctype="multipart/form-data" class="form-horizontal">
 
                             <div class="control-group">
                                 <label class="control-label">标题 :</label>
                                 <div class="controls">
-                                    <input style="width: 92%;" type="text" name="photoTitle"  id="photoTitle" class="span11" />
+
+                                    <select class="span11"  name="photoTitle"  id="photoTitle"    style="margin:0;padding:4px;width: 92%;height: 100%;  ">
+                                    <span th:if="${titleList} ne null ">
+                                        <option th:each=" tt,iterStat :${titleList}"   th:text="${tt.title}" ></option>
+                                    </span>
+                                    </select>
                                 </div>
                             </div>
                             <div class="control-group">
@@ -66,9 +77,6 @@
                                     <input style="width: 92%;" type="text" name="photoName" id="photoName" class="span11" />
                                 </div>
                             </div>
-
-
-
 
                             <div class="control-group">
                                 <label class="control-label">选择照片 :</label>
@@ -88,7 +96,7 @@
 
                             <div class="form-actions">
                                 <p style="text-align: center;">
-                                    <button id="submitPhoto" type="submit" class="btn btn-info">保存/提交</button>
+                                    <button id="submitPhoto" type="button" class="btn btn-info">保存/提交</button>
                                 </p>
                             </div>
                         </form>
@@ -101,4 +109,8 @@
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 </body>
 <div th:replace="../templates/frontdesk/body/businessManagement/photograph-upload-management-script :: photo-upload-script"></div>
+<script th:src="@{/private/frontdesk/body/js/bootstrap.min.js}"></script>
+<script th:src="@{/private/frontdesk/body/js/jquery.uniform.js}"></script>
+<script th:src="@{/private/frontdesk/body/js/select2.min.js}"></script>
+<script th:src="@{/private/frontdesk/body/js/matrix.form_common.js}"></script>
 </html>

@@ -12,6 +12,7 @@ import com.yilvtong.first.flightreservation.service.boservice.DepService;
 import com.yilvtong.first.flightreservation.service.frontdesk.CompanyService;
 import com.yilvtong.first.flightreservation.service.frontdesk.UserService;
 import com.yilvtong.first.flightreservation.tool.DateTimeUtils;
+import com.yilvtong.first.flightreservation.tool.ftp.SingleFtpClientConnection;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,7 +36,11 @@ public class AddUsersManagementController{
     private DepService depService;
 
 
-
+    /**
+     *  页面跳转到添加用户
+     * @param map
+     * @return
+     */
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage")
     public String pageJump(Map<String,Object> map) {
 
@@ -45,7 +50,12 @@ public class AddUsersManagementController{
 
     }
 
-
+    /**
+     *  添加用户
+     * @param user
+     * @param map
+     * @return
+     */
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/add")
     public String addUser(User user,Map<String,Object> map) {
         String time= DateTimeUtils.getCurrentDateTimeStr2();
@@ -53,6 +63,11 @@ public class AddUsersManagementController{
         user.setCreateDate(time);
         boolean how=userService.add(user);
         if(how){
+            SingleFtpClientConnection singleFtpClientConnection=new SingleFtpClientConnection();
+            //预先创建照片保存的根目录
+            singleFtpClientConnection.init();
+            singleFtpClientConnection.mkdir("/home/ftpuser/www/images/"+user.getAccount());
+            singleFtpClientConnection.close();
             return "redirect:/body/systemsettingmanagement/institutional-framework-management/ifm_users_management";
         }
         ObjectMapper mapper = new ObjectMapper();
@@ -68,9 +83,11 @@ public class AddUsersManagementController{
     }
 
 
-
-
-
+    /**
+     *  获取部门
+     * @param id
+     * @return
+     */
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/getDep")
     @ResponseBody
     public List<Dep> getDepartment(int id){
@@ -81,7 +98,11 @@ public class AddUsersManagementController{
         return null;
     }
 
-
+    /**
+     *  检查账号是否存在
+     * @param account
+     * @return
+     */
     @RequestMapping("/systemsettingmanagement/institutional-framework-management/ifm_add_users_manage/checkAccount")
     @ResponseBody
     public boolean checkAccount(@PathParam("account") String account){

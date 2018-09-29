@@ -2,7 +2,7 @@ package com.yilvtong.first.flightreservation.service.boservice;
 
 
 import com.yilvtong.first.flightreservation.bo.Cmpy;
-import com.yilvtong.first.flightreservation.mapper.boMapper.CmpyMapper;
+import com.yilvtong.first.flightreservation.mapper.bomapper.CmpyMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

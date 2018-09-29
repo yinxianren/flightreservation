@@ -1,7 +1,7 @@
 package com.yilvtong.first.flightreservation.service.boservice;
 
 import com.yilvtong.first.flightreservation.bo.User;
-import com.yilvtong.first.flightreservation.mapper.boMapper.UseMapper;
+import com.yilvtong.first.flightreservation.mapper.bomapper.UseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

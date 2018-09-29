@@ -1,4 +1,4 @@
-package com.yilvtong.first.flightreservation.mapper.boMapper;
+package com.yilvtong.first.flightreservation.mapper.bomapper;
 import com.yilvtong.first.flightreservation.mapper.MapperModule;
 import org.springframework.stereotype.Repository;
 

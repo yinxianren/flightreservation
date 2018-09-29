@@ -31,6 +31,7 @@
                     fd.append("imgTitle",imgTitle[i]);
                 }
                 imgUpload(url,fd);
+                $.alertView( "<i class='icon-spinner icon-spin'></i>正在上传中......请稍等！");
             });
         });
 
@@ -57,7 +58,12 @@
                 return;
             }
 
-            var photoTitle=$("#photoTitle").val().trim();
+            var photoTitle=$("#photoTitle").val();
+            if(isEmpty(photoTitle)){
+                hint("标题");
+                return;
+            }
+             photoTitle=photoTitle.trim();
             if(isEmpty(photoTitle)){
                 hint("标题");
                 return;
@@ -222,9 +228,11 @@
                         setTimeout(function(){
                             window.location.href = contextPath+"body/busi-manage/photograph-management";
                         },1000);
-                    }else if(data.code==500){
+                    }else{
                         $.alertView(data.message);
-                        location.reload();
+                         setTimeout(function(){
+                            location.reload();
+                        },1000);
                     }
                 },
                 error: function(error) {
