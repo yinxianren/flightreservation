@@ -105,8 +105,6 @@
                 var uid=$(this).attr("use_id");
                 for(var i=0;i<array.length;i++){
                     if(array[i][0]==uid) {
-                        $(window).scrollTop(0);
-                        unScroll();
                         var json = {
                             title:"删除操作！",
                             msg:"确定将<span style='color:#10b803;font-style: inherit;'> "+array[i][3]+"</span> 账户删除？ ",
@@ -118,7 +116,7 @@
                                     use_ajax(path,data);
                                 } },
                                 { title:"取消",click:function(){
-                                    removeUnScroll();
+
                                 } }
                             ]
                         }

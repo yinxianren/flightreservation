@@ -25,130 +25,130 @@
                 }
             });
 
-             //后台数据保存到数组中
+            //后台数据保存到数组中
             $.each(objs,function(index, obj){
                 var shortUpDate= obj.shortUpDate;
                 var domainName=obj.domainName;
                 var name =obj.name;
                 var savePath =obj.savePath;
                 var update =obj.update;
+                var id=obj.id;
+                var uid=obj.uid;
                 var photo=new Array();
                 photo[0]= domainName;
                 photo[1]= savePath;
                 photo[2]= name;
                 photo[3]= update;
                 photo[4]= shortUpDate;
+                photo[5]= id;
+                photo[6]= uid;
                 photos.push(photo);
             });
 
             //数据渲染
             var photoDiv=$("#photoDiv");
             for(var i=0;i<shortUpDateList.length;i++){
-                var me_ul=' <ul class="thumbnails " id="'+shortUpDateList[i]+'" > </ul>  ';
+                var me_ul='<div style="border-bottom:1px solid #bb9b79; ">' +
+                    '<p style="margin-bottom: 20px;">' +
+                    '<span style="font-size:20px;font-weight:bolder;color: #1118cc;">更新时间：'+shortUpDateList[i]+'</span>' +
+                    '<span class="blink" style="margin-left: 50px;color: #149f01;font-size: 16px;">温馨提示：单击图片，可以放大图片，点击图片右上方"X"可以关闭显示效果!</span>' +
+                    '</p>' +
+                    '</div> ' +
+                    '<ul class="thumbnails " style="margin-top: 20px;" id="'+shortUpDateList[i]+'" > </ul> <hr/> ';
                 $(photoDiv).append(me_ul);
 
 
                 for(var j=0;j<photos.length;j++){
                     if(shortUpDateList[i]== photos[j][4]){
-                        console.info(shortUpDateList[i]== photos[j][3]);
-                       var me_li=' <li class="span2">\n' +
-                           '           <a> <img src=" '+photos[j][0]+photos[j][1]+photos[j][2]+' " alt=" '+photos[j][2]+' " > </a>\n' +
-                           '           <div class="actions">\n' +
-                           '             <a title="" info-id="'+shortUpDateList[i]+'" class="lightbox_trigger_info" href="#">\n' +
-                           '                 <i class="icon-pencil"></i>\n' +
-                           '              </a>\n' +
-                           '               <a class="lightbox_trigger" href=" '+photos[j][0]+photos[j][1]+photos[j][2]+'">\n' +
-                           '                  <i class="icon-search"></i>\n' +
-                           '               </a>\n' +
-                           '          </div>\n' +
-                           '       </li> ';
-                       $("#"+shortUpDateList[i]).append(me_li);
+                        var me_li=' <li class="span2">\n' +
+                            '          <div >' +
+                            '            <p><span style="color: #0e0e0e;font-weight: bolder;">名称：</span>'+photos[j][2] +'</p> ' +
+                            '            <p><span style="color: #0e0e0e;font-weight: bolder;">保存路径：</span>'+photos[j][1]+'</p>' +
+                            '            <p><span style="color: #0e0e0e;font-weight: bolder;">更新时间：</span>'+photos[j][3].substring(11,19)+'</p>' +
+                            '          </div>\n' +
+                            '           <a> <img src=" '+photos[j][0]+photos[j][1]+photos[j][2]+' " alt=" '+photos[j][2]+' " onclick="imgDisplay(this)" > </a>\n' +
+                            '          <p style="text-align: center;margin-top: 15px;">' +
+                            '          <button onclick="delPhoto(this)" class="btn btn-danger btn-mini" id="'+photos[j][5]+'" aid="'+photos[j][6]+'"><i class=" icon-remove"></i>删除</button>  \n' +
+                            '          </p>\n' +
+                            '       </li> ';
+                        $("#"+shortUpDateList[i]).append(me_li);
                     }
                 }
             }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-            $(".lightbox_trigger_info").click(function(e){
-
-                var infoId = $(this).attr("info-id");
-
-                var lightbox =
-                    '<div id="lightbox" style="display:none;">' +
-                    '<div id="imgbox-bg">' +
-                    '<div>'+
-                    'asdfasdfaaaadsffasf<hr/>'+
-                    'asdfasdfaaaadsffasf<hr/>'+
-                    'asdfasdfaaaadsffasf<hr/>'+
-                    'asdfasdfaaaadsffasf<hr/>'+
-                    'asdfasdfaaaadsffasf<hr/>'+
-                    '</div>'+
-                    '<p ><i style="color:#000000;" class="icon-remove icon-white"></i></p>' +
-                    '</div>' +
-                    '</div>';
-
-                $('body').append(lightbox);
-                $('#lightbox').slideDown(500);
-
-            });
-
-            $('#lightbox').live('click', function() {
-                $('#lightbox').hide(200);
-            });
-
-
-
-
-//            $('.lightbox_trigger').click(function(e) {
-//
-//                e.preventDefault();
-//
-//                var image_href = $(this).attr("href");
-//
-//                if ($('#lightbox').length > 0) {
-//
-//                    $('#imgbox').html('<img src="' + image_href + '" /><p><i class="icon-remove icon-white"></i></p>');
-//
-//                    $('#lightbox').slideDown(500);
-//                }
-//
-//                else {
-//                    var lightbox =
-//                        '<div id="lightbox" style="display:none;">' +
-//                        '<div id="imgbox"><img src="' + image_href +'" />' +
-//                        '<p><i class="icon-remove icon-white"></i></p>' +
-//                        '</div>' +
-//                        '</div>';
-//
-//                    $('body').append(lightbox);
-//                    $('#lightbox').slideDown(500);
-//                }
-//
-//            });
-//
-//
-//            $('#lightbox').live('click', function() {
-//                $('#lightbox').hide(200);
-//            });
-//
-
-
-
-
-
         });
+
+
+
+        //当鼠标移到图片上时，显示x删除
+        function imgDisplay(obj) {
+            var src = $(obj).attr("src");
+            var imgHtml = '<div style="width: 100%;height: 100vh;overflow: auto;background: rgba(0,0,0,0.5);' +
+                'text-align: center;position: fixed;top: 0;left: 0;z-index: 1000;">' +
+                '<img src=' + src + ' style="margin-top: 100px;width: 70%;margin-bottom: 100px;"/>' +
+                '<p style="font-size: 50px;position: fixed;top: 30px;right: 30px;color: white;cursor: pointer;" ' +
+                'onclick="closePicture(this)">×</p></div>'
+            $('body').append(imgHtml);
+        }
+
+        //关闭
+        function closePicture(obj) {
+            $(obj).parent("div").remove();
+        }
+
+        /**
+         *  删除指定的图片
+         * @param obj
+         */
+        function delPhoto(obj){
+
+
+            var json = {
+                title:"删除操作！",
+                msg:"确定删除该照片？ ",
+                buttons:[
+                    { title:"确定",color:"red",click:function(){
+                        var pid=$(obj).attr("id");
+                        var aid=$(obj).attr("aid");
+                        var data="pid="+pid+"&aid="+aid;
+                        imgUpload(contextPath+"body/busi-manage/photograph-management/del",data);
+                    } },
+                    { title:"取消",click:function(){
+
+                    } }
+                ]
+            }
+            $.alertView(json);
+
+
+
+        }
+        /**
+         * 上传图片
+         */
+        function  imgUpload(url,data){
+
+            $.ajax({
+                type: "post",
+                url: url,
+                async: true,
+                data: data,
+                dataType:"json",
+                success: function(data) {
+
+                    $.alertView(data.message);
+                    setTimeout(function(){
+                        location.reload();
+                    },1000);
+
+
+                },
+                error: function(error) {
+                    console.log(error);
+                    $.alertView("内部错误！无法完成操作！");
+                }
+            });
+        }
+
     </script>
 
 </div>

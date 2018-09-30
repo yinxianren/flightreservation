@@ -64,5 +64,16 @@ public class PhotoService extends ServiceParent<Photo> {
     }
 
 
+    public boolean updataAndDeleter(int pid,int uid){
+        try {
+            return photoMapper.updataAndDeleter(pid,uid);
+        }catch(Exception e){
+            e.printStackTrace();
+            return false;
+        }
+
+    }
+
+
 
 }

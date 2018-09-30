@@ -1,15 +1,18 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>扩展功能</title>
+    <title>新闻爬虫</title>
     <meta charset="UTF-8" />
     <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
+    <script th:src="@{/private/frontdesk/body/js/bootstrap.min.js}"></script>
 </head>
 <body>
-<div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='extended_function_manage',sub_action='extended_function_manage')"></div>
-<!--main-container-part-->
+<div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='extended_function_manage',sub_action='reptile')"></div>
 <div id="content">
-
+    <div class="container-fluid">
+        <div th:replace="../templates/frontdesk/body/extendedFunctionManagement/reptile-bars :: bar(action='new')"></div>
+        <div class="row-fluid"></div>
+    </div>
     <hr/>
 
     <div>
@@ -20,7 +23,6 @@
     </div>
 
 
-</div>
 </div>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
 </body>

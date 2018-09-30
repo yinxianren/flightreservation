@@ -198,12 +198,20 @@
             </ul>
         </li>
 
+
         <!--  扩张功能 -->
-        <li th:class="${action=='extended_function_manage'}?'btn-success':'' "><a th:href="@{/body/extnetedfunctionmangement/extended-function-management}"><i class="icon icon-tint"></i> <span>扩展功能</span></a></li>
+        <li th:class="${action=='extended_function_manage'}?'submenu  open ':'submenu' ">
+            <a href="#"><i class="icon icon-tint "> </i>  <span>扩展功能</span> </a>
+            <ul>
+                <li th:class=" ${sub_action=='reptile'?'btn-success':''}"><a th:href="@{/reptile/extendedfunctionmangement/reptilemanagement/reptileManage}">爬虫</a></li>
+                <li th:class=" ${sub_action=='pay'?'btn-success':''}"><a th:href="@{/pay/extendedfunctionmangement/reptilemanagement/payManage}">支付业务</a></li>
+            </ul>
+        </li>
 
 
         <!--  网站后台管理模块 -->
-        <li th:class="${action=='webbase_stage_manage'}?'submenu  open ':'submenu' "> <a href="#"><i class="icon icon-cog "> </i>  <span>网站后台管理</span> </a>
+        <li th:class="${action=='webbase_stage_manage'}?'submenu  open ':'submenu' ">
+            <a href="#"><i class="icon icon-cog "> </i>  <span>网站后台管理</span> </a>
             <ul>
                 <li th:class=" ${sub_action=='service_manage'?'btn-success':''}"><a th:href="@{/body/webbackstagemanagement/service-management}">客户管理</a></li>
                 <li th:class=" ${sub_action=='promotional_info_manage'?'btn-success':''}"><a th:href="@{/body/webbackstagemanagement/promotional-info-management}">促销信息管理</a></li>

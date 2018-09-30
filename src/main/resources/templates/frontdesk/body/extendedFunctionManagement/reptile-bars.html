@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+</head>
+<body>
+<div th:fragment="bar(action)">
+
+
+    <div class="quick-actions_homepage">
+        <ul class="quick-actions">
+
+
+            <li style="background-color: #65aee6">
+                <a th:href="@{/reptile/extendedfunctionmangement/reptilemanagement/reptilePicture}">
+                    <i class="icon-twitter-sign"></i>
+                    <span class="label label-success">[[${action=='reptilePicture'?'✔':''}]]</span>
+                     图片爬虫
+                </a>
+            </li>
+
+            <li style="background-color: #3be1dd">
+                <a th:href="@{/reptile/extendedfunctionmangement/reptilemanagement/reptileNew}">
+                    <i class="icon-twitter-sign"></i>
+                    <span class="label label-success">[[${action=='new'?'✔':''}]]</span>
+                    新闻爬虫
+                </a>
+            </li>
+
+            <li style="background-color: #1e7773">
+                <a th:href="@{/reptile/extendedfunctionmangement/reptilemanagement/reptileArticle}">
+                    <i class="icon-twitter-sign"></i>
+                    <span class="label label-success">[[${action=='article'?'✔':''}]]</span>
+                    文章爬虫
+                </a>
+            </li>
+            <li style="background-color: #113e3a">
+                <a th:href="@{/reptile/extendedfunctionmangement/reptilemanagement/reptileBrainpower}">
+                    <i class="icon-twitter-sign"></i>
+                    <span class="label label-success">[[${action=='brainpower'?'✔':''}]]</span>
+                    智能爬虫
+                </a>
+            </li>
+        </ul>
+    </div>
+
+</div>
+</body>
+
+</html>

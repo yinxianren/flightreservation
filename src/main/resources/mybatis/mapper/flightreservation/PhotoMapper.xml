@@ -4,7 +4,7 @@
 <mapper namespace="com.yilvtong.first.flightreservation.mapper.frontdesk.PhotoMapper" >
 
     <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.entity.frontdesk.Photo" >
-        <id column="hp_id" property="id" jdbcType="INTEGER" />
+        <id column="ph_id" property="id" jdbcType="INTEGER" />
         <result column="ph_usr_id" property="account" jdbcType="INTEGER" />
         <result column="ph_host" property="host" jdbcType="VARCHAR" />
         <result column="ph_domain_name" property="domainName" jdbcType="VARCHAR" />
@@ -18,7 +18,7 @@
 
 
     <sql id="Base_Column_List" >
-    `hp_id`,
+    `ph_id`,
     `ph_usr_id`,
     `ph_host`,
     `ph_domain_name`,
@@ -34,7 +34,7 @@
         select
         <include refid="Base_Column_List" />
         from fr_photo
-        where hp_id = #{id,jdbcType=INTEGER}  AND is_delete=1
+        where ph_id = #{id,jdbcType=INTEGER}  AND is_delete=1
     </select>
 
 
@@ -157,8 +157,8 @@
 
 
     <delete id="delById" parameterType="java.lang.Integer" >
-        update fr_photo SET  is_delete=0
-        where hp_id = #{id,jdbcType=INTEGER} AND is_delete=1
+        delete * from fr_photo
+        where ph_id = #{id,jdbcType=INTEGER} AND is_delete=1
     </delete>
 
     <update id="updataById" parameterType="com.yilvtong.first.flightreservation.entity.frontdesk.Photo" >
@@ -190,7 +190,11 @@
                 up_date= #{update,jdbcType=VARCHAR}
             </if>
         </set>
-        where hp_id = #{id,jdbcType=INTEGER} AND is_delete=1
+        where ph_id = #{id,jdbcType=INTEGER} AND is_delete=1
     </update>
 
+    <update id="updataAndDeleter" parameterType="java.lang.Integer">
+        update fr_photo SET  is_delete=0
+        where ph_id = #{pid,jdbcType=INTEGER} AND ph_usr_id=#{uid,jdbcType=INTEGER} AND is_delete=1
+    </update>
 </mapper>

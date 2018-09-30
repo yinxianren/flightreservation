@@ -10,6 +10,7 @@ import lombok.Setter;
 public class PhotoView {
 
     private int id;
+    private int uid;
     private String domainName;
     private String name;
     private String savePath;

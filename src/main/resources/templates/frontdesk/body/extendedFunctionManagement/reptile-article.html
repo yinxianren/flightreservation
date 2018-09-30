@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>文章爬虫</title>
+    <meta charset="UTF-8" />
+    <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
+    <script th:src="@{/private/frontdesk/body/js/bootstrap.min.js}"></script>
+</head>
+<body>
+<div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='extended_function_manage',sub_action='reptile')"></div>
+<div id="content">
+    <div class="container-fluid">
+        <div th:replace="../templates/frontdesk/body/extendedFunctionManagement/reptile-bars :: bar(action='article')"></div>
+        <div class="row-fluid"></div>
+    </div>
+    <hr/>
+
+    <div>
+        <p style="text-align: center;font-size:25px;color:red;margin-top:300px;margin-bottom: 500px;font-family:  Helvetica,'Helvetica Neue', Arial, sans-serif">
+            <i class="icon-spinner icon-spin"></i>
+            正在开发中......
+        </p>
+    </div>
+
+
+</div>
+<div th:replace="../templates/frontdesk/body/footer :: footer"></div>
+</body>
+</html>

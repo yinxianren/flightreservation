@@ -4,7 +4,8 @@
 
 
     <resultMap id="BaseResultMap" type="com.yilvtong.first.flightreservation.entity.view.PhotoView" >
-        <result column="ph_usr_id" property="id" jdbcType="INTEGER" />
+        <result column="ph_id" property="id" jdbcType="INTEGER" />
+        <result column="ph_usr_id" property="uid" jdbcType="INTEGER" />
         <result column="ph_domain_name" property="domainName" jdbcType="VARCHAR" />
         <result column="ph_new_name" property="name" jdbcType="VARCHAR" />
         <result column="ph_save_path" property="savePath" jdbcType="VARCHAR" />
@@ -15,6 +16,8 @@
 
     <select id="getByUidAndLimit"  resultMap="BaseResultMap">
        SELECT
+       ph_id,
+       ph_usr_id,
        ph_domain_name,
        ph_new_name,
        ph_save_path,

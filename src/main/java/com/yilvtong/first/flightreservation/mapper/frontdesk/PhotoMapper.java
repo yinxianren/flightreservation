@@ -2,6 +2,7 @@ package com.yilvtong.first.flightreservation.mapper.frontdesk;
 
 import com.yilvtong.first.flightreservation.entity.frontdesk.Photo;
 import com.yilvtong.first.flightreservation.mapper.MapperModule;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -31,5 +32,13 @@ public interface PhotoMapper extends MapperModule<Photo> {
      */
    List<Photo> getAllPhotoPath();
 
+
+    /**
+     *  替代删除功能
+     * @param pid
+     * @param uid
+     * @return
+     */
+   boolean updataAndDeleter(@Param("pid") int pid,@Param("uid") int uid);
 
 }
