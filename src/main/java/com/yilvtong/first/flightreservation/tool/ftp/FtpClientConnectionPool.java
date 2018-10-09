@@ -1,12 +1,13 @@
 package com.yilvtong.first.flightreservation.tool.ftp;
 
+import com.yilvtong.first.flightreservation.tool.DateTimeUtils;
 import org.apache.commons.net.ftp.FTPClient;
 
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Random;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.util.*;
 
 
 public class FtpClientConnectionPool {
@@ -23,6 +24,7 @@ public class FtpClientConnectionPool {
 
     private List<FTPClient> ftpClientList= Collections.synchronizedList(new ArrayList<FTPClient>());
 
+    private List<ModifyTheFtpClient> modifyTheFtpClientList= Collections.synchronizedList(new ArrayList<ModifyTheFtpClient>());
 
     public FtpClientConnectionPool(){
 
@@ -32,10 +34,16 @@ public class FtpClientConnectionPool {
      *  随机获取一个连接
      * @return
      */
+    @Deprecated
     public FTPClient getNoneFtpcClient(){
-        int index=new Random().nextInt(10);
+        int index=new Random().nextInt(maxConnectionNum);
         return ftpClientList.get(index);
     }
+
+
+
+
+
 
 
     /**
@@ -51,9 +59,31 @@ public class FtpClientConnectionPool {
                 ftpClient.setFileType(FTPClient.BINARY_FILE_TYPE);//指定传输的是图片类型
                 ftpClientList.add(ftpClient);
             }
+            setModifyTheFtpClientList();
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * 包装 FTPClient，使之有一些新状态指
+     */
+    private  void setModifyTheFtpClientList(){
+
+        synchronized (ftpClientList){
+            Iterator<FTPClient>  ftpClientIterator=ftpClientList.iterator();
+            while (ftpClientIterator.hasNext()){
+                FTPClient ftpClient=ftpClientIterator.next();
+                ModifyTheFtpClient modifyTheFtpClient=new ModifyTheFtpClient();
+                modifyTheFtpClient.setFtpClient(ftpClient);
+                modifyTheFtpClientList.add(modifyTheFtpClient);
+            }
+        }
+    }
+
+
+    public List<ModifyTheFtpClient> getModifyTheFtpClientList(){
+        return modifyTheFtpClientList;
     }
 
     /**
@@ -112,7 +142,37 @@ public class FtpClientConnectionPool {
         return true;
     }
 
+    public boolean uploadPictureBySrc(String src){
 
+        URL uri = null;
+        InputStream inputStream=null;
+        //http://bpic.588ku.com/back_pic/04/89/17/9258f8bebbaf1eb.jpg!/fh/300/quality/90/unsharp/true/compress/true
+
+
+        try {
+            uri = new URL(src);
+            inputStream = uri.openStream();
+            String date= DateTimeUtils.getCurrentDateTimeStr();
+            boolean how=getNoneFtpcClient().storeFile(date+".jpg",inputStream);
+            if(!how){
+                return false;
+            }
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+            return false;
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }finally {
+            try {
+                inputStream.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        return true;
+
+    }
 
 
 }

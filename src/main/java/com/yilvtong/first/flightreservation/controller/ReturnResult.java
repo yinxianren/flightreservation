@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -14,6 +15,7 @@ public class ReturnResult<T>{
 
    private T t;
    private List<T> list;
+   private Set<T> set;
    private Map<String,T> map;
    private String status;
    private int code;

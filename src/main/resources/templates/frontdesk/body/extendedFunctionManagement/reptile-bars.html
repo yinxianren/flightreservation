@@ -42,7 +42,14 @@
             </li>
         </ul>
     </div>
-
+    <a style="display: none;"
+       th:href="${#httpServletRequest.getScheme() + '://'
+              + #httpServletRequest.getServerName()
+              + ':'
+              + #request.getServerPort()
+              + #request.getContextPath()
+              + '/'} "
+       id="contextPath"></a>
 </div>
 </body>
 

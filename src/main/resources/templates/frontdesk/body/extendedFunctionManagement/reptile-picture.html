@@ -5,7 +5,46 @@
     <meta charset="UTF-8" />
     <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-head"></div>
     <script th:src="@{/private/frontdesk/body/js/bootstrap.min.js}"></script>
+    <style>
+        .dialog {
+            position: fixed;
+            width:800px;
+            left: 50%;
+            top:25%;
+            margin-left: -400px;
+            background: #fff;
+            z-index: 999999;
+            border:none;
+            border-radius: 12px;
+            border-color: #ddd;
+            text-align: center;
+            box-shadow: 0px 0px 12px rgba(0, 0, 0, 0.6);
+            font-family: "Microsoft YaHei";
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            -khtml-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+        }
+        .dialog  h3 {
+            display: block;
+            font-size: 2em;
+            font-weight: bold;
+            color: #e30eca;
+            margin:0;
+            margin-top: 15px;
+            padding: 0px 10px;
+        }
 
+        .dialog .message{
+            margin: 5px;
+            padding: 0px 5px;
+            font-size: 16px;
+            color: #111;
+            margin-bottom: 100px;
+        }
+    </style>
 </head>
 <body>
 <div th:replace="../templates/frontdesk/body/navigation-bars :: navigation-bars-content(action='extended_function_manage',sub_action='reptile')"></div>
@@ -29,17 +68,23 @@
                         </div>
 
                         <div class="chat-message well">
-                           <span style="width: 100%;" class="input-box"><input style="width: 100%;" type="text" name="msg-box" id="msg-box" /></span>
+                            <input class="span12"   type="url" name="msg-box" id="msg-box" placeholder="输入要爬取图片的网址" />
+                            <span style="width: 100%;color: red; font-size: 16px;letter-spacing: 2px;" id="input-hint"></span>
                         </div>
+                        <div class="chat-message well">
+                            <input   placeholder="设置字符编码" value="utf-8" type="text" class="span12" name="account" id="charset-box"/>
+                            <span style="width: 100%;color: red; font-size: 16px;letter-spacing: 2px;" id="charset-hint"></span>
+                        </div>
+
 
                         <div class="widget-content nopadding">
                             <div class="control-group">
                                 <div class="controls">
                                     <div data-toggle="buttons-radio" class="btn-group">
-                                        <button class="btn btn-primary" type="button">一级爬虫（单页）</button>
-                                        <button class="btn btn-info" type="button">三级爬虫（嵌入3层）</button>
-                                        <button class="btn btn-success" type="button">五级爬虫（嵌入5层）</button>
-                                        <button class="btn btn-inverse" type="button">九级爬虫（嵌入9层）</button>
+                                        <button class="btn btn-primary class-one" type="button">一级爬虫（单页）</button>
+                                        <button class="btn btn-info class-three" type="button">三级爬虫（嵌入3层）</button>
+                                        <button class="btn btn-success class-five" type="button">五级爬虫（嵌入5层）</button>
+                                        <button class="btn btn-inverse class-nine" type="button">九级爬虫（嵌入9层）</button>
                                     </div>
                                 </div>
                             </div>
@@ -71,6 +116,7 @@
     </div>
 </div>
 <div th:replace="../templates/frontdesk/body/footer :: footer"></div>
-</body>
 <div th:replace="../templates/frontdesk/body/extendedFunctionManagement/reptile-picture-script :: reptile-picture"></div>
+</body>
+
 </html>

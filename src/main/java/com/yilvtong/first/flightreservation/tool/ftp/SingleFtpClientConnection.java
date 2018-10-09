@@ -1,5 +1,6 @@
 package com.yilvtong.first.flightreservation.tool.ftp;
 
+import com.yilvtong.first.flightreservation.tool.DateTimeUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.net.ftp.FTPClient;
 import org.apache.commons.net.ftp.FTPReply;
@@ -7,6 +8,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 @Slf4j
 public class SingleFtpClientConnection {
@@ -156,16 +159,56 @@ public class SingleFtpClientConnection {
   }
 
 
-/*
-  public static void main(String[] arg){
 
-      SingleFtpClientConnection s=new SingleFtpClientConnection();
-      s.init();
-      boolean is=s.removeDirectory("/home/ftpuser/www/images/admin/图片1");
-      System.out.println(is);
-      s.close();
+  public boolean uploadPictureBySrc(String src){
+
+      URL uri = null;
+      InputStream inputStream=null;
+      //http://bpic.588ku.com/back_pic/04/89/17/9258f8bebbaf1eb.jpg!/fh/300/quality/90/unsharp/true/compress/true
+
+
+
+      try {
+          uri = new URL(src);
+          inputStream = uri.openStream();
+          String date=DateTimeUtils.getCurrentDateTimeStr();
+          boolean how=ftpClient.storeFile(date+".jpg",inputStream);
+          if(!how){
+              return false;
+          }
+      } catch (MalformedURLException e) {
+          e.printStackTrace();
+          return false;
+      } catch (IOException e) {
+          e.printStackTrace();
+          return false;
+      }finally {
+          try {
+              inputStream.close();
+          } catch (IOException e) {
+              e.printStackTrace();
+          }
+      }
+      return true;
+
   }
 
-*/
+
+
+  public static void main(String[] arg){
+
+//      SingleFtpClientConnection s=new SingleFtpClientConnection();
+//      s.init();
+//      s.changeWorkingDirectory("/home/ftpuser/www/images/sudo/图片");
+//      s.uploadPictureBySrc("http://bpic.588ku.com/back_pic/05/59/10/145b35f5a48f018.jpg!/fh/300/quality/90/unsharp/true/compress/true");
+//      s.close();
+  }
+
+
+
+
+
+
+
 
 }

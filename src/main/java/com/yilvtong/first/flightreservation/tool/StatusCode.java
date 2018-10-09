@@ -10,6 +10,7 @@ public enum StatusCode {
     INTERNAL_ERROR_400_01_03(40103,"未授权：禁止访问资源！"),
     INTERNAL_ERROR_400_02(402,"未授权：服务器配置问题导致登录失败 ！"),
     INTERNAL_ERROR_400_04_01(40401,"未找到： 空参数 ！"),
+    INTERNAL_ERROR_400_04_02(40402,"未找到： 网址地址无效！"),
 
     INTERNAL_ERROR_500_100(500,"内部服务器错误,该操作可能导致系统内部错误！"),
     INTERNAL_ERROR_500_13(500,"内部服务器错误, 服务器太忙 ！"),
