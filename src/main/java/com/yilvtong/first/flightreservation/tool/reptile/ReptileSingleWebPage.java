@@ -60,7 +60,7 @@ public class ReptileSingleWebPage {
         for (String image:listimageurl){
             Matcher matcher=Pattern.compile(IMGSRC_REG).matcher(image);
             while (matcher.find()){
-                setImageSrc.add(matcher.group().substring(0, matcher.group().length()-1));
+                setImageSrc.add(matcher.group().substring(0, matcher.group().length()));
             }
         }
         return setImageSrc;
